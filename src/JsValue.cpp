@@ -22,93 +22,95 @@
 #include "JsError.h"
 #include "Utils.h"
 
-AdblockPlus::JsValue::JsValue(AdblockPlus::JsEnginePtr jsEngine,
+using namespace AdblockPlus;
+
+JsValue::JsValue(JsEnginePtr jsEngine,
       v8::Handle<v8::Value> value)
     : jsEngine(jsEngine),
       value(jsEngine->isolate, value)
 {
 }
 
-AdblockPlus::JsValue::JsValue(AdblockPlus::JsValuePtr value)
+JsValue::JsValue(JsValuePtr value)
     : jsEngine(value->jsEngine),
       value(value->value)
 {
 }
 
-AdblockPlus::JsValue::~JsValue()
+JsValue::~JsValue()
 {
 }
 
-bool AdblockPlus::JsValue::IsUndefined() const
+bool JsValue::IsUndefined() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsUndefined();
 }
 
-bool AdblockPlus::JsValue::IsNull() const
+bool JsValue::IsNull() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsNull();
 }
 
-bool AdblockPlus::JsValue::IsString() const
+bool JsValue::IsString() const
 {
   const JsContext context(jsEngine);
   v8::Local<v8::Value> value = UnwrapValue();
   return value->IsString() || value->IsStringObject();
 }
 
-bool AdblockPlus::JsValue::IsNumber() const
+bool JsValue::IsNumber() const
 {
   const JsContext context(jsEngine);
   v8::Local<v8::Value> value = UnwrapValue();
   return value->IsNumber() || value->IsNumberObject();
 }
 
-bool AdblockPlus::JsValue::IsBool() const
+bool JsValue::IsBool() const
 {
   const JsContext context(jsEngine);
   v8::Local<v8::Value> value = UnwrapValue();
   return value->IsBoolean() || value->IsBooleanObject();
 }
 
-bool AdblockPlus::JsValue::IsObject() const
+bool JsValue::IsObject() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsObject();
 }
 
-bool AdblockPlus::JsValue::IsArray() const
+bool JsValue::IsArray() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsArray();
 }
 
-bool AdblockPlus::JsValue::IsFunction() const
+bool JsValue::IsFunction() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsFunction();
 }
 
-std::string AdblockPlus::JsValue::AsString() const
+std::string JsValue::AsString() const
 {
   const JsContext context(jsEngine);
   return Utils::FromV8String(UnwrapValue());
 }
 
-int64_t AdblockPlus::JsValue::AsInt() const
+int64_t JsValue::AsInt() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IntegerValue();
 }
 
-bool AdblockPlus::JsValue::AsBool() const
+bool JsValue::AsBool() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->BooleanValue();
 }
 
-AdblockPlus::JsValueList AdblockPlus::JsValue::AsList() const
+JsValueList JsValue::AsList() const
 {
   if (!IsArray())
     throw std::runtime_error("Cannot convert a non-array to list");
@@ -125,7 +127,7 @@ AdblockPlus::JsValueList AdblockPlus::JsValue::AsList() const
   return result;
 }
 
-std::vector<std::string> AdblockPlus::JsValue::GetOwnPropertyNames() const
+std::vector<std::string> JsValue::GetOwnPropertyNames() const
 {
   if (!IsObject())
     throw new std::runtime_error("Attempting to get propert list for a non-object");
@@ -140,7 +142,7 @@ std::vector<std::string> AdblockPlus::JsValue::GetOwnPropertyNames() const
 }
 
 
-AdblockPlus::JsValuePtr AdblockPlus::JsValue::GetProperty(const std::string& name) const
+JsValuePtr JsValue::GetProperty(const std::string& name) const
 {
   if (!IsObject())
     throw new std::runtime_error("Attempting to get property of a non-object");
@@ -151,7 +153,7 @@ AdblockPlus::JsValuePtr AdblockPlus::JsValue::GetProperty(const std::string& nam
   return JsValuePtr(new JsValue(jsEngine, obj->Get(property)));
 }
 
-void AdblockPlus::JsValue::SetProperty(const std::string& name, v8::Handle<v8::Value> val)
+void JsValue::SetProperty(const std::string& name, v8::Handle<v8::Value> val)
 {
   if (!IsObject())
     throw new std::runtime_error("Attempting to set property on a non-object");
@@ -161,36 +163,36 @@ void AdblockPlus::JsValue::SetProperty(const std::string& name, v8::Handle<v8::V
   obj->Set(property, val);
 }
 
-v8::Local<v8::Value> AdblockPlus::JsValue::UnwrapValue() const
+v8::Local<v8::Value> JsValue::UnwrapValue() const
 {
   return v8::Local<v8::Value>::New(jsEngine->isolate, value);
 }
 
-void AdblockPlus::JsValue::SetProperty(const std::string& name, const std::string& val)
+void JsValue::SetProperty(const std::string& name, const std::string& val)
 {
   const JsContext context(jsEngine);
   SetProperty(name, Utils::ToV8String(jsEngine->isolate, val));
 }
 
-void AdblockPlus::JsValue::SetProperty(const std::string& name, int64_t val)
+void JsValue::SetProperty(const std::string& name, int64_t val)
 {
   const JsContext context(jsEngine);
   SetProperty(name, v8::Number::New(jsEngine->isolate, val));
 }
 
-void AdblockPlus::JsValue::SetProperty(const std::string& name, const JsValuePtr& val)
+void JsValue::SetProperty(const std::string& name, const JsValuePtr& val)
 {
   const JsContext context(jsEngine);
   SetProperty(name, val->UnwrapValue());
 }
 
-void AdblockPlus::JsValue::SetProperty(const std::string& name, bool val)
+void JsValue::SetProperty(const std::string& name, bool val)
 {
   const JsContext context(jsEngine);
   SetProperty(name, v8::Boolean::New(val));
 }
 
-std::string AdblockPlus::JsValue::GetClass() const
+std::string JsValue::GetClass() const
 {
   if (!IsObject())
     throw new std::runtime_error("Cannot get constructor of a non-object");
@@ -200,7 +202,7 @@ std::string AdblockPlus::JsValue::GetClass() const
   return Utils::FromV8String(obj->GetConstructorName());
 }
 
-AdblockPlus::JsValuePtr AdblockPlus::JsValue::Call(const JsValueList& params, JsValuePtr thisPtr) const
+JsValuePtr JsValue::Call(const JsValueList& params, JsValuePtr thisPtr) const
 {
   if (!IsFunction())
     throw new std::runtime_error("Attempting to call a non-function");

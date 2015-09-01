@@ -22,6 +22,8 @@
 #include "JsError.h"
 #include "Utils.h"
 
+using namespace AdblockPlus;
+
 namespace
 {
   v8::Handle<v8::Script> CompileScript(v8::Isolate* isolate,
@@ -41,7 +43,7 @@ namespace
   void CheckTryCatch(const v8::TryCatch& tryCatch)
   {
     if (tryCatch.HasCaught())
-      throw AdblockPlus::JsError(tryCatch.Exception(), tryCatch.Message());
+      throw JsError(tryCatch.Exception(), tryCatch.Message());
   }
 
   class V8Initializer
@@ -65,12 +67,12 @@ namespace
   };
 }
 
-AdblockPlus::JsEngine::JsEngine()
+JsEngine::JsEngine()
   : isolate(v8::Isolate::GetCurrent())
 {
 }
 
-AdblockPlus::JsEnginePtr AdblockPlus::JsEngine::New(const AppInfo& appInfo)
+JsEnginePtr JsEngine::New(const AppInfo& appInfo)
 {
   V8Initializer::Init();
   JsEnginePtr result(new JsEngine());
@@ -88,7 +90,7 @@ AdblockPlus::JsEnginePtr AdblockPlus::JsEngine::New(const AppInfo& appInfo)
   return result;
 }
 
-AdblockPlus::JsValuePtr AdblockPlus::JsEngine::Evaluate(const std::string& source,
+JsValuePtr JsEngine::Evaluate(const std::string& source,
     const std::string& filename)
 {
   const JsContext context(shared_from_this());
@@ -101,57 +103,56 @@ AdblockPlus::JsValuePtr AdblockPlus::JsEngine::Evaluate(const std::string& sourc
   return JsValuePtr(new JsValue(shared_from_this(), result));
 }
 
-void AdblockPlus::JsEngine::SetEventCallback(const std::string& eventName,
-    AdblockPlus::JsEngine::EventCallback callback)
+void JsEngine::SetEventCallback(const std::string& eventName,
+    JsEngine::EventCallback callback)
 {
   eventCallbacks[eventName] = callback;
 }
 
-void AdblockPlus::JsEngine::RemoveEventCallback(const std::string& eventName)
+void JsEngine::RemoveEventCallback(const std::string& eventName)
 {
   eventCallbacks.erase(eventName);
 }
 
-void AdblockPlus::JsEngine::TriggerEvent(const std::string& eventName, AdblockPlus::JsValueList& params)
+void JsEngine::TriggerEvent(const std::string& eventName, JsValueList& params)
 {
   EventMap::iterator it = eventCallbacks.find(eventName);
   if (it != eventCallbacks.end())
     it->second(params);
 }
 
-void AdblockPlus::JsEngine::Gc()
+void JsEngine::Gc()
 {
   while (!v8::V8::IdleNotification());
 }
 
-AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewValue(const std::string& val)
+JsValuePtr JsEngine::NewValue(const std::string& val)
 {
   const JsContext context(shared_from_this());
   return JsValuePtr(new JsValue(shared_from_this(),
     Utils::ToV8String(isolate, val)));
 }
 
-AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewValue(int64_t val)
+JsValuePtr JsEngine::NewValue(int64_t val)
 {
   const JsContext context(shared_from_this());
   return JsValuePtr(new JsValue(shared_from_this(),
     v8::Number::New(isolate, val)));
 }
 
-AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewValue(bool val)
+JsValuePtr JsEngine::NewValue(bool val)
 {
   const JsContext context(shared_from_this());
   return JsValuePtr(new JsValue(shared_from_this(), v8::Boolean::New(val)));
 }
 
-AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewObject()
+JsValuePtr JsEngine::NewObject()
 {
   const JsContext context(shared_from_this());
   return JsValuePtr(new JsValue(shared_from_this(), v8::Object::New()));
 }
 
-AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewCallback(
-    v8::InvocationCallback callback)
+JsValuePtr JsEngine::NewCallback(v8::InvocationCallback callback)
 {
   const JsContext context(shared_from_this());
 
@@ -164,7 +165,7 @@ AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewCallback(
   return JsValuePtr(new JsValue(shared_from_this(), templ->GetFunction()));
 }
 
-AdblockPlus::JsEnginePtr AdblockPlus::JsEngine::FromArguments(const v8::Arguments& arguments)
+JsEnginePtr JsEngine::FromArguments(const v8::Arguments& arguments)
 {
   const v8::Local<const v8::External> external =
       v8::Local<const v8::External>::Cast(arguments.Data());
@@ -176,7 +177,7 @@ AdblockPlus::JsEnginePtr AdblockPlus::JsEngine::FromArguments(const v8::Argument
   return result;
 }
 
-AdblockPlus::JsValueList AdblockPlus::JsEngine::ConvertArguments(const v8::Arguments& arguments)
+JsValueList JsEngine::ConvertArguments(const v8::Arguments& arguments)
 {
   const JsContext context(shared_from_this());
   JsValueList list;
@@ -185,14 +186,14 @@ AdblockPlus::JsValueList AdblockPlus::JsEngine::ConvertArguments(const v8::Argum
   return list;
 }
 
-AdblockPlus::FileSystemPtr AdblockPlus::JsEngine::GetFileSystem()
+FileSystemPtr JsEngine::GetFileSystem()
 {
   if (!fileSystem)
     fileSystem.reset(new DefaultFileSystem());
   return fileSystem;
 }
 
-void AdblockPlus::JsEngine::SetFileSystem(AdblockPlus::FileSystemPtr val)
+void JsEngine::SetFileSystem(FileSystemPtr val)
 {
   if (!val)
     throw std::runtime_error("FileSystem cannot be null");
@@ -200,14 +201,14 @@ void AdblockPlus::JsEngine::SetFileSystem(AdblockPlus::FileSystemPtr val)
   fileSystem = val;
 }
 
-AdblockPlus::WebRequestPtr AdblockPlus::JsEngine::GetWebRequest()
+WebRequestPtr JsEngine::GetWebRequest()
 {
   if (!webRequest)
     webRequest.reset(new DefaultWebRequest());
   return webRequest;
 }
 
-void AdblockPlus::JsEngine::SetWebRequest(AdblockPlus::WebRequestPtr val)
+void JsEngine::SetWebRequest(WebRequestPtr val)
 {
   if (!val)
     throw std::runtime_error("WebRequest cannot be null");
@@ -215,14 +216,14 @@ void AdblockPlus::JsEngine::SetWebRequest(AdblockPlus::WebRequestPtr val)
   webRequest = val;
 }
 
-AdblockPlus::LogSystemPtr AdblockPlus::JsEngine::GetLogSystem()
+LogSystemPtr JsEngine::GetLogSystem()
 {
   if (!logSystem)
     logSystem.reset(new DefaultLogSystem());
   return logSystem;
 }
 
-void AdblockPlus::JsEngine::SetLogSystem(AdblockPlus::LogSystemPtr val)
+void JsEngine::SetLogSystem(LogSystemPtr val)
 {
   if (!val)
     throw std::runtime_error("LogSystem cannot be null");
@@ -231,8 +232,7 @@ void AdblockPlus::JsEngine::SetLogSystem(AdblockPlus::LogSystemPtr val)
 }
 
 
-void AdblockPlus::JsEngine::SetGlobalProperty(const std::string& name, 
-                                              AdblockPlus::JsValuePtr value)
+void JsEngine::SetGlobalProperty(const std::string& name, JsValuePtr value)
 {
   if (!globalJsObject)
     throw std::runtime_error("Global object cannot be null");
