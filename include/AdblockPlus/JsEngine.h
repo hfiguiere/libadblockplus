@@ -76,7 +76,7 @@ namespace AdblockPlus
      *        general purpose event handling mechanism.
      * @param callback Event callback function.
      */
-    void SetEventCallback(const std::string& eventName, const EventCallback callback);
+    void SetEventCallback(const std::string& eventName, const EventCallback& callback);
 
     /**
      * Removes the callback function for an event.
@@ -89,7 +89,7 @@ namespace AdblockPlus
      * @param eventName Event name.
      * @param params Event parameters.
      */
-    void TriggerEvent(const std::string& eventName, JsValueList& params);
+    void TriggerEvent(const std::string& eventName, const JsValueList& params);
 
     /**
      * Evaluates a JavaScript expression.
@@ -209,8 +209,7 @@ namespace AdblockPlus
      * @param name Name of the property to set.
      * @param value Value of the property to set.
      */
-    void SetGlobalProperty(const std::string& name, AdblockPlus::JsValuePtr value);
-
+    void SetGlobalProperty(const std::string& name, const JsValuePtr& value);
   private:
     JsEngine();
 

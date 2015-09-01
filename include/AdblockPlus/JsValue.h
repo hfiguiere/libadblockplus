@@ -106,12 +106,11 @@ namespace AdblockPlus
      * @param thisPtr Optional `this` value.
      * @return Value returned by the function.
      */
-    JsValuePtr Call(const JsValueList& params = JsValueList(),
-        AdblockPlus::JsValuePtr thisPtr = AdblockPlus::JsValuePtr()) const;
+    JsValuePtr Call(const JsValueList& params = JsValueList(), JsValuePtr thisPtr = JsValuePtr()) const;
 
     v8::Local<v8::Value> UnwrapValue() const;
   protected:
-    JsValue(JsValuePtr value);
+    JsValue(const JsValuePtr& value);
     JsEnginePtr jsEngine;
   private:
     JsValue(JsEnginePtr jsEngine, v8::Handle<v8::Value> value);

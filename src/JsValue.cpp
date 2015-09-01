@@ -31,7 +31,7 @@ JsValue::JsValue(JsEnginePtr jsEngine,
 {
 }
 
-JsValue::JsValue(JsValuePtr value)
+JsValue::JsValue(const JsValuePtr& value)
     : jsEngine(value->jsEngine),
       value(value->value)
 {

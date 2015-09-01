@@ -104,7 +104,7 @@ JsValuePtr JsEngine::Evaluate(const std::string& source,
 }
 
 void JsEngine::SetEventCallback(const std::string& eventName,
-    JsEngine::EventCallback callback)
+    const JsEngine::EventCallback& callback)
 {
   eventCallbacks[eventName] = callback;
 }
@@ -114,7 +114,7 @@ void JsEngine::RemoveEventCallback(const std::string& eventName)
   eventCallbacks.erase(eventName);
 }
 
-void JsEngine::TriggerEvent(const std::string& eventName, JsValueList& params)
+void JsEngine::TriggerEvent(const std::string& eventName, const JsValueList& params)
 {
   EventMap::iterator it = eventCallbacks.find(eventName);
   if (it != eventCallbacks.end())
@@ -232,7 +232,7 @@ void JsEngine::SetLogSystem(LogSystemPtr val)
 }
 
 
-void JsEngine::SetGlobalProperty(const std::string& name, JsValuePtr value)
+void JsEngine::SetGlobalProperty(const std::string& name, const JsValuePtr& value)
 {
   if (!globalJsObject)
     throw std::runtime_error("Global object cannot be null");
