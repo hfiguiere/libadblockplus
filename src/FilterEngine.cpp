@@ -160,7 +160,7 @@ FilterEngine::FilterEngine(JsEnginePtr jsEngine,
 
   // TODO: This should really be implemented via a conditional variable
   while (!initialized)
-    ::Sleep(10);
+    AdblockPlus::Sleep(10);
 }
 
 namespace

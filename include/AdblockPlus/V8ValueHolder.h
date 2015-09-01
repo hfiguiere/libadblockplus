@@ -19,13 +19,7 @@
 #define ADBLOCK_PLUS_V8_VALUE_HOLDER_H
 
 #include <memory>
-
-namespace v8
-{
-  class Isolate;
-  template<class T> class Handle;
-  template<class T> class Persistent;
-}
+#include <v8.h>
 
 namespace AdblockPlus
 {

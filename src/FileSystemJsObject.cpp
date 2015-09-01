@@ -25,6 +25,8 @@
 #include "JsContext.h"
 #include "Thread.h"
 #include "Utils.h"
+#include "V8JsEnginePrivate.h"
+#include "V8JsValuePrivate.h"
 
 using namespace AdblockPlus;
 
@@ -248,8 +250,8 @@ namespace
 
   v8::Handle<v8::Value> ReadCallback(const v8::Arguments& arguments)
   {
-    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
-    AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
+    AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
 
     v8::Isolate* isolate = arguments.GetIsolate();
     if (converted.size() != 2)
@@ -266,8 +268,8 @@ namespace
 
   v8::Handle<v8::Value> WriteCallback(const v8::Arguments& arguments)
   {
-    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
-    AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
+    AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
 
     v8::Isolate* isolate = arguments.GetIsolate();
     if (converted.size() != 3)
@@ -284,8 +286,8 @@ namespace
 
   v8::Handle<v8::Value> MoveCallback(const v8::Arguments& arguments)
   {
-    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
-    AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
+    AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
 
     v8::Isolate* isolate = arguments.GetIsolate();
     if (converted.size() != 3)
@@ -302,8 +304,8 @@ namespace
 
   v8::Handle<v8::Value> RemoveCallback(const v8::Arguments& arguments)
   {
-    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
-    AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
+    AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
 
     v8::Isolate* isolate = arguments.GetIsolate();
     if (converted.size() != 2)
@@ -320,8 +322,8 @@ namespace
 
   v8::Handle<v8::Value> StatCallback(const v8::Arguments& arguments)
   {
-    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
-    AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
+    AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
 
     v8::Isolate* isolate = arguments.GetIsolate();
     if (converted.size() != 2)
@@ -338,8 +340,8 @@ namespace
 
   v8::Handle<v8::Value> ResolveCallback(const v8::Arguments& arguments)
   {
-    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
-    AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
+    AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
 
     v8::Isolate* isolate = arguments.GetIsolate();
     if (converted.size() != 1)
@@ -356,11 +358,11 @@ namespace
 
 JsValuePtr FileSystemJsObject::Setup(JsEnginePtr jsEngine, JsValuePtr obj)
 {
-  obj->SetProperty("read", jsEngine->NewCallback(::ReadCallback));
-  obj->SetProperty("write", jsEngine->NewCallback(::WriteCallback));
-  obj->SetProperty("move", jsEngine->NewCallback(::MoveCallback));
-  obj->SetProperty("remove", jsEngine->NewCallback(::RemoveCallback));
-  obj->SetProperty("stat", jsEngine->NewCallback(::StatCallback));
-  obj->SetProperty("resolve", jsEngine->NewCallback(::ResolveCallback));
+  obj->SetProperty("read", jsEngine->PrivateImplementation()->NewCallback(::ReadCallback));
+  obj->SetProperty("write", jsEngine->PrivateImplementation()->NewCallback(::WriteCallback));
+  obj->SetProperty("move", jsEngine->PrivateImplementation()->NewCallback(::MoveCallback));
+  obj->SetProperty("remove", jsEngine->PrivateImplementation()->NewCallback(::RemoveCallback));
+  obj->SetProperty("stat", jsEngine->PrivateImplementation()->NewCallback(::StatCallback));
+  obj->SetProperty("resolve", jsEngine->PrivateImplementation()->NewCallback(::ResolveCallback));
   return obj;
 }

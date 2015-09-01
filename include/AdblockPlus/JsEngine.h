@@ -29,38 +29,27 @@
 #include "JsValue.h"
 #include "WebRequest.h"
 #include "Declarations.h"
-#include "V8ValueHolder.h"
-
-namespace v8
-{
-  class Arguments;
-  class Isolate;
-  class Value;
-  class Context;
-  template<class T> class Handle;
-  typedef Handle<Value>(*InvocationCallback)(const Arguments &args);
-}
 
 namespace AdblockPlus
 {
+  class JsEnginePrivate;
+
   /**
    * JavaScript engine used by `FilterEngine`, wraps v8.
    */
   class JsEngine : public std::enable_shared_from_this<JsEngine>
   {
-    friend class JsValue;
-    friend class JsContext;
-
   public:
     /**
      * Event callback function.
      */
     typedef std::function<void(const JsValueList& params)> EventCallback;
-
     /**
      * Maps events to callback functions.
      */
     typedef std::map<std::string, EventCallback> EventMap;
+  public:
+    ~JsEngine();
 
     /**
      * Creates a new JavaScript engine instance.
@@ -137,33 +126,6 @@ namespace AdblockPlus
     JsValuePtr NewObject();
 
     /**
-     * Creates a JavaScript function that invokes a C++ callback.
-     * @param callback C++ callback to invoke. The callback receives a
-     *        `v8::Arguments` object and can use `FromArguments()` to retrieve
-     *        the current `JsEngine`.
-     * @return New `JsValue` instance.
-     */
-    JsValuePtr NewCallback(v8::InvocationCallback callback);
-
-    /**
-     * Returns a `JsEngine` instance contained in a `v8::Arguments` object.
-     * Use this in callbacks created via `NewCallback()` to retrieve the current
-     * `JsEngine`.
-     * @param arguments `v8::Arguments` object containing the `JsEngine`
-     *        instance.
-     * @return `JsEngine` instance from `v8::Arguments`.
-     */
-    static JsEnginePtr FromArguments(const v8::Arguments& arguments);
-
-    /**
-     * Converts v8 arguments to `JsValue` objects.
-     * @param arguments `v8::Arguments` object containing the arguments to
-     *        convert.
-     * @return List of arguments converted to `JsValue` objects.
-     */
-    JsValueList ConvertArguments(const v8::Arguments& arguments);
-
-    /**
      * @see `SetFileSystem()`.
      */
     FileSystemPtr GetFileSystem();
@@ -209,16 +171,17 @@ namespace AdblockPlus
      * @param value Value of the property to set.
      */
     void SetGlobalProperty(const std::string& name, const JsValuePtr& value);
+    JsEnginePrivate* PrivateImplementation()
+    {
+      return privateImpl.get();
+    }
   private:
     JsEngine();
-
+    std::unique_ptr<JsEnginePrivate> privateImpl;
+    EventMap eventCallbacks;
     FileSystemPtr fileSystem;
     WebRequestPtr webRequest;
     LogSystemPtr logSystem;
-    v8::Isolate* isolate;
-    V8ValueHolder<v8::Context> context;
-    EventMap eventCallbacks;
-    JsValuePtr globalJsObject;
   };
 }
 

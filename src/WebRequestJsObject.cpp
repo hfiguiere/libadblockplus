@@ -23,6 +23,8 @@
 #include "Thread.h"
 #include "Utils.h"
 #include "WebRequestJsObject.h"
+#include "V8JsEnginePrivate.h"
+#include "V8JsValuePrivate.h"
 
 namespace
 {
@@ -93,8 +95,8 @@ namespace
     WebRequestThread* thread;
     try
     {
-      AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
-      AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+      AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
+      AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
       if (converted.size() != 3u)
         throw std::runtime_error("GET requires exactly 3 arguments");
       thread = new WebRequestThread(jsEngine, converted);
@@ -113,6 +115,6 @@ namespace
 AdblockPlus::JsValuePtr AdblockPlus::WebRequestJsObject::Setup(
     AdblockPlus::JsEnginePtr jsEngine, AdblockPlus::JsValuePtr obj)
 {
-  obj->SetProperty("GET", jsEngine->NewCallback(::GETCallback));
+  obj->SetProperty("GET", jsEngine->PrivateImplementation()->NewCallback(::GETCallback));
   return obj;
 }

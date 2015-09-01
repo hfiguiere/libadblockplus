@@ -16,10 +16,11 @@
  */
 
 #include "JsContext.h"
+#include "V8JsEnginePrivate.h"
 
 AdblockPlus::JsContext::JsContext(const JsEnginePtr jsEngine)
-    : locker(jsEngine->isolate), isolateScope(jsEngine->isolate),
-      handleScope(jsEngine->isolate),
-      contextScope(v8::Local<v8::Context>::New(jsEngine->isolate, jsEngine->context))
+    : locker(jsEngine->PrivateImplementation()->isolate), isolateScope(jsEngine->PrivateImplementation()->isolate),
+      handleScope(jsEngine->PrivateImplementation()->isolate),
+      contextScope(v8::Local<v8::Context>::New(jsEngine->PrivateImplementation()->isolate, jsEngine->PrivateImplementation()->context))
 {
 }

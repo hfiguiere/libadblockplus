@@ -22,15 +22,16 @@
 #include "ConsoleJsObject.h"
 #include "JsContext.h"
 #include "Utils.h"
+#include "V8JsEnginePrivate.h"
 
 namespace
 {
   v8::Handle<v8::Value> DoLog(AdblockPlus::LogSystem::LogLevel logLevel,
       const v8::Arguments& arguments)
   {
-    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
+    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
     const AdblockPlus::JsContext context(jsEngine);
-    AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+    AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
 
     std::stringstream message;
     for (size_t i = 0; i < converted.size(); i++)
@@ -77,9 +78,9 @@ namespace
 
   v8::Handle<v8::Value> TraceCallback(const v8::Arguments& arguments)
   {
-    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
+    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
     const AdblockPlus::JsContext context(jsEngine);
-    AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+    AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
 
     std::stringstream traceback;
     v8::Local<v8::StackTrace> frames = v8::StackTrace::CurrentStackTrace(100);
@@ -107,11 +108,11 @@ namespace
 AdblockPlus::JsValuePtr AdblockPlus::ConsoleJsObject::Setup(
     AdblockPlus::JsEnginePtr jsEngine, AdblockPlus::JsValuePtr obj)
 {
-  obj->SetProperty("log", jsEngine->NewCallback(::LogCallback));
-  obj->SetProperty("debug", jsEngine->NewCallback(::DebugCallback));
-  obj->SetProperty("info", jsEngine->NewCallback(::InfoCallback));
-  obj->SetProperty("warn", jsEngine->NewCallback(::WarnCallback));
-  obj->SetProperty("error", jsEngine->NewCallback(::ErrorCallback));
-  obj->SetProperty("trace", jsEngine->NewCallback(::TraceCallback));
+  obj->SetProperty("log", jsEngine->PrivateImplementation()->NewCallback(::LogCallback));
+  obj->SetProperty("debug", jsEngine->PrivateImplementation()->NewCallback(::DebugCallback));
+  obj->SetProperty("info", jsEngine->PrivateImplementation()->NewCallback(::InfoCallback));
+  obj->SetProperty("warn", jsEngine->PrivateImplementation()->NewCallback(::WarnCallback));
+  obj->SetProperty("error", jsEngine->PrivateImplementation()->NewCallback(::ErrorCallback));
+  obj->SetProperty("trace", jsEngine->PrivateImplementation()->NewCallback(::TraceCallback));
   return obj;
 }

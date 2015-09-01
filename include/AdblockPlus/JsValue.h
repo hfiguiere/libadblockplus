@@ -20,26 +20,21 @@
 
 #include <cstdint>
 #include <string>
-#include "V8ValueHolder.h"
 #include "Declarations.h"
-
-namespace v8
-{
-  class Value;
-  template<class T> class Handle;
-  template<class T> class Local;
-}
 
 namespace AdblockPlus
 {
+  class JsValuePrivate;
+  
   /**
    * Wrapper for JavaScript values.
    * See `JsEngine` for creating `JsValue` objects.
    */
   class JsValue
   {
-    friend class JsEngine;
+    friend class JsValuePrivate;
   public:
+    JsValue(const JsEnginePtr& jsEngine, std::unique_ptr<JsValuePrivate>&& priv);
     virtual ~JsValue();
 
     bool IsUndefined() const;
@@ -106,14 +101,19 @@ namespace AdblockPlus
      */
     JsValuePtr Call(const JsValueList& params = JsValueList(), JsValuePtr thisPtr = JsValuePtr()) const;
 
-    v8::Local<v8::Value> UnwrapValue() const;
+    /**
+     * Returns an opaque pointer to the private implementation.
+     * It's required for advanced using of the value by other internal parts.
+     */
+    JsValuePrivate* PrivateImplementation()
+    {
+      return privateImpl.get();
+    }
   protected:
     JsValue(const JsValuePtr& value);
     JsEnginePtr jsEngine;
   private:
-    JsValue(JsEnginePtr jsEngine, v8::Handle<v8::Value> value);
-    void SetProperty(const std::string& name, v8::Handle<v8::Value> val);
-    V8ValueHolder<v8::Value> value;
+    std::unique_ptr<JsValuePrivate> privateImpl;
   };
 }
 

@@ -28,6 +28,8 @@
 #include "WebRequestJsObject.h"
 #include "Thread.h"
 #include "Utils.h"
+#include "V8JsEnginePrivate.h"
+#include "V8JsValuePrivate.h"
 
 using namespace AdblockPlus;
 
@@ -70,8 +72,8 @@ namespace
     try
     {
       AdblockPlus::JsValueList converted =
-          AdblockPlus::JsEngine::FromArguments(arguments)
-          ->ConvertArguments(arguments);
+          AdblockPlus::JsEnginePrivate::FromArguments(arguments)
+          ->PrivateImplementation()->ConvertArguments(arguments);
       timeoutThread = new TimeoutThread(converted);
     }
     catch (const std::exception& e)
@@ -89,8 +91,8 @@ namespace
 
   v8::Handle<v8::Value> TriggerEventCallback(const v8::Arguments& arguments)
   {
-    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
-    AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
+    AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEnginePrivate::FromArguments(arguments);
+    AdblockPlus::JsValueList converted = jsEngine->PrivateImplementation()->ConvertArguments(arguments);
     if (converted.size() < 1)
     {
       v8::Isolate* isolate = arguments.GetIsolate();
@@ -107,8 +109,8 @@ namespace
 JsValuePtr GlobalJsObject::Setup(JsEnginePtr jsEngine, const AppInfo& appInfo,
     JsValuePtr obj)
 {
-  obj->SetProperty("setTimeout", jsEngine->NewCallback(::SetTimeoutCallback));
-  obj->SetProperty("_triggerEvent", jsEngine->NewCallback(::TriggerEventCallback));
+  obj->SetProperty("setTimeout", jsEngine->PrivateImplementation()->NewCallback(::SetTimeoutCallback));
+  obj->SetProperty("_triggerEvent", jsEngine->PrivateImplementation()->NewCallback(::TriggerEventCallback));
   obj->SetProperty("_fileSystem",
       FileSystemJsObject::Setup(jsEngine, jsEngine->NewObject()));
   obj->SetProperty("_webRequest",
