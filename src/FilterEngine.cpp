@@ -210,7 +210,7 @@ FilterEngine::ContentType FilterEngine::StringToContentType(const std::string& c
   throw std::invalid_argument("Cannot convert argument to ContentType");
 }
 
-void FilterEngine::InitDone(JsValueList& params)
+void FilterEngine::InitDone(const JsValueList& params)
 {
   jsEngine->RemoveEventCallback("_init");
   initialized = true;
@@ -392,7 +392,7 @@ void FilterEngine::RemoveUpdateAvailableCallback()
 }
 
 void FilterEngine::UpdateAvailable(
-    FilterEngine::UpdateAvailableCallback callback, JsValueList& params)
+    FilterEngine::UpdateAvailableCallback callback, const JsValueList& params)
 {
   if (params.size() >= 1 && !params[0]->IsNull())
     callback(params[0]->AsString());
@@ -414,7 +414,7 @@ void FilterEngine::ForceUpdateCheck(
 }
 
 void FilterEngine::UpdateCheckDone(const std::string& eventName,
-    FilterEngine::UpdateCheckDoneCallback callback, JsValueList& params)
+    FilterEngine::UpdateCheckDoneCallback callback, const JsValueList& params)
 {
   jsEngine->RemoveEventCallback(eventName);
 
@@ -433,7 +433,7 @@ void FilterEngine::RemoveFilterChangeCallback()
   jsEngine->RemoveEventCallback("filterChange");
 }
 
-void FilterEngine::FilterChanged(FilterEngine::FilterChangeCallback callback, JsValueList& params)
+void FilterEngine::FilterChanged(FilterEngine::FilterChangeCallback callback, const JsValueList& params)
 {
   std::string action(params.size() >= 1 && !params[0]->IsNull() ? params[0]->AsString() : "");
   JsValuePtr item(params.size() >= 2 ? params[1] : jsEngine->NewValue(false));

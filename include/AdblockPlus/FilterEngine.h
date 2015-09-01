@@ -399,14 +399,14 @@ namespace AdblockPlus
     int updateCheckId;
     static const std::map<ContentType, std::string> contentTypes;
 
-    void InitDone(JsValueList& params);
+    void InitDone(const JsValueList& params);
     FilterPtr CheckFilterMatch(const std::string& url,
                                ContentType contentType,
                                const std::string& documentUrl) const;
-    void UpdateAvailable(UpdateAvailableCallback callback, JsValueList& params);
+    void UpdateAvailable(UpdateAvailableCallback callback, const JsValueList& params);
     void UpdateCheckDone(const std::string& eventName,
-                         UpdateCheckDoneCallback callback, JsValueList& params);
-    void FilterChanged(FilterChangeCallback callback, JsValueList& params);
+                         UpdateCheckDoneCallback callback, const JsValueList& params);
+    void FilterChanged(FilterChangeCallback callback, const JsValueList& params);
     void ShowNotification(const ShowNotificationCallback& callback,
       const JsValueList& params);
   };

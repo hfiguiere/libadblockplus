@@ -56,7 +56,7 @@ namespace AdblockPlus
     /**
      * Event callback function.
      */
-    typedef std::function<void(JsValueList& params)> EventCallback;
+    typedef std::function<void(const JsValueList& params)> EventCallback;
 
     /**
      * Maps events to callback functions.
@@ -76,7 +76,7 @@ namespace AdblockPlus
      *        general purpose event handling mechanism.
      * @param callback Event callback function.
      */
-    void SetEventCallback(const std::string& eventName, EventCallback callback);
+    void SetEventCallback(const std::string& eventName, const EventCallback callback);
 
     /**
      * Removes the callback function for an event.
