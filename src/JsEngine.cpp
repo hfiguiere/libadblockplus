@@ -15,8 +15,10 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <AdblockPlus.h>
-
+#include <AdblockPlus/JsEngine.h>
+#include <AdblockPlus/DefaultWebRequest.h>
+#include <AdblockPlus/DefaultFileSystem.h>
+#include <AdblockPlus/DefaultLogSystem.h>
 #include "GlobalJsObject.h"
 #include "JsContext.h"
 #include "JsError.h"

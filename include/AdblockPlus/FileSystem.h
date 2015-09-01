@@ -19,7 +19,7 @@
 #define ADBLOCK_PLUS_FILE_SYSTEM_H
 
 #include <istream>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <memory>
 

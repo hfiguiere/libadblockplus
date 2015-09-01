@@ -19,7 +19,7 @@
 #define ADBLOCK_PLUS_WEB_REQUEST_H
 
 #include <memory>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
 #include <vector>
 

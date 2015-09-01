@@ -18,10 +18,8 @@
 #ifndef ADBLOCK_PLUS_JS_VALUE_H
 #define ADBLOCK_PLUS_JS_VALUE_H
 
-#include <stdint.h>
+#include <cstdint>
 #include <string>
-#include <vector>
-#include <memory>
 #include "V8ValueHolder.h"
 #include "Declarations.h"
 

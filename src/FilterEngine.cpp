@@ -19,8 +19,7 @@
 #include <cctype>
 #include <functional>
 #include <string>
-
-#include <AdblockPlus.h>
+#include <AdblockPlus/FilterEngine.h>
 #include "JsContext.h"
 #include "Thread.h"
 

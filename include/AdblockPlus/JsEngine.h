@@ -18,19 +18,18 @@
 #ifndef ADBLOCK_PLUS_JS_ENGINE_H
 #define ADBLOCK_PLUS_JS_ENGINE_H
 
-#include <functional>
 #include <map>
 #include <stdexcept>
-#include <stdint.h>
+#include <cstdint>
 #include <string>
-#include <AdblockPlus/AppInfo.h>
-#include <AdblockPlus/LogSystem.h>
-#include <AdblockPlus/FileSystem.h>
-#include <AdblockPlus/JsValue.h>
-#include <AdblockPlus/WebRequest.h>
-
-#include "V8ValueHolder.h"
+#include <functional>
+#include "AppInfo.h"
+#include "LogSystem.h"
+#include "FileSystem.h"
+#include "JsValue.h"
+#include "WebRequest.h"
 #include "Declarations.h"
+#include "V8ValueHolder.h"
 
 namespace v8
 {
