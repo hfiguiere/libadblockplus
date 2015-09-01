@@ -30,6 +30,7 @@
 #include <AdblockPlus/WebRequest.h>
 
 #include "V8ValueHolder.h"
+#include "Declarations.h"
 
 namespace v8
 {
@@ -43,13 +44,6 @@ namespace v8
 
 namespace AdblockPlus
 {
-  class JsEngine;
-
-  /**
-   * Shared smart pointer to a `JsEngine` instance.
-   */
-  typedef std::shared_ptr<JsEngine> JsEnginePtr;
-
   /**
    * JavaScript engine used by `FilterEngine`, wraps v8.
    */

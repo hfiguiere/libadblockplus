@@ -23,6 +23,7 @@
 #include <vector>
 #include <memory>
 #include "V8ValueHolder.h"
+#include "Declarations.h"
 
 namespace v8
 {
@@ -33,21 +34,6 @@ namespace v8
 
 namespace AdblockPlus
 {
-  class JsValue;
-  class JsEngine;
-
-  typedef std::shared_ptr<JsEngine> JsEnginePtr;
-
-  /**
-   * Shared smart pointer to a `JsValue` instance.
-   */
-  typedef std::shared_ptr<JsValue> JsValuePtr;
-
-  /**
-   * List of JavaScript values.
-   */
-  typedef std::vector<AdblockPlus::JsValuePtr> JsValueList;
-
   /**
    * Wrapper for JavaScript values.
    * See `JsEngine` for creating `JsValue` objects.
