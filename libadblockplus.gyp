@@ -35,6 +35,8 @@
       'third_party/v8/include',
     ],
     'sources': [
+      'include/AdblockPlus/JsValue.h',
+      'include/AdblockPlus/JsEngine.h',
       'src/AppInfoJsObject.cpp',
       'src/ConsoleJsObject.cpp',
       'src/DefaultLogSystem.cpp',
