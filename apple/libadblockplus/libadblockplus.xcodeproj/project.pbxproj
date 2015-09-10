@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		44B45FE51BA1AD6100B05E02 /* libadblockplus.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B45FE41BA1AD6100B05E02 /* libadblockplus.h */; };
-		44B45FE71BA1AD6100B05E02 /* libadblockplus.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B45FE61BA1AD6100B05E02 /* libadblockplus.m */; };
 		44B45FF41BA1AD7F00B05E02 /* libadblockplus_osx.h in Headers */ = {isa = PBXBuildFile; fileRef = 44B45FF31BA1AD7F00B05E02 /* libadblockplus_osx.h */; };
 		44B45FF61BA1AD7F00B05E02 /* libadblockplus_osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B45FF51BA1AD7F00B05E02 /* libadblockplus_osx.m */; };
 		44B45FFB1BA1ADE300B05E02 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B45FFA1BA1ADE300B05E02 /* JavaScriptCore.framework */; };
@@ -22,7 +20,6 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				44B45FE51BA1AD6100B05E02 /* libadblockplus.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -30,13 +27,14 @@
 
 /* Begin PBXFileReference section */
 		44B45FE11BA1AD6100B05E02 /* liblibadblockplus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibadblockplus.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		44B45FE41BA1AD6100B05E02 /* libadblockplus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libadblockplus.h; sourceTree = "<group>"; };
-		44B45FE61BA1AD6100B05E02 /* libadblockplus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = libadblockplus.m; sourceTree = "<group>"; };
 		44B45FF11BA1AD7F00B05E02 /* liblibadblockplus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibadblockplus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B45FF31BA1AD7F00B05E02 /* libadblockplus_osx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libadblockplus_osx.h; sourceTree = "<group>"; };
 		44B45FF51BA1AD7F00B05E02 /* libadblockplus_osx.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = libadblockplus_osx.m; sourceTree = "<group>"; };
 		44B45FFA1BA1ADE300B05E02 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		44B45FFC1BA1ADEA00B05E02 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		44B460381BA1B20400B05E02 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppInfo.h; path = ../../../include/AdblockPlus/AppInfo.h; sourceTree = "<group>"; };
+		44B4603B1BA1B23400B05E02 /* JsValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsValue.h; path = ../../../include/AdblockPlus/JsValue.h; sourceTree = "<group>"; };
+		44B4603D1BA1B24600B05E02 /* JsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsEngine.h; path = ../../../include/AdblockPlus/JsEngine.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,8 +80,9 @@
 		44B45FE31BA1AD6100B05E02 /* libadblockplus */ = {
 			isa = PBXGroup;
 			children = (
-				44B45FE41BA1AD6100B05E02 /* libadblockplus.h */,
-				44B45FE61BA1AD6100B05E02 /* libadblockplus.m */,
+				44B4603D1BA1B24600B05E02 /* JsEngine.h */,
+				44B4603B1BA1B23400B05E02 /* JsValue.h */,
+				44B460381BA1B20400B05E02 /* AppInfo.h */,
 			);
 			path = libadblockplus;
 			sourceTree = "<group>";
@@ -185,7 +184,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44B45FE71BA1AD6100B05E02 /* libadblockplus.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
