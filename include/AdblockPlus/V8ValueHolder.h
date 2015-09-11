@@ -32,6 +32,10 @@ namespace AdblockPlus
     {
       reset();
     }
+    V8ValueHolder(V8ValueHolder&& src)
+    : isolate(src.isolate), value(src.value)
+    {
+    }
     V8ValueHolder(v8::Isolate* isolate, v8::Handle<T> value)
     {
       reset(isolate, value);

@@ -26,7 +26,7 @@ namespace AdblockPlus
 {
   class V8JsEnginePrivateImpl : public JsEnginePrivate
   {
-    friend class JsValuePrivate;
+    friend class V8JsValuePrivateImpl;
     friend class JsContext;
   public:
     V8JsEnginePrivateImpl();

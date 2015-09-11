@@ -18,19 +18,18 @@
 #ifndef ADBLOCK_PLUS_V8_JS_VALUE_PRIVATE_H
 #define ADBLOCK_PLUS_V8_JS_VALUE_PRIVATE_H
 
-#include <string>
-#include <vector>
+#include "JsValuePrivate.h"
 #include <v8.h>
 #include <AdblockPlus/V8ValueHolder.h>
 
 namespace AdblockPlus
 {
-  class JsValuePrivate
+  class V8JsValuePrivateImpl : public JsValuePrivate
   {
   public:
-    JsValuePrivate(const JsEnginePtr& jsEngine, v8::Handle<v8::Value> value);
-    //JsValuePrivate(const JsValuePrivate& src);
-    ~JsValuePrivate();
+    V8JsValuePrivateImpl(const JsEnginePtr& jsEngine, v8::Handle<v8::Value> value);
+    V8JsValuePrivateImpl(const V8JsValuePrivateImpl& src);
+    ~V8JsValuePrivateImpl();
 
     bool IsNull() const;
     bool IsString() const;
@@ -57,9 +56,16 @@ namespace AdblockPlus
     std::vector<std::string> GetOwnPropertyNames() const;
   private:
     v8::Local<v8::Value> UnwrapValue() const;
+    static V8ValueHolder<v8::Value> Clone(const JsEnginePtr& jsEngine, const V8ValueHolder<v8::Value>& src);
     void SetProperty(const std::string& name, v8::Handle<v8::Value> val);
     JsEnginePtr jsEngine;
     V8ValueHolder<v8::Value> value;
   };
+
+  V8JsValuePrivateImpl* GetPrivateImpl(JsValue& jsValue);
+  inline V8JsValuePrivateImpl* GetPrivateImpl(const JsValuePtr& jsValue)
+  {
+    return GetPrivateImpl(*jsValue);
+  }
 }
 #endif // ADBLOCK_PLUS_V8_JS_VALUE_PRIVATE_H

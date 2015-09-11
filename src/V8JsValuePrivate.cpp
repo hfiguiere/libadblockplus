@@ -26,85 +26,96 @@
 
 using namespace AdblockPlus;
 
-JsValuePrivate::JsValuePrivate(const JsEnginePtr& jsEngine, v8::Handle<v8::Value> value)
+V8JsValuePrivateImpl::V8JsValuePrivateImpl(const JsEnginePtr& jsEngine, v8::Handle<v8::Value> value)
   : jsEngine(jsEngine), value(GetPrivateImpl(jsEngine)->isolate, value)
 {
 }
 
-JsValuePrivate::~JsValuePrivate()
+V8ValueHolder<v8::Value> V8JsValuePrivateImpl::Clone(const JsEnginePtr& jsEngine, const V8ValueHolder<v8::Value>& value)
+{
+  JsContext jsContext(jsEngine);
+  return V8ValueHolder<v8::Value>(GetPrivateImpl(jsEngine)->isolate, v8::Local<v8::Value>::New(GetPrivateImpl(jsEngine)->isolate, value));
+}
+
+V8JsValuePrivateImpl::V8JsValuePrivateImpl(const V8JsValuePrivateImpl& src)
+  : jsEngine(src.jsEngine), value(Clone(jsEngine, src.value))
 {
 }
 
-bool JsValuePrivate::IsUndefined() const
+V8JsValuePrivateImpl::~V8JsValuePrivateImpl()
+{
+}
+
+bool V8JsValuePrivateImpl::IsUndefined() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsUndefined();
 }
 
-bool JsValuePrivate::IsNull() const
+bool V8JsValuePrivateImpl::IsNull() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsNull();
 }
 
-bool JsValuePrivate::IsString() const
+bool V8JsValuePrivateImpl::IsString() const
 {
   const JsContext context(jsEngine);
   v8::Local<v8::Value> value = UnwrapValue();
   return value->IsString() || value->IsStringObject();
 }
 
-bool JsValuePrivate::IsNumber() const
+bool V8JsValuePrivateImpl::IsNumber() const
 {
   const JsContext context(jsEngine);
   v8::Local<v8::Value> value = UnwrapValue();
   return value->IsNumber() || value->IsNumberObject();
 }
 
-bool JsValuePrivate::IsBool() const
+bool V8JsValuePrivateImpl::IsBool() const
 {
   const JsContext context(jsEngine);
   v8::Local<v8::Value> value = UnwrapValue();
   return value->IsBoolean() || value->IsBooleanObject();
 }
 
-bool JsValuePrivate::IsObject() const
+bool V8JsValuePrivateImpl::IsObject() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsObject();
 }
 
-bool JsValuePrivate::IsArray() const
+bool V8JsValuePrivateImpl::IsArray() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsArray();
 }
 
-bool JsValuePrivate::IsFunction() const
+bool V8JsValuePrivateImpl::IsFunction() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IsFunction();
 }
 
-std::string JsValuePrivate::AsString() const
+std::string V8JsValuePrivateImpl::AsString() const
 {
   const JsContext context(jsEngine);
   return Utils::FromV8String(UnwrapValue());
 }
 
-int64_t JsValuePrivate::AsInt() const
+int64_t V8JsValuePrivateImpl::AsInt() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->IntegerValue();
 }
 
-bool JsValuePrivate::AsBool() const
+bool V8JsValuePrivateImpl::AsBool() const
 {
   const JsContext context(jsEngine);
   return UnwrapValue()->BooleanValue();
 }
 
-JsValueList JsValuePrivate::AsList() const
+JsValueList V8JsValuePrivateImpl::AsList() const
 {
   if (!IsArray())
     throw std::runtime_error("Cannot convert a non-array to list");
@@ -120,7 +131,7 @@ JsValueList JsValuePrivate::AsList() const
   return result;
 }
 
-std::vector<std::string> JsValuePrivate::GetOwnPropertyNames() const
+std::vector<std::string> V8JsValuePrivateImpl::GetOwnPropertyNames() const
 {
   if (!IsObject())
     throw new std::runtime_error("Attempting to get propert list for a non-object");
@@ -136,7 +147,7 @@ std::vector<std::string> JsValuePrivate::GetOwnPropertyNames() const
 }
 
 
-JsValuePtr JsValuePrivate::GetProperty(const std::string& name) const
+JsValuePtr V8JsValuePrivateImpl::GetProperty(const std::string& name) const
 {
   if (!IsObject())
     throw new std::runtime_error("Attempting to get property of a non-object");
@@ -147,7 +158,7 @@ JsValuePtr JsValuePrivate::GetProperty(const std::string& name) const
   return GetPrivateImpl(jsEngine)->CreateJsValuePtr(obj->Get(property));
 }
 
-void JsValuePrivate::SetProperty(const std::string& name, v8::Handle<v8::Value> val)
+void V8JsValuePrivateImpl::SetProperty(const std::string& name, v8::Handle<v8::Value> val)
 {
   if (!IsObject())
     throw new std::runtime_error("Attempting to set property on a non-object");
@@ -157,36 +168,36 @@ void JsValuePrivate::SetProperty(const std::string& name, v8::Handle<v8::Value> 
   obj->Set(property, val);
 }
 
-v8::Local<v8::Value> JsValuePrivate::UnwrapValue() const
+v8::Local<v8::Value> V8JsValuePrivateImpl::UnwrapValue() const
 {
   return v8::Local<v8::Value>::New(GetPrivateImpl(jsEngine)->isolate, value);
 }
 
-void JsValuePrivate::SetProperty(const std::string& name, const std::string& val)
+void V8JsValuePrivateImpl::SetProperty(const std::string& name, const std::string& val)
 {
   const JsContext context(jsEngine);
   SetProperty(name, Utils::ToV8String(GetPrivateImpl(jsEngine)->isolate, val));
 }
 
-void JsValuePrivate::SetProperty(const std::string& name, int64_t val)
+void V8JsValuePrivateImpl::SetProperty(const std::string& name, int64_t val)
 {
   const JsContext context(jsEngine);
   SetProperty(name, v8::Number::New(GetPrivateImpl(jsEngine)->isolate, val));
 }
 
-void JsValuePrivate::SetProperty(const std::string& name, const JsValuePtr& val)
+void V8JsValuePrivateImpl::SetProperty(const std::string& name, const JsValuePtr& val)
 {
   const JsContext context(jsEngine);
-  SetProperty(name, val->PrivateImplementation()->UnwrapValue());
+  SetProperty(name, GetPrivateImpl(val)->UnwrapValue());
 }
 
-void JsValuePrivate::SetProperty(const std::string& name, bool val)
+void V8JsValuePrivateImpl::SetProperty(const std::string& name, bool val)
 {
   const JsContext context(jsEngine);
   SetProperty(name, v8::Boolean::New(val));
 }
 
-std::string JsValuePrivate::GetClass() const
+std::string V8JsValuePrivateImpl::GetClass() const
 {
   if (!IsObject())
     throw new std::runtime_error("Cannot get constructor of a non-object");
@@ -196,7 +207,7 @@ std::string JsValuePrivate::GetClass() const
   return Utils::FromV8String(obj->GetConstructorName());
 }
 
-JsValuePtr JsValuePrivate::Call(const JsValueList& params, JsValuePtr thisPtr) const
+JsValuePtr V8JsValuePrivateImpl::Call(const JsValueList& params, JsValuePtr thisPtr) const
 {
   if (!IsFunction())
     throw new std::runtime_error("Attempting to call a non-function");
@@ -210,11 +221,11 @@ JsValuePtr JsValuePrivate::Call(const JsValueList& params, JsValuePtr thisPtr) c
   }
   if (!thisPtr->IsObject())
     throw new std::runtime_error("`this` pointer has to be an object");
-  v8::Local<v8::Object> thisObj = v8::Local<v8::Object>::Cast(thisPtr->PrivateImplementation()->UnwrapValue());
+  v8::Local<v8::Object> thisObj = v8::Local<v8::Object>::Cast(GetPrivateImpl(thisPtr)->UnwrapValue());
 
   std::vector<v8::Handle<v8::Value>> argv;
   for (JsValueList::const_iterator it = params.begin(); it != params.end(); ++it)
-    argv.push_back((*it)->PrivateImplementation()->UnwrapValue());
+    argv.push_back(GetPrivateImpl(*it)->UnwrapValue());
 
   const v8::TryCatch tryCatch;
   v8::Local<v8::Function> func = v8::Local<v8::Function>::Cast(UnwrapValue());
@@ -225,4 +236,14 @@ JsValuePtr JsValuePrivate::Call(const JsValueList& params, JsValuePtr thisPtr) c
     throw JsError(tryCatch.Exception(), tryCatch.Message());
 
   return GetPrivateImpl(jsEngine)->CreateJsValuePtr(result);
+}
+
+JsValuePrivatePtr AdblockPlus::CloneJsValuePrivate(const JsValuePrivate& jsValuePriv)
+{
+  return JsValuePrivatePtr(new V8JsValuePrivateImpl(static_cast<const V8JsValuePrivateImpl&>(jsValuePriv)));
+}
+
+V8JsValuePrivateImpl* AdblockPlus::GetPrivateImpl(JsValue& jsValue)
+{
+  return static_cast<V8JsValuePrivateImpl*>(jsValue.PrivateImplementation());
 }

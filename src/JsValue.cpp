@@ -15,7 +15,7 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <AdblockPlus/JsValue.h>
-#include "V8JsValuePrivate.h"
+#include "JsValuePrivate.h"
 
 using namespace AdblockPlus;
 
@@ -129,6 +129,6 @@ JsValuePtr JsValue::Call(const JsValueList& params, JsValuePtr thisPtr) const
 }
 
 JsValue::JsValue(const JsValuePtr& value)
-  : jsEngine(value->jsEngine), privateImpl(new JsValuePrivate(*value->privateImpl))
+  : jsEngine(value->jsEngine), privateImpl(CloneJsValuePrivate(*value->privateImpl))
 {
 }

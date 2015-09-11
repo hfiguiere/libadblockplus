@@ -73,7 +73,7 @@ V8JsEnginePrivateImpl::V8JsEnginePrivateImpl()
 
 JsValuePtr V8JsEnginePrivateImpl::CreateJsValuePtr(v8::Local<v8::Value> v8value)
 {
-  std::unique_ptr<JsValuePrivate> jsValuePriv(new JsValuePrivate(parent.lock(), v8value));
+  std::unique_ptr<JsValuePrivate> jsValuePriv(new V8JsValuePrivateImpl(parent.lock(), v8value));
   return JsValuePtr(new JsValue(parent.lock(), move(jsValuePriv)));
 }
 

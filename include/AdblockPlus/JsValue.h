@@ -24,15 +24,19 @@
 
 namespace AdblockPlus
 {
-  class JsValuePrivate;
-  
+  struct JsValuePrivate;
+  typedef std::unique_ptr<JsValuePrivate> JsValuePrivatePtr;
+  /*
+   * Clones the wrapper around the internal JS value.
+   */
+  JsValuePrivatePtr CloneJsValuePrivate(const JsValuePrivate&);
+
   /**
    * Wrapper for JavaScript values.
    * See `JsEngine` for creating `JsValue` objects.
    */
   class JsValue
   {
-    friend class JsValuePrivate;
   public:
     JsValue(const JsEnginePtr& jsEngine, std::unique_ptr<JsValuePrivate>&& priv);
     virtual ~JsValue();
@@ -113,7 +117,7 @@ namespace AdblockPlus
     JsValue(const JsValuePtr& value);
     JsEnginePtr jsEngine;
   private:
-    std::unique_ptr<JsValuePrivate> privateImpl;
+    JsValuePrivatePtr privateImpl;
   };
 }
 
