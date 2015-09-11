@@ -33,6 +33,8 @@
 namespace AdblockPlus
 {
   class JsEnginePrivate;
+  typedef std::unique_ptr<JsEnginePrivate> JsEnginePrivatePtr;
+  JsEnginePrivatePtr NewJsEnginePrivate();
 
   /**
    * JavaScript engine used by `FilterEngine`, wraps v8.
@@ -177,7 +179,7 @@ namespace AdblockPlus
     }
   private:
     JsEngine();
-    std::unique_ptr<JsEnginePrivate> privateImpl;
+    JsEnginePrivatePtr privateImpl;
     EventMap eventCallbacks;
     FileSystemPtr fileSystem;
     WebRequestPtr webRequest;

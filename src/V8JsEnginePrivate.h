@@ -19,19 +19,19 @@
 #define ADBLOCK_PLUS_V8_JS_ENGINE_PRIVATE_H
 
 #include <AdblockPlus/V8ValueHolder.h>
-#include <AdblockPlus/Declarations.h>
+#include "JsEnginePrivate.h"
 #include "JsContext.h"
 
 namespace AdblockPlus
 {
-  class JsEnginePrivate
+  class V8JsEnginePrivateImpl : public JsEnginePrivate
   {
     friend class JsValuePrivate;
     friend class JsContext;
   public:
-    static std::unique_ptr<JsEnginePrivate> New();
-    void Gc();
-    void Init(const JsEnginePtr& jsEngine, const AppInfo& appInfo);
+    V8JsEnginePrivateImpl();
+    void Gc() override;
+    void Init(const JsEnginePtr& jsEngine, const AppInfo& appInfo) override;
     /**
      * Creates a JavaScript function that invokes a C++ callback.
      * @param callback C++ callback to invoke. The callback receives a
@@ -41,12 +41,12 @@ namespace AdblockPlus
      */
     JsValuePtr NewCallback(v8::InvocationCallback callback);
 
-    JsValuePtr Evaluate(const std::string& source, const std::string& filename = "");
-    JsValuePtr NewObject();
-    JsValuePtr NewValue(const std::string& val);
-    JsValuePtr NewValue(int64_t val);
-    JsValuePtr NewValue(bool val);
-    void SetGlobalProperty(const std::string& name, const JsValuePtr& value);
+    JsValuePtr Evaluate(const std::string& source, const std::string& filename = "") override;
+    JsValuePtr NewObject() override;
+    JsValuePtr NewValue(const std::string& val) override;
+    JsValuePtr NewValue(int64_t val) override;
+    JsValuePtr NewValue(bool val) override;
+    void SetGlobalProperty(const std::string& name, const JsValuePtr& value) override;
 
     /**
      * Returns a `JsEngine` instance contained in a `v8::Arguments` object.
@@ -68,12 +68,16 @@ namespace AdblockPlus
 
     JsValuePtr CreateJsValuePtr(v8::Local<v8::Value> v8value);
   private:
-    JsEnginePrivate();
-  private:
     std::weak_ptr<JsEngine> parent;
     V8ValueHolder<v8::Context> context;
     JsValuePtr globalJsObject;
     v8::Isolate* isolate;
   };
+
+  V8JsEnginePrivateImpl* GetPrivateImpl(JsEngine& jsEngine);
+  inline V8JsEnginePrivateImpl* GetPrivateImpl(const JsEnginePtr& jsEngine)
+  {
+    return GetPrivateImpl(*jsEngine);
+  }
 }
 #endif // ADBLOCK_PLUS_V8_JS_ENGINE_PRIVATE_H

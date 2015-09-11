@@ -27,7 +27,7 @@
 using namespace AdblockPlus;
 
 JsValuePrivate::JsValuePrivate(const JsEnginePtr& jsEngine, v8::Handle<v8::Value> value)
-  : jsEngine(jsEngine), value(jsEngine->PrivateImplementation()->isolate, value)
+  : jsEngine(jsEngine), value(GetPrivateImpl(jsEngine)->isolate, value)
 {
 }
 
@@ -115,7 +115,7 @@ JsValueList JsValuePrivate::AsList() const
   uint32_t length = array->Length();
   for (uint32_t i = 0; i < length; i++)
   {
-    result.push_back(jsEngine->PrivateImplementation()->CreateJsValuePtr(array->Get(i)));
+    result.push_back(GetPrivateImpl(jsEngine)->CreateJsValuePtr(array->Get(i)));
   }
   return result;
 }
@@ -127,7 +127,7 @@ std::vector<std::string> JsValuePrivate::GetOwnPropertyNames() const
 
   const JsContext context(jsEngine);
   v8::Local<v8::Object> object = v8::Local<v8::Object>::Cast(UnwrapValue());
-  JsValuePtr jsObject = jsEngine->PrivateImplementation()->CreateJsValuePtr(object->GetOwnPropertyNames());
+  JsValuePtr jsObject = GetPrivateImpl(jsEngine)->CreateJsValuePtr(object->GetOwnPropertyNames());
   JsValueList properties = jsObject->AsList();
   std::vector<std::string> result;
   for (JsValueList::iterator it = properties.begin(); it != properties.end(); ++it)
@@ -142,9 +142,9 @@ JsValuePtr JsValuePrivate::GetProperty(const std::string& name) const
     throw new std::runtime_error("Attempting to get property of a non-object");
 
   const JsContext context(jsEngine);
-  v8::Local<v8::String> property = Utils::ToV8String(jsEngine->PrivateImplementation()->isolate, name);
+  v8::Local<v8::String> property = Utils::ToV8String(GetPrivateImpl(jsEngine)->isolate, name);
   v8::Local<v8::Object> obj = v8::Local<v8::Object>::Cast(UnwrapValue());
-  return jsEngine->PrivateImplementation()->CreateJsValuePtr(obj->Get(property));
+  return GetPrivateImpl(jsEngine)->CreateJsValuePtr(obj->Get(property));
 }
 
 void JsValuePrivate::SetProperty(const std::string& name, v8::Handle<v8::Value> val)
@@ -152,26 +152,26 @@ void JsValuePrivate::SetProperty(const std::string& name, v8::Handle<v8::Value> 
   if (!IsObject())
     throw new std::runtime_error("Attempting to set property on a non-object");
 
-  v8::Local<v8::String> property = Utils::ToV8String(jsEngine->PrivateImplementation()->isolate, name);
+  v8::Local<v8::String> property = Utils::ToV8String(GetPrivateImpl(jsEngine)->isolate, name);
   v8::Local<v8::Object> obj = v8::Local<v8::Object>::Cast(UnwrapValue());
   obj->Set(property, val);
 }
 
 v8::Local<v8::Value> JsValuePrivate::UnwrapValue() const
 {
-  return v8::Local<v8::Value>::New(jsEngine->PrivateImplementation()->isolate, value);
+  return v8::Local<v8::Value>::New(GetPrivateImpl(jsEngine)->isolate, value);
 }
 
 void JsValuePrivate::SetProperty(const std::string& name, const std::string& val)
 {
   const JsContext context(jsEngine);
-  SetProperty(name, Utils::ToV8String(jsEngine->PrivateImplementation()->isolate, val));
+  SetProperty(name, Utils::ToV8String(GetPrivateImpl(jsEngine)->isolate, val));
 }
 
 void JsValuePrivate::SetProperty(const std::string& name, int64_t val)
 {
   const JsContext context(jsEngine);
-  SetProperty(name, v8::Number::New(jsEngine->PrivateImplementation()->isolate, val));
+  SetProperty(name, v8::Number::New(GetPrivateImpl(jsEngine)->isolate, val));
 }
 
 void JsValuePrivate::SetProperty(const std::string& name, const JsValuePtr& val)
@@ -204,7 +204,7 @@ JsValuePtr JsValuePrivate::Call(const JsValueList& params, JsValuePtr thisPtr) c
   const JsContext context(jsEngine);
   if (!thisPtr)
   {
-    JsEnginePrivate* jsEnginePriv = jsEngine->PrivateImplementation();
+    V8JsEnginePrivateImpl* jsEnginePriv = GetPrivateImpl(jsEngine);
     v8::Local<v8::Context> localContext = v8::Local<v8::Context>::New(jsEnginePriv->isolate, jsEnginePriv->context);
     thisPtr = jsEnginePriv->CreateJsValuePtr(localContext->Global());
   }
@@ -224,5 +224,5 @@ JsValuePtr JsValuePrivate::Call(const JsValueList& params, JsValuePtr thisPtr) c
   if (tryCatch.HasCaught())
     throw JsError(tryCatch.Exception(), tryCatch.Message());
 
-  return jsEngine->PrivateImplementation()->CreateJsValuePtr(result);
+  return GetPrivateImpl(jsEngine)->CreateJsValuePtr(result);
 }

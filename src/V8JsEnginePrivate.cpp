@@ -66,30 +66,30 @@ namespace
 
 using namespace AdblockPlus;
 
-JsEnginePrivate::JsEnginePrivate()
+V8JsEnginePrivateImpl::V8JsEnginePrivateImpl()
   : isolate(v8::Isolate::GetCurrent())
 {
 }
 
-JsValuePtr JsEnginePrivate::CreateJsValuePtr(v8::Local<v8::Value> v8value)
+JsValuePtr V8JsEnginePrivateImpl::CreateJsValuePtr(v8::Local<v8::Value> v8value)
 {
   std::unique_ptr<JsValuePrivate> jsValuePriv(new JsValuePrivate(parent.lock(), v8value));
   return JsValuePtr(new JsValue(parent.lock(), move(jsValuePriv)));
 }
 
-std::unique_ptr<JsEnginePrivate> JsEnginePrivate::New()
+std::unique_ptr<JsEnginePrivate> AdblockPlus::NewJsEnginePrivate()
 {
   V8Initializer::Init();
-  std::unique_ptr<JsEnginePrivate> result(new JsEnginePrivate());
+  std::unique_ptr<JsEnginePrivate> result(new V8JsEnginePrivateImpl());
   return result;
 }
 
-void JsEnginePrivate::Gc()
+void V8JsEnginePrivateImpl::Gc()
 {
   while (!v8::V8::IdleNotification());
 }
 
-void JsEnginePrivate::Init(const JsEnginePtr& jsEngine, const AppInfo& appInfo)
+void V8JsEnginePrivateImpl::Init(const JsEnginePtr& jsEngine, const AppInfo& appInfo)
 {
   parent = jsEngine;
   const v8::Locker locker(isolate);
@@ -101,7 +101,7 @@ void JsEnginePrivate::Init(const JsEnginePtr& jsEngine, const AppInfo& appInfo)
   GlobalJsObject::Setup(parent.lock(), appInfo, globalJsObject);
 }
 
-JsValuePtr JsEnginePrivate::Evaluate(const std::string& source,
+JsValuePtr V8JsEnginePrivateImpl::Evaluate(const std::string& source,
     const std::string& filename)
 {
   const JsContext context(parent.lock());
@@ -114,31 +114,31 @@ JsValuePtr JsEnginePrivate::Evaluate(const std::string& source,
   return CreateJsValuePtr(result);
 }
 
-JsValuePtr JsEnginePrivate::NewValue(const std::string& val)
+JsValuePtr V8JsEnginePrivateImpl::NewValue(const std::string& val)
 {
   const JsContext context(parent.lock());
   return CreateJsValuePtr(Utils::ToV8String(isolate, val));
 }
 
-JsValuePtr JsEnginePrivate::NewValue(int64_t val)
+JsValuePtr V8JsEnginePrivateImpl::NewValue(int64_t val)
 {
   const JsContext context(parent.lock());
   return CreateJsValuePtr(v8::Number::New(isolate, val));
 }
 
-JsValuePtr JsEnginePrivate::NewValue(bool val)
+JsValuePtr V8JsEnginePrivateImpl::NewValue(bool val)
 {
   const JsContext context(parent.lock());
   return CreateJsValuePtr(v8::Boolean::New(val));
 }
 
-JsValuePtr JsEnginePrivate::NewObject()
+JsValuePtr V8JsEnginePrivateImpl::NewObject()
 {
   const JsContext context(parent.lock());
   return CreateJsValuePtr(v8::Object::New());
 }
 
-JsValuePtr JsEnginePrivate::NewCallback(v8::InvocationCallback callback)
+JsValuePtr V8JsEnginePrivateImpl::NewCallback(v8::InvocationCallback callback)
 {
   const JsContext context(parent.lock());
 
@@ -151,7 +151,7 @@ JsValuePtr JsEnginePrivate::NewCallback(v8::InvocationCallback callback)
   return CreateJsValuePtr(templ->GetFunction());
 }
 
-JsEnginePtr JsEnginePrivate::FromArguments(const v8::Arguments& arguments)
+JsEnginePtr V8JsEnginePrivateImpl::FromArguments(const v8::Arguments& arguments)
 {
   const v8::Local<const v8::External> external =
       v8::Local<const v8::External>::Cast(arguments.Data());
@@ -163,7 +163,7 @@ JsEnginePtr JsEnginePrivate::FromArguments(const v8::Arguments& arguments)
   return result;
 }
 
-JsValueList JsEnginePrivate::ConvertArguments(const v8::Arguments& arguments)
+JsValueList V8JsEnginePrivateImpl::ConvertArguments(const v8::Arguments& arguments)
 {
   const JsContext context(parent.lock());
   JsValueList list;
@@ -172,10 +172,15 @@ JsValueList JsEnginePrivate::ConvertArguments(const v8::Arguments& arguments)
   return list;
 }
 
-void JsEnginePrivate::SetGlobalProperty(const std::string& name,  const JsValuePtr& value)
+void V8JsEnginePrivateImpl::SetGlobalProperty(const std::string& name,  const JsValuePtr& value)
 {
   if (!globalJsObject)
     throw std::runtime_error("Global object cannot be null");
 
   globalJsObject->SetProperty(name, value);
+}
+
+V8JsEnginePrivateImpl* AdblockPlus::GetPrivateImpl(JsEngine& jsEngine)
+{
+  return static_cast<V8JsEnginePrivateImpl*>(jsEngine.PrivateImplementation());
 }

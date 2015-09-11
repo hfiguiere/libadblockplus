@@ -18,13 +18,12 @@
 #include <AdblockPlus/DefaultWebRequest.h>
 #include <AdblockPlus/DefaultFileSystem.h>
 #include <AdblockPlus/DefaultLogSystem.h>
-#include "V8JsEnginePrivate.h"
+#include "JsEnginePrivate.h"
 
 using namespace AdblockPlus;
 
-
 JsEngine::JsEngine()
-  : privateImpl(JsEnginePrivate::New())
+  : privateImpl(NewJsEnginePrivate())
 {
 }
 

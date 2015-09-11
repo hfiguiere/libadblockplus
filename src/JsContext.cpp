@@ -19,8 +19,8 @@
 #include "V8JsEnginePrivate.h"
 
 AdblockPlus::JsContext::JsContext(const JsEnginePtr jsEngine)
-    : locker(jsEngine->PrivateImplementation()->isolate), isolateScope(jsEngine->PrivateImplementation()->isolate),
-      handleScope(jsEngine->PrivateImplementation()->isolate),
-      contextScope(v8::Local<v8::Context>::New(jsEngine->PrivateImplementation()->isolate, jsEngine->PrivateImplementation()->context))
+    : locker(GetPrivateImpl(jsEngine)->isolate), isolateScope(GetPrivateImpl(jsEngine)->isolate),
+      handleScope(GetPrivateImpl(jsEngine)->isolate),
+      contextScope(v8::Local<v8::Context>::New(GetPrivateImpl(jsEngine)->isolate, GetPrivateImpl(jsEngine)->context))
 {
 }
