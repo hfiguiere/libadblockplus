@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		44B4602E1BA1AE5600B05E02 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44B4602D1BA1AE5600B05E02 /* main.mm */; };
 		44B460371BA1AE8200B05E02 /* liblibadblockplus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B460361BA1AE8200B05E02 /* liblibadblockplus.a */; };
+		44D07DB01BA331D900CFBC64 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44D07DAF1BA331D900CFBC64 /* JavaScriptCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -27,6 +28,7 @@
 		44B4602A1BA1AE5600B05E02 /* cmd-app */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "cmd-app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B4602D1BA1AE5600B05E02 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		44B460361BA1AE8200B05E02 /* liblibadblockplus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibadblockplus.a; path = ../libadblockplus/build/Debug/liblibadblockplus.a; sourceTree = "<group>"; };
+		44D07DAF1BA331D900CFBC64 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,6 +36,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44D07DB01BA331D900CFBC64 /* JavaScriptCore.framework in Frameworks */,
 				44B460371BA1AE8200B05E02 /* liblibadblockplus.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -44,6 +47,7 @@
 		44B460211BA1AE5600B05E02 = {
 			isa = PBXGroup;
 			children = (
+				44D07DAF1BA331D900CFBC64 /* JavaScriptCore.framework */,
 				44B460361BA1AE8200B05E02 /* liblibadblockplus.a */,
 				44B4602C1BA1AE5600B05E02 /* cmd-app */,
 				44B4602B1BA1AE5600B05E02 /* Products */,
@@ -241,6 +245,7 @@
 				44B460331BA1AE5600B05E02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

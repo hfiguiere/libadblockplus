@@ -7,10 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		44B45FF41BA1AD7F00B05E02 /* libadblockplus_osx.h in Headers */ = {isa = PBXBuildFile; fileRef = 44B45FF31BA1AD7F00B05E02 /* libadblockplus_osx.h */; };
-		44B45FF61BA1AD7F00B05E02 /* libadblockplus_osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B45FF51BA1AD7F00B05E02 /* libadblockplus_osx.m */; };
-		44B45FFB1BA1ADE300B05E02 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B45FFA1BA1ADE300B05E02 /* JavaScriptCore.framework */; };
-		44B45FFD1BA1ADEA00B05E02 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B45FFC1BA1ADEA00B05E02 /* JavaScriptCore.framework */; };
+		44D07D9B1BA1C17D00CFBC64 /* JsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07D9A1BA1C17D00CFBC64 /* JsEngine.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07D9C1BA1C17D00CFBC64 /* JsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07D9A1BA1C17D00CFBC64 /* JsEngine.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DA41BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DA31BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		44D07DA51BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DA31BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		44D07DA71BA3288D00CFBC64 /* JSCJsValuePrivate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DA61BA3288D00CFBC64 /* JSCJsValuePrivate.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		44D07DA81BA3288D00CFBC64 /* JSCJsValuePrivate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DA61BA3288D00CFBC64 /* JSCJsValuePrivate.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		44D07DAA1BA3292800CFBC64 /* JsValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DA91BA3292800CFBC64 /* JsValue.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DAB1BA3292800CFBC64 /* JsValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DA91BA3292800CFBC64 /* JsValue.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DAD1BA32B7900CFBC64 /* Notification.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DAC1BA32B7900CFBC64 /* Notification.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DAE1BA32B7900CFBC64 /* Notification.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DAC1BA32B7900CFBC64 /* Notification.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DB21BA3426000CFBC64 /* GlobalJsObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB11BA3426000CFBC64 /* GlobalJsObject.mm */; settings = {ASSET_TAGS = (); }; };
+		44D07DB31BA3426000CFBC64 /* GlobalJsObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB11BA3426000CFBC64 /* GlobalJsObject.mm */; settings = {ASSET_TAGS = (); }; };
+		44D07DB61BA375A400CFBC64 /* DefaultLogSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB51BA375A400CFBC64 /* DefaultLogSystem.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DB71BA375A400CFBC64 /* DefaultLogSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB51BA375A400CFBC64 /* DefaultLogSystem.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DBA1BA43F0400CFBC64 /* JSFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D07DB81BA43F0400CFBC64 /* JSFileSystem.h */; settings = {ASSET_TAGS = (); }; };
+		44D07DBB1BA43F0400CFBC64 /* JSFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB91BA43F0400CFBC64 /* JSFileSystem.m */; settings = {ASSET_TAGS = (); }; };
+		44D07DBC1BA43F0400CFBC64 /* JSFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB91BA43F0400CFBC64 /* JSFileSystem.m */; settings = {ASSET_TAGS = (); }; };
+		44D07DBF1BA4401000CFBC64 /* JSWebRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D07DBD1BA4401000CFBC64 /* JSWebRequest.h */; settings = {ASSET_TAGS = (); }; };
+		44D07DC01BA4401000CFBC64 /* JSWebRequest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DBE1BA4401000CFBC64 /* JSWebRequest.mm */; settings = {ASSET_TAGS = (); }; };
+		44D07DC11BA4401000CFBC64 /* JSWebRequest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DBE1BA4401000CFBC64 /* JSWebRequest.mm */; settings = {ASSET_TAGS = (); }; };
+		44D07DC31BA4411200CFBC64 /* FilterEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DC21BA4411200CFBC64 /* FilterEngine.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DC41BA4411200CFBC64 /* FilterEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DC21BA4411200CFBC64 /* FilterEngine.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DC61BA4419300CFBC64 /* adblockplus.js.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DC51BA4419300CFBC64 /* adblockplus.js.cpp */; settings = {ASSET_TAGS = (); }; };
+		44D07DC71BA4419300CFBC64 /* adblockplus.js.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DC51BA4419300CFBC64 /* adblockplus.js.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,13 +48,36 @@
 /* Begin PBXFileReference section */
 		44B45FE11BA1AD6100B05E02 /* liblibadblockplus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibadblockplus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B45FF11BA1AD7F00B05E02 /* liblibadblockplus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibadblockplus.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		44B45FF31BA1AD7F00B05E02 /* libadblockplus_osx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libadblockplus_osx.h; sourceTree = "<group>"; };
-		44B45FF51BA1AD7F00B05E02 /* libadblockplus_osx.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = libadblockplus_osx.m; sourceTree = "<group>"; };
 		44B45FFA1BA1ADE300B05E02 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		44B45FFC1BA1ADEA00B05E02 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		44B460381BA1B20400B05E02 /* AppInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppInfo.h; path = ../../../include/AdblockPlus/AppInfo.h; sourceTree = "<group>"; };
-		44B4603B1BA1B23400B05E02 /* JsValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsValue.h; path = ../../../include/AdblockPlus/JsValue.h; sourceTree = "<group>"; };
-		44B4603D1BA1B24600B05E02 /* JsEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JsEngine.h; path = ../../../include/AdblockPlus/JsEngine.h; sourceTree = "<group>"; };
+		44D07D8D1BA1BFA200CFBC64 /* AppInfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppInfo.h; path = ../../include/AdblockPlus/AppInfo.h; sourceTree = "<group>"; };
+		44D07D8E1BA1BFBE00CFBC64 /* Declarations.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Declarations.h; path = ../../include/AdblockPlus/Declarations.h; sourceTree = "<group>"; };
+		44D07D8F1BA1BFBE00CFBC64 /* DefaultFileSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DefaultFileSystem.h; path = ../../include/AdblockPlus/DefaultFileSystem.h; sourceTree = "<group>"; };
+		44D07D901BA1BFBE00CFBC64 /* DefaultLogSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DefaultLogSystem.h; path = ../../include/AdblockPlus/DefaultLogSystem.h; sourceTree = "<group>"; };
+		44D07D911BA1BFBE00CFBC64 /* DefaultWebRequest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DefaultWebRequest.h; path = ../../include/AdblockPlus/DefaultWebRequest.h; sourceTree = "<group>"; };
+		44D07D921BA1BFBE00CFBC64 /* FileSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FileSystem.h; path = ../../include/AdblockPlus/FileSystem.h; sourceTree = "<group>"; };
+		44D07D931BA1BFBE00CFBC64 /* FilterEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FilterEngine.h; path = ../../include/AdblockPlus/FilterEngine.h; sourceTree = "<group>"; };
+		44D07D941BA1BFBE00CFBC64 /* JsEngine.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JsEngine.h; path = ../../include/AdblockPlus/JsEngine.h; sourceTree = "<group>"; };
+		44D07D951BA1BFBE00CFBC64 /* JsValue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JsValue.h; path = ../../include/AdblockPlus/JsValue.h; sourceTree = "<group>"; };
+		44D07D961BA1BFBE00CFBC64 /* LogSystem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LogSystem.h; path = ../../include/AdblockPlus/LogSystem.h; sourceTree = "<group>"; };
+		44D07D971BA1BFBE00CFBC64 /* Notification.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Notification.h; path = ../../include/AdblockPlus/Notification.h; sourceTree = "<group>"; };
+		44D07D981BA1BFBE00CFBC64 /* ReferrerMapping.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ReferrerMapping.h; path = ../../include/AdblockPlus/ReferrerMapping.h; sourceTree = "<group>"; };
+		44D07D9A1BA1C17D00CFBC64 /* JsEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JsEngine.cpp; path = ../../src/JsEngine.cpp; sourceTree = "<group>"; };
+		44D07D9E1BA1C37B00CFBC64 /* JSCJsValuePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSCJsValuePrivate.h; path = ../../src/JSCJsValuePrivate.h; sourceTree = "<group>"; };
+		44D07DA21BA1C66500CFBC64 /* JSCJsEnginePrivate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JSCJsEnginePrivate.h; path = ../../src/JSCJsEnginePrivate.h; sourceTree = "<group>"; };
+		44D07DA31BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = JSCJsEnginePrivate.mm; path = ../../src/JSCJsEnginePrivate.mm; sourceTree = "<group>"; };
+		44D07DA61BA3288D00CFBC64 /* JSCJsValuePrivate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = JSCJsValuePrivate.mm; path = ../../src/JSCJsValuePrivate.mm; sourceTree = "<group>"; };
+		44D07DA91BA3292800CFBC64 /* JsValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JsValue.cpp; path = ../../src/JsValue.cpp; sourceTree = "<group>"; };
+		44D07DAC1BA32B7900CFBC64 /* Notification.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Notification.cpp; path = ../../src/Notification.cpp; sourceTree = "<group>"; };
+		44D07DB11BA3426000CFBC64 /* GlobalJsObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = GlobalJsObject.mm; path = ../../src/GlobalJsObject.mm; sourceTree = "<group>"; };
+		44D07DB41BA373A200CFBC64 /* ObjCHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ObjCHelper.h; path = ../../src/ObjCHelper.h; sourceTree = "<group>"; };
+		44D07DB51BA375A400CFBC64 /* DefaultLogSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DefaultLogSystem.cpp; path = ../../src/DefaultLogSystem.cpp; sourceTree = "<group>"; };
+		44D07DB81BA43F0400CFBC64 /* JSFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSFileSystem.h; path = ../../src/JSFileSystem.h; sourceTree = "<group>"; };
+		44D07DB91BA43F0400CFBC64 /* JSFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSFileSystem.m; path = ../../src/JSFileSystem.m; sourceTree = "<group>"; };
+		44D07DBD1BA4401000CFBC64 /* JSWebRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSWebRequest.h; path = ../../src/JSWebRequest.h; sourceTree = "<group>"; };
+		44D07DBE1BA4401000CFBC64 /* JSWebRequest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = JSWebRequest.mm; path = ../../src/JSWebRequest.mm; sourceTree = "<group>"; };
+		44D07DC21BA4411200CFBC64 /* FilterEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FilterEngine.cpp; path = ../../src/FilterEngine.cpp; sourceTree = "<group>"; };
+		44D07DC51BA4419300CFBC64 /* adblockplus.js.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = adblockplus.js.cpp; path = ../../build/out/Debug/obj.target/libadblockplus/geni/adblockplus.js.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,7 +85,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44B45FFD1BA1ADEA00B05E02 /* JavaScriptCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -50,7 +92,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44B45FFB1BA1ADE300B05E02 /* JavaScriptCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,10 +101,10 @@
 		44B45FD81BA1AD6100B05E02 = {
 			isa = PBXGroup;
 			children = (
+				44D07D991BA1C14F00CFBC64 /* Source */,
+				44D07D8C1BA1BF8E00CFBC64 /* Headers */,
 				44B45FFC1BA1ADEA00B05E02 /* JavaScriptCore.framework */,
 				44B45FFA1BA1ADE300B05E02 /* JavaScriptCore.framework */,
-				44B45FE31BA1AD6100B05E02 /* libadblockplus */,
-				44B45FF21BA1AD7F00B05E02 /* libadblockplus-osx */,
 				44B45FE21BA1AD6100B05E02 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -77,23 +118,46 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		44B45FE31BA1AD6100B05E02 /* libadblockplus */ = {
+		44D07D8C1BA1BF8E00CFBC64 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				44B4603D1BA1B24600B05E02 /* JsEngine.h */,
-				44B4603B1BA1B23400B05E02 /* JsValue.h */,
-				44B460381BA1B20400B05E02 /* AppInfo.h */,
+				44D07DB81BA43F0400CFBC64 /* JSFileSystem.h */,
+				44D07DBD1BA4401000CFBC64 /* JSWebRequest.h */,
+				44D07D8D1BA1BFA200CFBC64 /* AppInfo.h */,
+				44D07D8E1BA1BFBE00CFBC64 /* Declarations.h */,
+				44D07D8F1BA1BFBE00CFBC64 /* DefaultFileSystem.h */,
+				44D07D901BA1BFBE00CFBC64 /* DefaultLogSystem.h */,
+				44D07D911BA1BFBE00CFBC64 /* DefaultWebRequest.h */,
+				44D07D921BA1BFBE00CFBC64 /* FileSystem.h */,
+				44D07D931BA1BFBE00CFBC64 /* FilterEngine.h */,
+				44D07D941BA1BFBE00CFBC64 /* JsEngine.h */,
+				44D07D951BA1BFBE00CFBC64 /* JsValue.h */,
+				44D07D961BA1BFBE00CFBC64 /* LogSystem.h */,
+				44D07D971BA1BFBE00CFBC64 /* Notification.h */,
+				44D07D981BA1BFBE00CFBC64 /* ReferrerMapping.h */,
+				44D07D9E1BA1C37B00CFBC64 /* JSCJsValuePrivate.h */,
+				44D07DA21BA1C66500CFBC64 /* JSCJsEnginePrivate.h */,
+				44D07DB41BA373A200CFBC64 /* ObjCHelper.h */,
 			);
-			path = libadblockplus;
+			name = Headers;
 			sourceTree = "<group>";
 		};
-		44B45FF21BA1AD7F00B05E02 /* libadblockplus-osx */ = {
+		44D07D991BA1C14F00CFBC64 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				44B45FF31BA1AD7F00B05E02 /* libadblockplus_osx.h */,
-				44B45FF51BA1AD7F00B05E02 /* libadblockplus_osx.m */,
+				44D07DC51BA4419300CFBC64 /* adblockplus.js.cpp */,
+				44D07DC21BA4411200CFBC64 /* FilterEngine.cpp */,
+				44D07DBE1BA4401000CFBC64 /* JSWebRequest.mm */,
+				44D07DB91BA43F0400CFBC64 /* JSFileSystem.m */,
+				44D07DB51BA375A400CFBC64 /* DefaultLogSystem.cpp */,
+				44D07DB11BA3426000CFBC64 /* GlobalJsObject.mm */,
+				44D07DAC1BA32B7900CFBC64 /* Notification.cpp */,
+				44D07DA91BA3292800CFBC64 /* JsValue.cpp */,
+				44D07DA61BA3288D00CFBC64 /* JSCJsValuePrivate.mm */,
+				44D07D9A1BA1C17D00CFBC64 /* JsEngine.cpp */,
+				44D07DA31BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm */,
 			);
-			path = "libadblockplus-osx";
+			name = Source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -103,7 +167,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44B45FF41BA1AD7F00B05E02 /* libadblockplus_osx.h in Headers */,
+				44D07DBF1BA4401000CFBC64 /* JSWebRequest.h in Headers */,
+				44D07DBA1BA43F0400CFBC64 /* JSFileSystem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -184,6 +249,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44D07DB21BA3426000CFBC64 /* GlobalJsObject.mm in Sources */,
+				44D07D9B1BA1C17D00CFBC64 /* JsEngine.cpp in Sources */,
+				44D07DA41BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm in Sources */,
+				44D07DBB1BA43F0400CFBC64 /* JSFileSystem.m in Sources */,
+				44D07DB61BA375A400CFBC64 /* DefaultLogSystem.cpp in Sources */,
+				44D07DAD1BA32B7900CFBC64 /* Notification.cpp in Sources */,
+				44D07DC01BA4401000CFBC64 /* JSWebRequest.mm in Sources */,
+				44D07DAA1BA3292800CFBC64 /* JsValue.cpp in Sources */,
+				44D07DC61BA4419300CFBC64 /* adblockplus.js.cpp in Sources */,
+				44D07DA71BA3288D00CFBC64 /* JSCJsValuePrivate.mm in Sources */,
+				44D07DC31BA4411200CFBC64 /* FilterEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,7 +267,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				44B45FF61BA1AD7F00B05E02 /* libadblockplus_osx.m in Sources */,
+				44D07DB31BA3426000CFBC64 /* GlobalJsObject.mm in Sources */,
+				44D07D9C1BA1C17D00CFBC64 /* JsEngine.cpp in Sources */,
+				44D07DA51BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm in Sources */,
+				44D07DBC1BA43F0400CFBC64 /* JSFileSystem.m in Sources */,
+				44D07DB71BA375A400CFBC64 /* DefaultLogSystem.cpp in Sources */,
+				44D07DAE1BA32B7900CFBC64 /* Notification.cpp in Sources */,
+				44D07DC11BA4401000CFBC64 /* JSWebRequest.mm in Sources */,
+				44D07DAB1BA3292800CFBC64 /* JsValue.cpp in Sources */,
+				44D07DC71BA4419300CFBC64 /* adblockplus.js.cpp in Sources */,
+				44D07DA81BA3288D00CFBC64 /* JSCJsValuePrivate.mm in Sources */,
+				44D07DC41BA4411200CFBC64 /* FilterEngine.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -225,7 +311,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
-					"$(inherited)",
+					ABP_JAVASCRIPT_CORE,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -263,6 +349,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = ABP_JAVASCRIPT_CORE;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -279,18 +366,22 @@
 		44B45FEB1BA1AD6100B05E02 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				WARNING_CFLAGS = "-DADBLOCK_PLUS_USE_JAVASCRIPT_CORE";
 			};
 			name = Debug;
 		};
 		44B45FEC1BA1AD6100B05E02 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				WARNING_CFLAGS = "-DADBLOCK_PLUS_USE_JAVASCRIPT_CORE";
 			};
 			name = Release;
 		};
@@ -298,6 +389,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = libadblockplus;
 				SDKROOT = macosx;
@@ -308,6 +400,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				EXECUTABLE_PREFIX = lib;
+				HEADER_SEARCH_PATHS = "$(SRCROOT)/../../include";
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				PRODUCT_NAME = libadblockplus;
 				SDKROOT = macosx;
@@ -333,6 +426,7 @@
 				44B45FEC1BA1AD6100B05E02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		44B45FF71BA1AD7F00B05E02 /* Build configuration list for PBXNativeTarget "libadblockplus-osx" */ = {
 			isa = XCConfigurationList;
@@ -341,6 +435,7 @@
 				44B45FF91BA1AD7F00B05E02 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
