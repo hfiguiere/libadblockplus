@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AdblockPlus/JsEngine.h>
+#import <AdblockPlus/FilterEngine.h>
 
 @interface ViewController : UIViewController
 
