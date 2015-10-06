@@ -1,0 +1,350 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		44B45FE51BA1AD6100B05E02 /* libadblockplus.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 44B45FE41BA1AD6100B05E02 /* libadblockplus.h */; };
+		44B45FE71BA1AD6100B05E02 /* libadblockplus.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B45FE61BA1AD6100B05E02 /* libadblockplus.m */; };
+		44B45FF41BA1AD7F00B05E02 /* libadblockplus_osx.h in Headers */ = {isa = PBXBuildFile; fileRef = 44B45FF31BA1AD7F00B05E02 /* libadblockplus_osx.h */; };
+		44B45FF61BA1AD7F00B05E02 /* libadblockplus_osx.m in Sources */ = {isa = PBXBuildFile; fileRef = 44B45FF51BA1AD7F00B05E02 /* libadblockplus_osx.m */; };
+		44B45FFB1BA1ADE300B05E02 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B45FFA1BA1ADE300B05E02 /* JavaScriptCore.framework */; };
+		44B45FFD1BA1ADEA00B05E02 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 44B45FFC1BA1ADEA00B05E02 /* JavaScriptCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		44B45FDF1BA1AD6100B05E02 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				44B45FE51BA1AD6100B05E02 /* libadblockplus.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		44B45FE11BA1AD6100B05E02 /* liblibadblockplus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibadblockplus.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		44B45FE41BA1AD6100B05E02 /* libadblockplus.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libadblockplus.h; sourceTree = "<group>"; };
+		44B45FE61BA1AD6100B05E02 /* libadblockplus.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = libadblockplus.m; sourceTree = "<group>"; };
+		44B45FF11BA1AD7F00B05E02 /* liblibadblockplus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibadblockplus.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		44B45FF31BA1AD7F00B05E02 /* libadblockplus_osx.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = libadblockplus_osx.h; sourceTree = "<group>"; };
+		44B45FF51BA1AD7F00B05E02 /* libadblockplus_osx.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = libadblockplus_osx.m; sourceTree = "<group>"; };
+		44B45FFA1BA1ADE300B05E02 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
+		44B45FFC1BA1ADEA00B05E02 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		44B45FDE1BA1AD6100B05E02 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44B45FFD1BA1ADEA00B05E02 /* JavaScriptCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44B45FEE1BA1AD7F00B05E02 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44B45FFB1BA1ADE300B05E02 /* JavaScriptCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		44B45FD81BA1AD6100B05E02 = {
+			isa = PBXGroup;
+			children = (
+				44B45FFC1BA1ADEA00B05E02 /* JavaScriptCore.framework */,
+				44B45FFA1BA1ADE300B05E02 /* JavaScriptCore.framework */,
+				44B45FE31BA1AD6100B05E02 /* libadblockplus */,
+				44B45FF21BA1AD7F00B05E02 /* libadblockplus-osx */,
+				44B45FE21BA1AD6100B05E02 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		44B45FE21BA1AD6100B05E02 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				44B45FE11BA1AD6100B05E02 /* liblibadblockplus.a */,
+				44B45FF11BA1AD7F00B05E02 /* liblibadblockplus.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		44B45FE31BA1AD6100B05E02 /* libadblockplus */ = {
+			isa = PBXGroup;
+			children = (
+				44B45FE41BA1AD6100B05E02 /* libadblockplus.h */,
+				44B45FE61BA1AD6100B05E02 /* libadblockplus.m */,
+			);
+			path = libadblockplus;
+			sourceTree = "<group>";
+		};
+		44B45FF21BA1AD7F00B05E02 /* libadblockplus-osx */ = {
+			isa = PBXGroup;
+			children = (
+				44B45FF31BA1AD7F00B05E02 /* libadblockplus_osx.h */,
+				44B45FF51BA1AD7F00B05E02 /* libadblockplus_osx.m */,
+			);
+			path = "libadblockplus-osx";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		44B45FEF1BA1AD7F00B05E02 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44B45FF41BA1AD7F00B05E02 /* libadblockplus_osx.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		44B45FE01BA1AD6100B05E02 /* libadblockplus */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44B45FEA1BA1AD6100B05E02 /* Build configuration list for PBXNativeTarget "libadblockplus" */;
+			buildPhases = (
+				44B45FDD1BA1AD6100B05E02 /* Sources */,
+				44B45FDE1BA1AD6100B05E02 /* Frameworks */,
+				44B45FDF1BA1AD6100B05E02 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = libadblockplus;
+			productName = libadblockplus;
+			productReference = 44B45FE11BA1AD6100B05E02 /* liblibadblockplus.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		44B45FF01BA1AD7F00B05E02 /* libadblockplus-osx */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 44B45FF71BA1AD7F00B05E02 /* Build configuration list for PBXNativeTarget "libadblockplus-osx" */;
+			buildPhases = (
+				44B45FED1BA1AD7F00B05E02 /* Sources */,
+				44B45FEE1BA1AD7F00B05E02 /* Frameworks */,
+				44B45FEF1BA1AD7F00B05E02 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "libadblockplus-osx";
+			productName = "libadblockplus-osx";
+			productReference = 44B45FF11BA1AD7F00B05E02 /* liblibadblockplus.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		44B45FD91BA1AD6100B05E02 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Eyeo GmbH";
+				TargetAttributes = {
+					44B45FE01BA1AD6100B05E02 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					44B45FF01BA1AD7F00B05E02 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+				};
+			};
+			buildConfigurationList = 44B45FDC1BA1AD6100B05E02 /* Build configuration list for PBXProject "libadblockplus" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 44B45FD81BA1AD6100B05E02;
+			productRefGroup = 44B45FE21BA1AD6100B05E02 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				44B45FE01BA1AD6100B05E02 /* libadblockplus */,
+				44B45FF01BA1AD7F00B05E02 /* libadblockplus-osx */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		44B45FDD1BA1AD6100B05E02 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44B45FE71BA1AD6100B05E02 /* libadblockplus.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		44B45FED1BA1AD7F00B05E02 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44B45FF61BA1AD7F00B05E02 /* libadblockplus_osx.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		44B45FE81BA1AD6100B05E02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		44B45FE91BA1AD6100B05E02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		44B45FEB1BA1AD6100B05E02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		44B45FEC1BA1AD6100B05E02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		44B45FF81BA1AD7F00B05E02 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = libadblockplus;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		44B45FF91BA1AD7F00B05E02 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				EXECUTABLE_PREFIX = lib;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				PRODUCT_NAME = libadblockplus;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		44B45FDC1BA1AD6100B05E02 /* Build configuration list for PBXProject "libadblockplus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44B45FE81BA1AD6100B05E02 /* Debug */,
+				44B45FE91BA1AD6100B05E02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		44B45FEA1BA1AD6100B05E02 /* Build configuration list for PBXNativeTarget "libadblockplus" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44B45FEB1BA1AD6100B05E02 /* Debug */,
+				44B45FEC1BA1AD6100B05E02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		44B45FF71BA1AD7F00B05E02 /* Build configuration list for PBXNativeTarget "libadblockplus-osx" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				44B45FF81BA1AD7F00B05E02 /* Debug */,
+				44B45FF91BA1AD7F00B05E02 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 44B45FD91BA1AD6100B05E02 /* Project object */;
+}
