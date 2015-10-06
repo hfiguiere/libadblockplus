@@ -193,15 +193,27 @@ namespace AdblockPlus
     typedef std::function<void(const NotificationPtr&)> ShowNotificationCallback;
 
     /**
-     * Constructor.
+     * Creates a new FilterEngine instance asynchronously.
+     * @param jsEngine `JsEngine` instance used to run JavaScript code
+     *        internally.
+     * @param onCreate A function which is called when the new instance of
+     *        FilterEngine is created. The parameter is the new instance pointer.
+     * @param preconfiguredPrefs `AdblockPlus::FilterEngine::Prefs`
+     *        name-value list of preconfigured prefs.
+     */
+    static void CreateAsync(const JsEnginePtr& jsEngine,
+      const std::function<void(const FilterEnginePtr&)>& onCreate,
+      const Prefs& preconfiguredPrefs = Prefs());
+
+    /**
+     * Creates a new FilterEngine instance synchrously.
      * @param jsEngine `JsEngine` instance used to run JavaScript code
      *        internally.
      * @param preconfiguredPrefs `AdblockPlus::FilterEngine::Prefs`
      *        name-value list of preconfigured prefs.
      */
-    explicit FilterEngine(JsEnginePtr jsEngine, 
-        const Prefs& preconfiguredPrefs = Prefs()
-      );
+    static FilterEnginePtr Create(const JsEnginePtr& jsEngine,
+      const Prefs& preconfiguredPrefs = Prefs());
 
     /**
      * Retrieves the `JsEngine` instance associated with this `FilterEngine`
@@ -393,8 +405,17 @@ namespace AdblockPlus
     static std::string ContentTypeToString(ContentType contentType);
 
   private:
+    /**
+     * Constructor.
+     * @param jsEngine `JsEngine` instance used to run JavaScript code
+     *        internally.
+     * @param preconfiguredPrefs `AdblockPlus::FilterEngine::Prefs`
+     *        name-value list of preconfigured prefs.
+     */
+    explicit FilterEngine(JsEnginePtr jsEngine,
+        const Prefs& preconfiguredPrefs = Prefs());
+
     JsEnginePtr jsEngine;
-    bool initialized;
     bool firstRun;
     int updateCheckId;
     static const std::map<ContentType, std::string> contentTypes;

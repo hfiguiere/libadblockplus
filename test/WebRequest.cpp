@@ -94,7 +94,7 @@ TEST_F(DefaultWebRequestTest, RealWebRequest)
 
 TEST_F(DefaultWebRequestTest, XMLHttpRequest)
 {
-  AdblockPlus::FilterEngine filterEngine(jsEngine);
+  AdblockPlus::FilterEnginePtr filterEngine = AdblockPlus::FilterEngine::Create(jsEngine);
 
   jsEngine->Evaluate("\
     var result;\

@@ -20,6 +20,8 @@
 #include <functional>
 #include <string>
 #include <AdblockPlus/FilterEngine.h>
+#include <condition_variable>
+#include <mutex>
 #ifndef ABP_JAVASCRIPT_CORE
 #include "JsContext.h"
 #endif
@@ -137,36 +139,59 @@ bool Subscription::operator==(const Subscription& subscription) const
 
 FilterEngine::FilterEngine(JsEnginePtr jsEngine, 
                            const FilterEngine::Prefs& preconfiguredPrefs)
-    : jsEngine(jsEngine), initialized(false), firstRun(false), updateCheckId(0)
+    : jsEngine(jsEngine), firstRun(false), updateCheckId(0)
 {
-  jsEngine->SetEventCallback("_init", std::bind(&FilterEngine::InitDone,
-      this, std::placeholders::_1));
-
+#ifndef ABP_JAVASCRIPT_CORE
+  // Lock the JS engine while we are loading scripts, no timeouts should fire
+  // until we are done.
+  const JsContext context(jsEngine);
+#endif
+  // Set the preconfigured prefs
+  JsValuePtr preconfiguredPrefsObject = jsEngine->NewObject();
+  for (FilterEngine::Prefs::const_iterator it = preconfiguredPrefs.begin();
+       it != preconfiguredPrefs.end(); it++)
   {
-#ifndef ABP_JAVASCRIPT_CORE
-    // Lock the JS engine while we are loading scripts, no timeouts should fire
-    // until we are done.
-    const JsContext context(jsEngine);
-#endif
-
-    // Set the preconfigured prefs
-    JsValuePtr preconfiguredPrefsObject = jsEngine->NewObject();
-    for (FilterEngine::Prefs::const_iterator it = preconfiguredPrefs.begin();
-         it != preconfiguredPrefs.end(); it++)
-    {
-      preconfiguredPrefsObject->SetProperty(it->first, it->second);
-    }
-    jsEngine->SetGlobalProperty("_preconfiguredPrefs", preconfiguredPrefsObject);
-    // Load adblockplus scripts
-    for (int i = 0; !jsSources[i].empty(); i += 2)
-      jsEngine->Evaluate(jsSources[i + 1], jsSources[i]);
+    preconfiguredPrefsObject->SetProperty(it->first, it->second);
   }
+  jsEngine->SetGlobalProperty("_preconfiguredPrefs", preconfiguredPrefsObject);
+  // Load adblockplus scripts
+  for (int i = 0; !jsSources[i].empty(); i += 2)
+    jsEngine->Evaluate(jsSources[i + 1], jsSources[i]);
+}
 
-#ifndef ABP_JAVASCRIPT_CORE
-  // TODO: This should really be implemented via a conditional variable
+void FilterEngine::CreateAsync(const JsEnginePtr& jsEngine,
+                               const std::function<void(const FilterEnginePtr&)>& onCreate,
+                               const Prefs& preconfiguredPrefs)
+{
+  FilterEnginePtr filterEngine(new FilterEngine(jsEngine, preconfiguredPrefs));
+  jsEngine->SetEventCallback("_init", [onCreate, filterEngine, jsEngine](const JsValueList& params)
+  {
+    filterEngine->InitDone(params);
+    onCreate(filterEngine);
+    jsEngine->RemoveEventCallback("_init");
+  });
+}
+
+FilterEnginePtr FilterEngine::Create(const JsEnginePtr& jsEngine,
+                                     const Prefs& preconfiguredPrefs)
+{
+  FilterEnginePtr retValue;
+  bool initialized = false;
+  std::mutex initializedMutex;
+  std::condition_variable initializedCV;
+  CreateAsync(jsEngine, [&retValue, &initialized, &initializedMutex, &initializedCV](const FilterEnginePtr& filterEngine)
+  {
+    retValue = filterEngine;
+    {
+      std::lock_guard<std::mutex> lock(initializedMutex);
+      initialized = true;
+    }
+    initializedCV.notify_one();
+  }, preconfiguredPrefs);
+  std::unique_lock<std::mutex> lock(initializedMutex);
   while (!initialized)
-    AdblockPlus::Sleep(10);
-#endif
+    initializedCV.wait(lock);
+  return retValue;
 }
 
 namespace
@@ -217,8 +242,6 @@ FilterEngine::ContentType FilterEngine::StringToContentType(const std::string& c
 
 void FilterEngine::InitDone(const JsValueList& params)
 {
-  jsEngine->RemoveEventCallback("_init");
-  initialized = true;
   firstRun = params.size() && params[0]->AsBool();
 }
 

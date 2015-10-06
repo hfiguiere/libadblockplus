@@ -27,6 +27,7 @@ namespace AdblockPlus
   class AppInfo;
   class JsValue;
   class JsEngine;
+  class FilterEngine;
 
   /**
    * Shared pointer to `JsEngine` instance.
@@ -38,6 +39,12 @@ namespace AdblockPlus
    */
   typedef std::shared_ptr<JsValue> JsValuePtr;
   
+  /**
+   * Shared smart pointer to a `FilterEngine` instance.
+   */
+  typedef std::shared_ptr<FilterEngine> FilterEnginePtr;
+  
+
   /**
    * List of JavaScript values.
    */

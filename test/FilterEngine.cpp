@@ -42,7 +42,7 @@ namespace
       jsEngine->SetFileSystem(AdblockPlus::FileSystemPtr(new FileSystem));
       jsEngine->SetWebRequest(AdblockPlus::WebRequestPtr(new LazyWebRequest));
       jsEngine->SetLogSystem(AdblockPlus::LogSystemPtr(new LogSystem));
-      filterEngine = FilterEnginePtr(new AdblockPlus::FilterEngine(jsEngine));
+      filterEngine = AdblockPlus::FilterEngine::Create(jsEngine);
     }
   };
 
@@ -89,7 +89,7 @@ namespace
       jsEngine->SetFileSystem(AdblockPlus::FileSystemPtr(new LazyFileSystem));
       mockWebRequest = new MockWebRequest;
       jsEngine->SetWebRequest(AdblockPlus::WebRequestPtr(mockWebRequest));
-      filterEngine = FilterEnginePtr(new AdblockPlus::FilterEngine(jsEngine));
+      filterEngine = AdblockPlus::FilterEngine::Create(jsEngine);
     }
   };
 
@@ -376,6 +376,9 @@ TEST_F(FilterEngineTestNoData, FirstRunFlag)
 
 TEST_F(FilterEngineTest, SetRemoveFilterChangeCallback)
 {
+  //* HACK: here is a race condition, without the hack "timesCalled == 3"
+  AdblockPlus::Sleep(40/*msec*/);
+  //*/
   int timesCalled = 0;
   MockFilterChangeCallback mockFilterChangeCallback(timesCalled);
 
