@@ -15,8 +15,10 @@
  * along with Adblock Plus.  If not, see <http://www.gnu.org/licenses/>.
  */
 #include <AdblockPlus/JsEngine.h>
+#ifndef ABP_JAVASCRIPT_CORE
 #include <AdblockPlus/DefaultWebRequest.h>
 #include <AdblockPlus/DefaultFileSystem.h>
+#endif
 #include <AdblockPlus/DefaultLogSystem.h>
 #include "JsEnginePrivate.h"
 
@@ -85,6 +87,7 @@ JsValuePtr JsEngine::NewObject()
   return privateImpl->NewObject();
 }
 
+#ifndef ABP_JAVASCRIPT_CORE
 FileSystemPtr JsEngine::GetFileSystem()
 {
   if (!fileSystem)
@@ -109,11 +112,13 @@ WebRequestPtr JsEngine::GetWebRequest()
 
 void JsEngine::SetWebRequest(WebRequestPtr val)
 {
+#ifndef ABP_JAVASCRIPT_CORE
   if (!val)
     throw std::runtime_error("WebRequest cannot be null");
-
+#endif
   webRequest = val;
 }
+#endif
 
 LogSystemPtr JsEngine::GetLogSystem()
 {

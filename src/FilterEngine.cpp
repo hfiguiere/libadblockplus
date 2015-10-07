@@ -20,7 +20,9 @@
 #include <functional>
 #include <string>
 #include <AdblockPlus/FilterEngine.h>
+#ifndef ABP_JAVASCRIPT_CORE
 #include "JsContext.h"
+#endif
 #include "Thread.h"
 
 using namespace AdblockPlus;
@@ -141,9 +143,11 @@ FilterEngine::FilterEngine(JsEnginePtr jsEngine,
       this, std::placeholders::_1));
 
   {
+#ifndef ABP_JAVASCRIPT_CORE
     // Lock the JS engine while we are loading scripts, no timeouts should fire
     // until we are done.
     const JsContext context(jsEngine);
+#endif
 
     // Set the preconfigured prefs
     JsValuePtr preconfiguredPrefsObject = jsEngine->NewObject();
@@ -158,9 +162,11 @@ FilterEngine::FilterEngine(JsEnginePtr jsEngine,
       jsEngine->Evaluate(jsSources[i + 1], jsSources[i]);
   }
 
+#ifndef ABP_JAVASCRIPT_CORE
   // TODO: This should really be implemented via a conditional variable
   while (!initialized)
     AdblockPlus::Sleep(10);
+#endif
 }
 
 namespace
