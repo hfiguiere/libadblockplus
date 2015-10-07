@@ -60,27 +60,28 @@ namespace
 
     void Run()
     {
-      AdblockPlus::ServerResponse result = jsEngine->GetWebRequest()->GET(url, headers);
-
-      AdblockPlus::JsContext context(jsEngine);
-
-      AdblockPlus::JsValuePtr resultObject = jsEngine->NewObject();
-      resultObject->SetProperty("status", result.status);
-      resultObject->SetProperty("responseStatus", result.responseStatus);
-      resultObject->SetProperty("responseText", result.responseText);
-
-      AdblockPlus::JsValuePtr headersObject = jsEngine->NewObject();
-      for (AdblockPlus::HeaderList::iterator it = result.responseHeaders.begin();
-        it != result.responseHeaders.end(); ++it)
+      jsEngine->GetWebRequest()->GET(url, headers, [this](const AdblockPlus::ServerResponse& result)
       {
-        headersObject->SetProperty(it->first, it->second);
-      }
-      resultObject->SetProperty("responseHeaders", headersObject);
+        AdblockPlus::JsContext context(jsEngine);
 
-      AdblockPlus::JsValueList params;
-      params.push_back(resultObject);
-      callback->Call(params);
-      delete this;
+        AdblockPlus::JsValuePtr resultObject = jsEngine->NewObject();
+        resultObject->SetProperty("status", result.status);
+        resultObject->SetProperty("responseStatus", result.responseStatus);
+        resultObject->SetProperty("responseText", result.responseText);
+
+        AdblockPlus::JsValuePtr headersObject = jsEngine->NewObject();
+        for (AdblockPlus::HeaderList::const_iterator it = result.responseHeaders.begin();
+          it != result.responseHeaders.end(); ++it)
+        {
+          headersObject->SetProperty(it->first, it->second);
+        }
+        resultObject->SetProperty("responseHeaders", headersObject);
+
+        AdblockPlus::JsValueList params;
+        params.push_back(resultObject);
+        callback->Call(params);
+        delete this;
+      });
     }
 
   private:

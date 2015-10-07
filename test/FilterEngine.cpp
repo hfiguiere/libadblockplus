@@ -70,10 +70,11 @@ namespace
     public:
       AdblockPlus::ServerResponse response;
 
-      AdblockPlus::ServerResponse GET(const std::string& url,
-          const AdblockPlus::HeaderList& requestHeaders) const
+      void GET(const std::string& url,
+        const AdblockPlus::HeaderList& requestHeaders,
+        const OnResponse& onResponse) const
       {
-        return response;
+        onResponse(response);
       }
     };
 

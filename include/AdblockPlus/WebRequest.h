@@ -22,6 +22,7 @@
 #include <cstdint>
 #include <string>
 #include <vector>
+#include <functional>
 
 namespace AdblockPlus
 {
@@ -97,12 +98,19 @@ namespace AdblockPlus
     virtual inline ~WebRequest() {};
 
     /**
+     * The callback type which is invoked when the request is finsihed.
+     * @param ServerResponse HTTP server response.
+     */
+    
+    typedef std::function<void(const ServerResponse&)> OnResponse;
+
+    /**
      * Performs a GET request.
      * @param url Request URL.
      * @param requestHeaders Request headers.
      * @return HTTP response.
      */
-    virtual ServerResponse GET(const std::string& url, const HeaderList& requestHeaders) const = 0;
+    virtual void GET(const std::string& url, const HeaderList& requestHeaders, const OnResponse& onResponse) const = 0;
   };
 
   /**

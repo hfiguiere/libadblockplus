@@ -30,6 +30,11 @@ namespace AdblockPlus
   class DefaultWebRequest : public WebRequest
   {
     ServerResponse GET(const std::string& url, const HeaderList& requestHeaders) const;
+
+    void GET(const std::string& url, const HeaderList& requestHeaders, const OnResponse& onResponse) const
+    {
+      onResponse(GET(url, requestHeaders));
+    }
   };
 }
 

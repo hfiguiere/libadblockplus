@@ -34,13 +34,13 @@ namespace
   {
   public:
     AdblockPlus::ServerResponse response;
-    AdblockPlus::ServerResponse GET(const std::string& url, const AdblockPlus::HeaderList& requestHeaders) const
+    void GET(const std::string& url, const AdblockPlus::HeaderList& requestHeaders, const OnResponse& onResponse) const
     {
       if (url.find("easylist") != std::string::npos)
-        return LazyWebRequest::GET(url, requestHeaders);
+        return LazyWebRequest::GET(url, requestHeaders, onResponse);
 
       previousRequestUrl = url;
-      return response;
+      onResponse(response);
     }
   };
 

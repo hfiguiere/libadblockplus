@@ -24,7 +24,7 @@ namespace
   class MockWebRequest : public AdblockPlus::WebRequest
   {
   public:
-    AdblockPlus::ServerResponse GET(const std::string& url, const AdblockPlus::HeaderList& requestHeaders) const
+    void GET(const std::string& url, const AdblockPlus::HeaderList& requestHeaders, const OnResponse& onResponse) const
     {
       AdblockPlus::Sleep(50);
 
@@ -33,7 +33,7 @@ namespace
       result.responseStatus = 123;
       result.responseHeaders.push_back(std::pair<std::string, std::string>("Foo", "Bar"));
       result.responseText = url + "\n" + requestHeaders[0].first + "\n" + requestHeaders[0].second;
-      return result;
+      onResponse(result);
     }
   };
 

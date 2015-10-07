@@ -70,7 +70,7 @@ public:
 class ThrowingWebRequest : public AdblockPlus::WebRequest
 {
 public:
-  AdblockPlus::ServerResponse GET(const std::string& url, const AdblockPlus::HeaderList& requestHeaders) const
+  void GET(const std::string& url, const AdblockPlus::HeaderList& requestHeaders, const OnResponse& onResponse) const
   {
     throw std::runtime_error("Unexpected GET: " + url);
   }
@@ -121,11 +121,8 @@ public:
 class LazyWebRequest : public AdblockPlus::WebRequest
 {
 public:
-  AdblockPlus::ServerResponse GET(const std::string& url, const AdblockPlus::HeaderList& requestHeaders) const
+  void GET(const std::string& /*url*/, const AdblockPlus::HeaderList& /*requestHeaders*/, const OnResponse& /*onResponse*/) const
   {
-    while (true)
-      AdblockPlus::Sleep(100000);
-    return AdblockPlus::ServerResponse();
   }
 };
 
