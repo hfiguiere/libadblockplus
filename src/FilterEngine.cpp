@@ -172,6 +172,7 @@ void FilterEngine::CreateAsync(const JsEnginePtr& jsEngine,
   });
 }
 
+#ifndef ABP_JAVASCRIPT_CORE
 FilterEnginePtr FilterEngine::Create(const JsEnginePtr& jsEngine,
                                      const Prefs& preconfiguredPrefs)
 {
@@ -193,6 +194,7 @@ FilterEnginePtr FilterEngine::Create(const JsEnginePtr& jsEngine,
     initializedCV.wait(lock);
   return retValue;
 }
+#endif
 
 namespace
 {
