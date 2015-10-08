@@ -12,6 +12,7 @@
 		449A9A521BC543C500C09468 /* AppInfoJsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 449A9A511BC543C500C09468 /* AppInfoJsObject.cpp */; settings = {ASSET_TAGS = (); }; };
 		449A9A541BC5446700C09468 /* liblibadblockplus.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 449A9A531BC5446700C09468 /* liblibadblockplus.a */; };
 		449A9A581BC544A000C09468 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 449A9A571BC544A000C09468 /* JavaScriptCore.framework */; };
+		44A8D1211BC67DA100686BDC /* ConsoleJsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D1201BC67DA100686BDC /* ConsoleJsObject.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -34,6 +35,8 @@
 		449A9A531BC5446700C09468 /* liblibadblockplus.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = liblibadblockplus.a; path = ../libadblockplus/build/Debug/liblibadblockplus.a; sourceTree = "<group>"; };
 		449A9A551BC5447900C09468 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		449A9A571BC544A000C09468 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		44A8D11F1BC67DA100686BDC /* BaseJsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseJsTest.h; path = ../../../test/BaseJsTest.h; sourceTree = "<group>"; };
+		44A8D1201BC67DA100686BDC /* ConsoleJsObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConsoleJsObject.cpp; path = ../../../test/ConsoleJsObject.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,8 @@
 		449A9A471BC5417200C09468 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				44A8D11F1BC67DA100686BDC /* BaseJsTest.h */,
+				44A8D1201BC67DA100686BDC /* ConsoleJsObject.cpp */,
 				449A9A511BC543C500C09468 /* AppInfoJsObject.cpp */,
 				449A9A481BC5417200C09468 /* main.mm */,
 			);
@@ -137,6 +142,7 @@
 				449A9A491BC5417200C09468 /* main.mm in Sources */,
 				449A9A521BC543C500C09468 /* AppInfoJsObject.cpp in Sources */,
 				449A9A501BC5421F00C09468 /* gtest-all.cc in Sources */,
+				44A8D1211BC67DA100686BDC /* ConsoleJsObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,6 +176,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
+					ABP_JAVASCRIPT_CORE,
 					"$(inherited)",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -212,6 +219,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = ABP_JAVASCRIPT_CORE;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -261,6 +269,7 @@
 				449A9A4E1BC5417200C09468 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

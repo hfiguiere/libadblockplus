@@ -56,7 +56,9 @@ TEST_F(ConsoleJsObjectTest, ConsoleLogCall)
   jsEngine->Evaluate("\n\nconsole.log('foo', 'bar');\n\n", "eval");
   ASSERT_EQ(AdblockPlus::LogSystem::LOG_LEVEL_LOG, mockLogSystem->lastLogLevel);
   ASSERT_EQ("foo bar", mockLogSystem->lastMessage);
+#ifndef ABP_JAVASCRIPT_CORE
   ASSERT_EQ("eval:3", mockLogSystem->lastSource);
+#endif
 }
 
 TEST_F(ConsoleJsObjectTest, ConsoleDebugCall)
@@ -64,7 +66,9 @@ TEST_F(ConsoleJsObjectTest, ConsoleDebugCall)
   jsEngine->Evaluate("console.debug('foo', 'bar')");
   ASSERT_EQ(AdblockPlus::LogSystem::LOG_LEVEL_LOG, mockLogSystem->lastLogLevel);
   ASSERT_EQ("foo bar", mockLogSystem->lastMessage);
+#ifndef ABP_JAVASCRIPT_CORE
   ASSERT_EQ(":1", mockLogSystem->lastSource);
+#endif
 }
 
 TEST_F(ConsoleJsObjectTest, ConsoleInfoCall)
@@ -72,7 +76,9 @@ TEST_F(ConsoleJsObjectTest, ConsoleInfoCall)
   jsEngine->Evaluate("console.info('foo', 'bar')");
   ASSERT_EQ(AdblockPlus::LogSystem::LOG_LEVEL_INFO, mockLogSystem->lastLogLevel);
   ASSERT_EQ("foo bar", mockLogSystem->lastMessage);
+#ifndef ABP_JAVASCRIPT_CORE
   ASSERT_EQ(":1", mockLogSystem->lastSource);
+#endif
 }
 
 TEST_F(ConsoleJsObjectTest, ConsoleWarnCall)
@@ -80,7 +86,9 @@ TEST_F(ConsoleJsObjectTest, ConsoleWarnCall)
   jsEngine->Evaluate("console.warn('foo', 'bar')");
   ASSERT_EQ(AdblockPlus::LogSystem::LOG_LEVEL_WARN, mockLogSystem->lastLogLevel);
   ASSERT_EQ("foo bar", mockLogSystem->lastMessage);
+#ifndef ABP_JAVASCRIPT_CORE
   ASSERT_EQ(":1", mockLogSystem->lastSource);
+#endif
 }
 
 TEST_F(ConsoleJsObjectTest, ConsoleErrorCall)
@@ -88,9 +96,12 @@ TEST_F(ConsoleJsObjectTest, ConsoleErrorCall)
   jsEngine->Evaluate("console.error('foo', 'bar')");
   ASSERT_EQ(AdblockPlus::LogSystem::LOG_LEVEL_ERROR, mockLogSystem->lastLogLevel);
   ASSERT_EQ("foo bar", mockLogSystem->lastMessage);
+#ifndef ABP_JAVASCRIPT_CORE
   ASSERT_EQ(":1", mockLogSystem->lastSource);
+#endif
 }
 
+#ifndef ABP_JAVASCRIPT_CORE
 TEST_F(ConsoleJsObjectTest, ConsoleTraceCall)
 {
   jsEngine->Evaluate("\n\
@@ -108,3 +119,4 @@ TEST_F(ConsoleJsObjectTest, ConsoleTraceCall)
 3: /* anonymous */() at eval:8\n", mockLogSystem->lastMessage);
   ASSERT_EQ("", mockLogSystem->lastSource);
 }
+#endif
