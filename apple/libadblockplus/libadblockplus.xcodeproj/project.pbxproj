@@ -22,8 +22,8 @@
 		44D07DB61BA375A400CFBC64 /* DefaultLogSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB51BA375A400CFBC64 /* DefaultLogSystem.cpp */; settings = {ASSET_TAGS = (); }; };
 		44D07DB71BA375A400CFBC64 /* DefaultLogSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB51BA375A400CFBC64 /* DefaultLogSystem.cpp */; settings = {ASSET_TAGS = (); }; };
 		44D07DBA1BA43F0400CFBC64 /* JSFileSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D07DB81BA43F0400CFBC64 /* JSFileSystem.h */; settings = {ASSET_TAGS = (); }; };
-		44D07DBB1BA43F0400CFBC64 /* JSFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB91BA43F0400CFBC64 /* JSFileSystem.m */; settings = {ASSET_TAGS = (); }; };
-		44D07DBC1BA43F0400CFBC64 /* JSFileSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB91BA43F0400CFBC64 /* JSFileSystem.m */; settings = {ASSET_TAGS = (); }; };
+		44D07DBB1BA43F0400CFBC64 /* JSFileSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB91BA43F0400CFBC64 /* JSFileSystem.mm */; settings = {ASSET_TAGS = (); }; };
+		44D07DBC1BA43F0400CFBC64 /* JSFileSystem.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DB91BA43F0400CFBC64 /* JSFileSystem.mm */; settings = {ASSET_TAGS = (); }; };
 		44D07DBF1BA4401000CFBC64 /* JSWebRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 44D07DBD1BA4401000CFBC64 /* JSWebRequest.h */; settings = {ASSET_TAGS = (); }; };
 		44D07DC01BA4401000CFBC64 /* JSWebRequest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DBE1BA4401000CFBC64 /* JSWebRequest.mm */; settings = {ASSET_TAGS = (); }; };
 		44D07DC11BA4401000CFBC64 /* JSWebRequest.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DBE1BA4401000CFBC64 /* JSWebRequest.mm */; settings = {ASSET_TAGS = (); }; };
@@ -73,7 +73,7 @@
 		44D07DB41BA373A200CFBC64 /* ObjCHelper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ObjCHelper.h; path = ../../src/ObjCHelper.h; sourceTree = "<group>"; };
 		44D07DB51BA375A400CFBC64 /* DefaultLogSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DefaultLogSystem.cpp; path = ../../src/DefaultLogSystem.cpp; sourceTree = "<group>"; };
 		44D07DB81BA43F0400CFBC64 /* JSFileSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSFileSystem.h; path = ../../src/JSFileSystem.h; sourceTree = "<group>"; };
-		44D07DB91BA43F0400CFBC64 /* JSFileSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = JSFileSystem.m; path = ../../src/JSFileSystem.m; sourceTree = "<group>"; };
+		44D07DB91BA43F0400CFBC64 /* JSFileSystem.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = JSFileSystem.mm; path = ../../src/JSFileSystem.mm; sourceTree = "<group>"; };
 		44D07DBD1BA4401000CFBC64 /* JSWebRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = JSWebRequest.h; path = ../../src/JSWebRequest.h; sourceTree = "<group>"; };
 		44D07DBE1BA4401000CFBC64 /* JSWebRequest.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = JSWebRequest.mm; path = ../../src/JSWebRequest.mm; sourceTree = "<group>"; };
 		44D07DC21BA4411200CFBC64 /* FilterEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FilterEngine.cpp; path = ../../src/FilterEngine.cpp; sourceTree = "<group>"; };
@@ -148,7 +148,7 @@
 				44D07DC51BA4419300CFBC64 /* adblockplus.js.cpp */,
 				44D07DC21BA4411200CFBC64 /* FilterEngine.cpp */,
 				44D07DBE1BA4401000CFBC64 /* JSWebRequest.mm */,
-				44D07DB91BA43F0400CFBC64 /* JSFileSystem.m */,
+				44D07DB91BA43F0400CFBC64 /* JSFileSystem.mm */,
 				44D07DB51BA375A400CFBC64 /* DefaultLogSystem.cpp */,
 				44D07DB11BA3426000CFBC64 /* GlobalJsObject.mm */,
 				44D07DAC1BA32B7900CFBC64 /* Notification.cpp */,
@@ -252,7 +252,7 @@
 				44D07DB21BA3426000CFBC64 /* GlobalJsObject.mm in Sources */,
 				44D07D9B1BA1C17D00CFBC64 /* JsEngine.cpp in Sources */,
 				44D07DA41BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm in Sources */,
-				44D07DBB1BA43F0400CFBC64 /* JSFileSystem.m in Sources */,
+				44D07DBB1BA43F0400CFBC64 /* JSFileSystem.mm in Sources */,
 				44D07DB61BA375A400CFBC64 /* DefaultLogSystem.cpp in Sources */,
 				44D07DAD1BA32B7900CFBC64 /* Notification.cpp in Sources */,
 				44D07DC01BA4401000CFBC64 /* JSWebRequest.mm in Sources */,
@@ -270,7 +270,7 @@
 				44D07DB31BA3426000CFBC64 /* GlobalJsObject.mm in Sources */,
 				44D07D9C1BA1C17D00CFBC64 /* JsEngine.cpp in Sources */,
 				44D07DA51BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm in Sources */,
-				44D07DBC1BA43F0400CFBC64 /* JSFileSystem.m in Sources */,
+				44D07DBC1BA43F0400CFBC64 /* JSFileSystem.mm in Sources */,
 				44D07DB71BA375A400CFBC64 /* DefaultLogSystem.cpp in Sources */,
 				44D07DAE1BA32B7900CFBC64 /* Notification.cpp in Sources */,
 				44D07DC11BA4401000CFBC64 /* JSWebRequest.mm in Sources */,

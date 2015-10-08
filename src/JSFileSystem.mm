@@ -1,8 +1,15 @@
 #import "JSFileSystem.h"
 #import "ObjCHelper.h"
+#import "JSCJsEnginePrivate.h"
+#import <AdblockPlus/JsEngine.h>
+#import <sstream>
 
 #define PATH_SEPARATOR '/'
 #define BLOCK_SIZE 4096
+
+using AdblockPlus::ObjcCast;
+using AdblockPlus::ToObjCBOOL;
+using AdblockPlus::ToInt32;
 
 typedef void(^ABPFileReader_OnDoneCallback)(NSData* data, NSString* error);
 
@@ -173,6 +180,50 @@ typedef void(^ABPFileWriter_OnDoneCallback)(NSString* error);
 
 -(void)read:(NSString*) path onRead:(JSValue*) doneCallback
 {
+  ABPJSContext* jsContext = ObjcCast<ABPJSContext>([doneCallback context]);
+  AdblockPlus::JsEnginePtr jsEngine;
+  if (!jsContext || !(jsEngine = jsContext->m_jsEngine.lock()))
+    return;
+  
+  // if there is overridden file system then use it
+  if (auto fileSystem = jsEngine->GetFileSystem())
+  {
+    dispatch_async(self.queue,
+    ^{
+      std::string error;
+      std::string cppStringPath = [path UTF8String];
+      std::string content;
+      try
+      {
+        std::shared_ptr<std::istream> data = fileSystem->Read(cppStringPath);
+        std::stringstream ss_content;
+        ss_content << data->rdbuf();
+        content = ss_content.str();
+      }
+      catch (const std::exception& ex)
+      {
+        error = ex.what();
+      }
+      catch(...)
+      {
+        error = "Unknown error while calling Read on " + cppStringPath;
+      }
+      
+      if (!doneCallback)
+        return;
+      
+      JSValue* callbackArg = [JSValue valueWithNewObjectInContext: [doneCallback context]];
+      [callbackArg setValue:@(content.c_str()) forProperty:@"content"];
+      [callbackArg setValue:@(error.c_str()) forProperty:@"error"];
+      
+      [self dispatchAction:
+      ^{
+        [doneCallback callWithArguments: @[callbackArg]];
+       }];
+    });
+    return;
+  }
+  
   ABPFileReader* fileReader = [[ABPFileReader alloc]initWithPath: path];
   // We should not capture self by strong reference because otherwise there will be a retain cycle
   // because we keep the strong reference to the delegate (ABPFileReader) which keeps
@@ -194,6 +245,44 @@ typedef void(^ABPFileWriter_OnDoneCallback)(NSString* error);
 
 -(void)write:(NSString*) path withContent:(NSString*) content onWritten:(JSValue*) doneCallback
 {
+  ABPJSContext* jsContext = ObjcCast<ABPJSContext>([doneCallback context]);
+  AdblockPlus::JsEnginePtr jsEngine;
+  if (!jsContext || !(jsEngine = jsContext->m_jsEngine.lock()))
+    return;
+  
+  // if there is overridden file system then use it
+  if (auto fileSystem = jsEngine->GetFileSystem())
+  {
+    dispatch_async(self.queue,
+    ^{
+      std::string error;
+      std::string cppStringPath = [path UTF8String];
+      auto ss = std::make_shared<std::stringstream>();
+      (*ss) << [content UTF8String];
+      try
+      {
+        fileSystem->Write(cppStringPath, ss);
+      }
+      catch (const std::exception& ex)
+      {
+        error = ex.what();
+      }
+      catch(...)
+      {
+        error = "Unknown error while calling Write on " + cppStringPath;
+      }
+      
+      if (!doneCallback)
+        return;
+      
+      [self dispatchAction:^
+       {
+         [doneCallback callWithArguments:@[@(error.c_str())]];
+       }];
+    });
+    return;
+  }
+  
   ABPFileWriter* fileWriter = [[ABPFileWriter alloc]initWithPath: path withData:[content dataUsingEncoding:NSUTF8StringEncoding]];
   // We should not capture self by strong reference because otherwise there will be a retain cycle
   // because we keep the strong reference to the delegate (ABPFileWriter) which keeps
@@ -214,6 +303,36 @@ typedef void(^ABPFileWriter_OnDoneCallback)(NSString* error);
 {
   dispatch_async(self.queue,
   ^{
+    ABPJSContext* jsContext = ObjcCast<ABPJSContext>([doneCallback context]);
+    AdblockPlus::JsEnginePtr jsEngine;
+    if (!jsContext || !(jsEngine = jsContext->m_jsEngine.lock()))
+      return;
+    
+    // if there is overridden file system then use it
+    if (auto fileSystem = jsEngine->GetFileSystem())
+    {
+      std::string error;
+      std::string cppStringSrcPath = [sourcePath UTF8String];
+      std::string cppStringDestPath = [destinationPath UTF8String];
+      try
+      {
+        fileSystem->Move(cppStringSrcPath, cppStringDestPath);
+      }
+      catch (const std::exception& ex)
+      {
+        error = ex.what();
+      }
+      catch(...)
+      {
+        error = "Unknown error while calling Move on " + cppStringSrcPath + " > " + cppStringDestPath;
+      }
+      [self dispatchAction:^
+       {
+         [doneCallback callWithArguments: @[@(error.c_str())]];
+       }];
+      return;
+    }
+    
     NSError* error = nil;
     [[NSFileManager defaultManager] moveItemAtPath:sourcePath toPath: destinationPath error:&error];
     if (!doneCallback)
@@ -229,10 +348,40 @@ typedef void(^ABPFileWriter_OnDoneCallback)(NSString* error);
 {
   dispatch_async(self.queue, ^
   {
+    ABPJSContext* jsContext = ObjcCast<ABPJSContext>([doneCallback context]);
+    AdblockPlus::JsEnginePtr jsEngine;
+    if (!jsContext || !(jsEngine = jsContext->m_jsEngine.lock()))
+      return;
+    
+    // if there is overridden file system then use it
+    if (auto fileSystem = jsEngine->GetFileSystem())
+    {
+      std::string error;
+      std::string cppStringPath = [path UTF8String];
+      try
+      {
+        fileSystem->Remove(cppStringPath);
+      }
+      catch (const std::exception& ex)
+      {
+        error = ex.what();
+      }
+      catch(...)
+      {
+        error = "Unknown error while calling Remove on " + cppStringPath;
+      }
+      [self dispatchAction:^
+       {
+         [doneCallback callWithArguments:@[@(error.c_str())]];
+       }];
+      return;
+    }
+    
     NSError* error = nil;
     [[NSFileManager defaultManager] removeItemAtPath:path error: &error];
     if (!doneCallback)
       return;
+    
     [self dispatchAction:^
     {
       [doneCallback callWithArguments:error ? @[[error description]] : @[]];
@@ -245,29 +394,62 @@ typedef void(^ABPFileWriter_OnDoneCallback)(NSString* error);
   if (!doneCallback)
     return;
 
+  ABPJSContext* jsContext = ObjcCast<ABPJSContext>([doneCallback context]);
+  AdblockPlus::JsEnginePtr jsEngine;
+  if (!jsContext || !(jsEngine = jsContext->m_jsEngine.lock()))
+    return;
+  
+  
   dispatch_async(self.queue, ^
   {
-    JSContext* jsContext = [doneCallback context];
     JSValue* result = [JSValue valueWithNewObjectInContext:jsContext];
-    NSFileManager* fileManager = [NSFileManager defaultManager];
-    BOOL isDirectory = NO;
-    BOOL fileExists = [fileManager fileExistsAtPath:path isDirectory:&isDirectory];
-    [result setValue:[JSValue valueWithBool:fileExists inContext:jsContext] forProperty:@"exists"];
-    [result setValue:[JSValue valueWithBool:!isDirectory inContext:jsContext] forProperty:@"isFile"];
-    [result setValue:[JSValue valueWithBool:isDirectory inContext:jsContext] forProperty:@"isDirectory"];
-    if (fileExists == YES)
+    
+    // if there is overridden file system then use it
+    if (auto fileSystem = jsEngine->GetFileSystem())
     {
-      NSError* error = nil;
-      NSDictionary* attributes = [fileManager attributesOfItemAtPath:path error:&error];
-      NSDate* modificationDate = [attributes valueForKey:NSFileModificationDate];
-      if (modificationDate)
+      std::string error;
+      std::string cppStringPath = [path UTF8String];
+      AdblockPlus::FileSystem::StatResult stat;
+      try
       {
-        const int32_t MSEC_IN_SEC = 1000;
-        JSValue* lastModifiedJSValue = [JSValue valueWithDouble:[modificationDate timeIntervalSince1970] * MSEC_IN_SEC inContext:jsContext];
-        [result setValue:lastModifiedJSValue forProperty:@"lastModified"];
+        stat = fileSystem->Stat(cppStringPath);
       }
-      if (error)
-        [result setValue:[error description] forProperty:@"error"];
+      catch (const std::exception& ex)
+      {
+        error = ex.what();
+      }
+      catch(...)
+      {
+        error = "Unknown error while calling stat on " + cppStringPath;
+      }
+      [result setValue:[JSValue valueWithBool:ToObjCBOOL(stat.exists) inContext:jsContext] forProperty:@"exists"];
+      [result setValue:[JSValue valueWithBool:ToObjCBOOL(stat.isFile) inContext:jsContext] forProperty:@"isFile"];
+      [result setValue:[JSValue valueWithBool:ToObjCBOOL(stat.isDirectory) inContext:jsContext] forProperty:@"isDirectory"];
+      [result setValue:[JSValue valueWithInt32:ToInt32(stat.lastModified) inContext:jsContext] forProperty:@"lastModified"];
+      [result setValue:@(error.c_str()) forProperty:@"error"];
+    }
+    else
+    {
+      NSFileManager* fileManager = [NSFileManager defaultManager];
+      BOOL isDirectory = NO;
+      BOOL fileExists = [fileManager fileExistsAtPath:path isDirectory:&isDirectory];
+      [result setValue:[JSValue valueWithBool:fileExists inContext:jsContext] forProperty:@"exists"];
+      [result setValue:[JSValue valueWithBool:!isDirectory inContext:jsContext] forProperty:@"isFile"];
+      [result setValue:[JSValue valueWithBool:isDirectory inContext:jsContext] forProperty:@"isDirectory"];
+      if (fileExists == YES)
+      {
+        NSError* error = nil;
+        NSDictionary* attributes = [fileManager attributesOfItemAtPath:path error:&error];
+        NSDate* modificationDate = [attributes valueForKey:NSFileModificationDate];
+        if (modificationDate)
+        {
+          const int32_t MSEC_IN_SEC = 1000;
+          JSValue* lastModifiedJSValue = [JSValue valueWithDouble:[modificationDate timeIntervalSince1970] * MSEC_IN_SEC inContext:jsContext];
+          [result setValue:lastModifiedJSValue forProperty:@"lastModified"];
+        }
+        if (error)
+          [result setValue:[error description] forProperty:@"error"];
+      }
     }
     
     [self dispatchAction:^
@@ -279,6 +461,17 @@ typedef void(^ABPFileWriter_OnDoneCallback)(NSString* error);
 
 -(NSString*)resolve:(NSString*) path
 {
+  ABPJSContext* jsContext = ObjcCast<ABPJSContext>([JSContext currentContext]);
+  AdblockPlus::JsEnginePtr jsEngine;
+  if (!jsContext || !(jsEngine = jsContext->m_jsEngine.lock()))
+    return nil;
+  
+  // if there is overridden file system then use it
+  if (auto fileSystem = jsEngine->GetFileSystem())
+  {
+    return @(fileSystem->Resolve([path UTF8String]).c_str());
+  }
+  
   if (_basePath == nil)
   {
     return path;
