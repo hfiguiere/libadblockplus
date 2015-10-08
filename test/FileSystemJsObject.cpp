@@ -18,9 +18,44 @@
 #include <sstream>
 #include "BaseJsTest.h"
 #include "../src/Thread.h"
+#include <mutex>
+#include <condition_variable>
 
 namespace
 {
+  class ScopedWaiter
+  {
+#ifndef ABP_JAVASCRIPT_CORE
+    std::mutex waitMutex;
+    std::condition_variable waitCV;
+#endif
+    bool result;
+  public:
+    ScopedWaiter() : result(false)
+    {}
+    void notify()
+    {
+#ifndef ABP_JAVASCRIPT_CORE
+      std::lock_guard<std::mutex> lock(waitMutex);
+#endif
+      result = true;
+#ifndef ABP_JAVASCRIPT_CORE
+      waitCV.notify_one();
+#endif
+    }
+    void wait()
+    {
+#ifndef ABP_JAVASCRIPT_CORE
+      std::unique_lock<std::mutex> lock(waitMutex);
+#endif
+      while(!result)
+#ifndef ABP_JAVASCRIPT_CORE
+        waitCV.wait(lock);
+#else
+        AdblockPlus::Sleep(40);
+#endif
+    }
+  };
   class MockFileSystem : public AdblockPlus::FileSystem
   {
   public:
@@ -101,8 +136,14 @@ namespace
   void ReadFile(AdblockPlus::JsEnginePtr jsEngine, std::string& content,
                 std::string& error)
   {
-    jsEngine->Evaluate("_fileSystem.read('', function(r) {result = r})");
-    AdblockPlus::Sleep(50);
+    ScopedWaiter waiter;
+    jsEngine->SetEventCallback("_onReadDone", [&](const AdblockPlus::JsValueList&)
+    {
+      waiter.notify();
+      jsEngine->RemoveEventCallback("_onReadDone");
+    });
+    jsEngine->Evaluate("_fileSystem.read('', function(r) {result = r;this._triggerEvent('_onReadDone');})");
+    waiter.wait();
     content = jsEngine->Evaluate("result.content")->AsString();
     error = jsEngine->Evaluate("result.error")->AsString();
   }
@@ -132,12 +173,13 @@ TEST_F(FileSystemJsObjectTest, Read)
   ASSERT_EQ("foo", content);
   ASSERT_EQ("", error);
 }
-
+#ifndef ABP_JAVASCRIPT_CORE
 TEST_F(FileSystemJsObjectTest, ReadIllegalArguments)
 {
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.read()"));
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.read('', '')"));
 }
+#endif
 
 TEST_F(FileSystemJsObjectTest, ReadError)
 {
@@ -158,11 +200,13 @@ TEST_F(FileSystemJsObjectTest, Write)
   ASSERT_EQ("", jsEngine->Evaluate("error")->AsString());
 }
 
+#ifndef ABP_JAVASCRIPT_CORE
 TEST_F(FileSystemJsObjectTest, WriteIllegalArguments)
 {
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.write()"));
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.write('', '', '')"));
 }
+#endif
 
 TEST_F(FileSystemJsObjectTest, WriteError)
 {
@@ -181,11 +225,13 @@ TEST_F(FileSystemJsObjectTest, Move)
   ASSERT_EQ("", jsEngine->Evaluate("error")->AsString());
 }
 
+#ifndef ABP_JAVASCRIPT_CORE
 TEST_F(FileSystemJsObjectTest, MoveIllegalArguments)
 {
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.move()"));
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.move('', '', '')"));
 }
+#endif
 
 TEST_F(FileSystemJsObjectTest, MoveError)
 {
@@ -203,11 +249,13 @@ TEST_F(FileSystemJsObjectTest, Remove)
   ASSERT_EQ("", jsEngine->Evaluate("error")->AsString());
 }
 
+#ifndef ABP_JAVASCRIPT_CORE
 TEST_F(FileSystemJsObjectTest, RemoveIllegalArguments)
 {
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.remove()"));
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.remove('', '')"));
 }
+#endif
 
 TEST_F(FileSystemJsObjectTest, RemoveError)
 {
@@ -233,11 +281,13 @@ TEST_F(FileSystemJsObjectTest, Stat)
   ASSERT_EQ(1337, jsEngine->Evaluate("result.lastModified")->AsInt());
 }
 
+#ifndef ABP_JAVASCRIPT_CORE
 TEST_F(FileSystemJsObjectTest, StatIllegalArguments)
 {
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.stat()"));
   ASSERT_ANY_THROW(jsEngine->Evaluate("_fileSystem.stat('', '')"));
 }
+#endif
 
 TEST_F(FileSystemJsObjectTest, StatError)
 {
