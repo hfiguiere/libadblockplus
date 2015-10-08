@@ -87,11 +87,12 @@ JsValuePtr JsEngine::NewObject()
   return privateImpl->NewObject();
 }
 
-#ifndef ABP_JAVASCRIPT_CORE
 FileSystemPtr JsEngine::GetFileSystem()
 {
+#ifndef ABP_JAVASCRIPT_CORE
   if (!fileSystem)
     fileSystem.reset(new DefaultFileSystem());
+#endif
   return fileSystem;
 }
 
@@ -105,8 +106,10 @@ void JsEngine::SetFileSystem(FileSystemPtr val)
 
 WebRequestPtr JsEngine::GetWebRequest()
 {
+#ifndef ABP_JAVASCRIPT_CORE
   if (!webRequest)
     webRequest.reset(new DefaultWebRequest());
+#endif
   return webRequest;
 }
 
@@ -118,7 +121,6 @@ void JsEngine::SetWebRequest(WebRequestPtr val)
 #endif
   webRequest = val;
 }
-#endif
 
 LogSystemPtr JsEngine::GetLogSystem()
 {

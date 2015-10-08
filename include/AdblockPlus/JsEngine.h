@@ -127,7 +127,6 @@ namespace AdblockPlus
      */
     JsValuePtr NewObject();
 
-#ifndef ABP_JAVASCRIPT_CORE
     /**
      * @see `SetFileSystem()`.
      */
@@ -153,7 +152,6 @@ namespace AdblockPlus
      * @param The `WebRequest` instance to use.
      */
     void SetWebRequest(WebRequestPtr val);
-#endif
     /**
      * @see `SetLogSystem()`.
      */
