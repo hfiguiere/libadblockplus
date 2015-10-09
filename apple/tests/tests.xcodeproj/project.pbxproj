@@ -17,6 +17,7 @@
 		44A8D12B1BC685A500686BDC /* FilterEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D12A1BC685A500686BDC /* FilterEngine.cpp */; settings = {ASSET_TAGS = (); }; };
 		44A8D12D1BC7BF1D00686BDC /* JsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D12C1BC7BF1D00686BDC /* JsEngine.cpp */; settings = {ASSET_TAGS = (); }; };
 		44A8D12F1BC7C01000686BDC /* JsValue.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D12E1BC7C01000686BDC /* JsValue.cpp */; settings = {ASSET_TAGS = (); }; };
+		44A8D1311BC7C51C00686BDC /* Notification.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D1301BC7C51C00686BDC /* Notification.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -45,6 +46,7 @@
 		44A8D12A1BC685A500686BDC /* FilterEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FilterEngine.cpp; path = ../../../test/FilterEngine.cpp; sourceTree = "<group>"; };
 		44A8D12C1BC7BF1D00686BDC /* JsEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JsEngine.cpp; path = ../../../test/JsEngine.cpp; sourceTree = "<group>"; };
 		44A8D12E1BC7C01000686BDC /* JsValue.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = JsValue.cpp; path = ../../../test/JsValue.cpp; sourceTree = "<group>"; };
+		44A8D1301BC7C51C00686BDC /* Notification.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Notification.cpp; path = ../../../test/Notification.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				44A8D12E1BC7C01000686BDC /* JsValue.cpp */,
+				44A8D1301BC7C51C00686BDC /* Notification.cpp */,
 				44A8D12C1BC7BF1D00686BDC /* JsEngine.cpp */,
 				44A8D12A1BC685A500686BDC /* FilterEngine.cpp */,
 				44A8D1281BC682AF00686BDC /* FileSystemJsObject.cpp */,
@@ -158,6 +161,7 @@
 				449A9A521BC543C500C09468 /* AppInfoJsObject.cpp in Sources */,
 				449A9A501BC5421F00C09468 /* gtest-all.cc in Sources */,
 				44A8D12F1BC7C01000686BDC /* JsValue.cpp in Sources */,
+				44A8D1311BC7C51C00686BDC /* Notification.cpp in Sources */,
 				44A8D1211BC67DA100686BDC /* ConsoleJsObject.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
