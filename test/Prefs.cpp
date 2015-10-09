@@ -98,9 +98,11 @@ TEST_F(PrefsTest, PrefsGetSet)
   ASSERT_TRUE(filterEngine->GetPref("subscriptions_autoupdate")->AsBool());
   ASSERT_TRUE(filterEngine->GetPref("foobar")->IsUndefined());
 
+#ifndef ABP_JAVASCRIPT_CORE
   ASSERT_ANY_THROW(filterEngine->SetPref("patternsfile", jsEngine->NewValue(0)));
   ASSERT_ANY_THROW(filterEngine->SetPref("patternsbackupinterval", jsEngine->NewValue(true)));
   ASSERT_ANY_THROW(filterEngine->SetPref("subscriptions_autoupdate", jsEngine->NewValue("foo")));
+#endif
 
   filterEngine->SetPref("patternsfile", jsEngine->NewValue("filters.ini"));
   filterEngine->SetPref("patternsbackupinterval", jsEngine->NewValue(48));
