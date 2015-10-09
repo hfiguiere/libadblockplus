@@ -157,6 +157,19 @@ FilterEngine::FilterEngine(JsEnginePtr jsEngine,
   // Load adblockplus scripts
   for (int i = 0; !jsSources[i].empty(); i += 2)
     jsEngine->Evaluate(jsSources[i + 1], jsSources[i]);
+  
+#ifdef ABP_JAVASCRIPT_CORE
+  std::string fixFilterConstructors = "(function()"
+  "{"
+  "  var filterClasses = require(\"filterClasses\");"
+  "  filterClasses.BlockingFilter.prototype.constructor = filterClasses.BlockingFilter;"
+  "  filterClasses.WhitelistFilter.prototype.constructor = filterClasses.WhitelistFilter;"
+  "  filterClasses.ElemHideFilter.prototype.constructor = filterClasses.ElemHideFilter;"
+  "  filterClasses.ElemHideException.prototype.constructor = filterClasses.ElemHideException;"
+  "  filterClasses.CommentFilter.prototype.constructor = filterClasses.CommentFilter;"
+  "})()";
+  jsEngine->Evaluate(fixFilterConstructors);
+#endif
 }
 
 void FilterEngine::CreateAsync(const JsEnginePtr& jsEngine,
