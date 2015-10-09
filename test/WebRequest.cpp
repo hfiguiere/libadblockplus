@@ -31,7 +31,7 @@ namespace
       AdblockPlus::ServerResponse result;
       result.status = NS_OK;
       result.responseStatus = 123;
-      result.responseHeaders.push_back(std::pair<std::string, std::string>("Foo", "Bar"));
+      result.responseHeaders.push_back(std::pair<std::string, std::string>("foo", "Bar"));
       result.responseText = url + "\n" + requestHeaders[0].first + "\n" + requestHeaders[0].second;
       onResponse(result);
     }
@@ -44,15 +44,28 @@ namespace
     void SetUp()
     {
       BaseJsTest::SetUp();
-      jsEngine->SetWebRequest(AdblockPlus::WebRequestPtr(new T));
+      ConfigureWebRequest();
       jsEngine->SetFileSystem(AdblockPlus::FileSystemPtr(new LazyFileSystem));
     }
+    void ConfigureWebRequest()
+    {
+      jsEngine->SetWebRequest(AdblockPlus::WebRequestPtr(new T));
+    }
   };
+  
+#ifdef ABP_JAVASCRIPT_CORE
+  template<>
+  void WebRequestTest<AdblockPlus::DefaultWebRequest>::ConfigureWebRequest()
+  {
+    jsEngine->SetWebRequest(AdblockPlus::WebRequestPtr());
+  }
+#endif
 
   typedef WebRequestTest<MockWebRequest> MockWebRequestTest;
   typedef WebRequestTest<AdblockPlus::DefaultWebRequest> DefaultWebRequestTest;
 }
 
+#ifndef ABP_JAVASCRIPT_CORE
 TEST_F(MockWebRequestTest, BadCall)
 {
   ASSERT_ANY_THROW(jsEngine->Evaluate("_webRequest.GET()"));
@@ -62,19 +75,20 @@ TEST_F(MockWebRequestTest, BadCall)
   ASSERT_ANY_THROW(jsEngine->Evaluate("_webRequest.GET('http://example.com/', {}, null)"));
   ASSERT_ANY_THROW(jsEngine->Evaluate("_webRequest.GET('http://example.com/', {}, function(){}, 0)"));
 }
+#endif
 
 TEST_F(MockWebRequestTest, SuccessfulRequest)
 {
   jsEngine->Evaluate("_webRequest.GET('http://example.com/', {X: 'Y'}, function(result) {foo = result;} )");
-  ASSERT_TRUE(jsEngine->Evaluate("this.foo")->IsUndefined());
   AdblockPlus::Sleep(200);
+  ASSERT_FALSE(jsEngine->Evaluate("this.foo")->IsUndefined());
   ASSERT_EQ(AdblockPlus::WebRequest::NS_OK, jsEngine->Evaluate("foo.status")->AsInt());
   ASSERT_EQ(123, jsEngine->Evaluate("foo.responseStatus")->AsInt());
   ASSERT_EQ("http://example.com/\nX\nY", jsEngine->Evaluate("foo.responseText")->AsString());
-  ASSERT_EQ("{\"Foo\":\"Bar\"}", jsEngine->Evaluate("JSON.stringify(foo.responseHeaders)")->AsString());
+  ASSERT_EQ("{\"foo\":\"Bar\"}", jsEngine->Evaluate("JSON.stringify(foo.responseHeaders)")->AsString());
 }
 
-#if defined(HAVE_CURL) || defined(_WIN32)
+#if defined(HAVE_CURL) || defined(_WIN32) || defined(ABP_JAVASCRIPT_CORE)
 TEST_F(DefaultWebRequestTest, RealWebRequest)
 {
   // This URL should redirect to easylist-downloads.adblockplus.org and we
@@ -132,7 +146,7 @@ TEST_F(DefaultWebRequestTest, DummyWebRequest)
 
 TEST_F(DefaultWebRequestTest, XMLHttpRequest)
 {
-  AdblockPlus::FilterEngine filterEngine(jsEngine);
+  auto filterEngine = AdblockPlus::FilterEngine::Create(jsEngine);
 
   jsEngine->Evaluate("\
     var result;\

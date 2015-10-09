@@ -100,7 +100,7 @@ typedef void(^ABPJSWebRequestDelegateImpl_OnDoneCallback)(int32_t networkStatus,
     JSValue* jsHeaders = [JSValue valueWithNewObjectInContext:jsContext];
     for (NSString* headerName in headers)
     {
-      [jsHeaders setValue:[headers objectForKey:headerName] forProperty:headerName];
+      [jsHeaders setValue:[headers objectForKey:headerName] forProperty:[headerName lowercaseString]];
     }
     [jsResult setValue:jsHeaders forProperty:@"responseHeaders"];
     [jsDoneCallback callWithArguments:@[jsResult]];
@@ -121,17 +121,24 @@ typedef void(^ABPJSWebRequestDelegateImpl_OnDoneCallback)(int32_t networkStatus,
       NSString* headerValue = [headers objectForKey:headerName];
       headerList.emplace_back(std::make_pair([headerName UTF8String], [headerValue UTF8String]));
     }
-    webRequest->GET([url UTF8String], headerList, [doneCallback](const AdblockPlus::ServerResponse& response)
+    try
     {
-      NSMutableDictionary* headers = [NSMutableDictionary new];
-      for (const auto& header: response.responseHeaders)
+      webRequest->GET([url UTF8String], headerList, [doneCallback](const AdblockPlus::ServerResponse& response)
       {
-        [headers setValue:@(header.second.c_str()) forKey:@(header.first.c_str())];
-      }
+        NSMutableDictionary* headers = [NSMutableDictionary new];
+        for (const auto& header: response.responseHeaders)
+        {
+          [headers setValue:@(header.second.c_str()) forKey:@(header.first.c_str())];
+        }
       
-      NSData* data = [[NSData alloc] initWithBytes:response.responseText.c_str() length:response.responseText.length()];
-      doneCallback(ToInt32(response.status), response.responseStatus, data, headers);
-    });
+        NSData* data = [[NSData alloc] initWithBytes:response.responseText.c_str() length:response.responseText.length()];
+        doneCallback(ToInt32(response.status), response.responseStatus, data, headers);
+      });
+    }
+    catch(...)
+    {
+      
+    }
     return;
   }
   
