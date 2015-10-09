@@ -14,6 +14,7 @@
 		449A9A581BC544A000C09468 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 449A9A571BC544A000C09468 /* JavaScriptCore.framework */; };
 		44A8D1211BC67DA100686BDC /* ConsoleJsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D1201BC67DA100686BDC /* ConsoleJsObject.cpp */; settings = {ASSET_TAGS = (); }; };
 		44A8D1291BC682AF00686BDC /* FileSystemJsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D1281BC682AF00686BDC /* FileSystemJsObject.cpp */; settings = {ASSET_TAGS = (); }; };
+		44A8D12B1BC685A500686BDC /* FilterEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D12A1BC685A500686BDC /* FilterEngine.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -39,6 +40,7 @@
 		44A8D11F1BC67DA100686BDC /* BaseJsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseJsTest.h; path = ../../../test/BaseJsTest.h; sourceTree = "<group>"; };
 		44A8D1201BC67DA100686BDC /* ConsoleJsObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ConsoleJsObject.cpp; path = ../../../test/ConsoleJsObject.cpp; sourceTree = "<group>"; };
 		44A8D1281BC682AF00686BDC /* FileSystemJsObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FileSystemJsObject.cpp; path = ../../../test/FileSystemJsObject.cpp; sourceTree = "<group>"; };
+		44A8D12A1BC685A500686BDC /* FilterEngine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = FilterEngine.cpp; path = ../../../test/FilterEngine.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 		449A9A471BC5417200C09468 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				44A8D12A1BC685A500686BDC /* FilterEngine.cpp */,
 				44A8D1281BC682AF00686BDC /* FileSystemJsObject.cpp */,
 				44A8D11F1BC67DA100686BDC /* BaseJsTest.h */,
 				44A8D1201BC67DA100686BDC /* ConsoleJsObject.cpp */,
@@ -143,6 +146,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				449A9A491BC5417200C09468 /* main.mm in Sources */,
+				44A8D12B1BC685A500686BDC /* FilterEngine.cpp in Sources */,
 				44A8D1291BC682AF00686BDC /* FileSystemJsObject.cpp in Sources */,
 				449A9A521BC543C500C09468 /* AppInfoJsObject.cpp in Sources */,
 				449A9A501BC5421F00C09468 /* gtest-all.cc in Sources */,
