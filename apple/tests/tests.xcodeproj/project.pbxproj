@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		445E66E71BC7C896009E2C43 /* UpdateCheck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 445E66E61BC7C896009E2C43 /* UpdateCheck.cpp */; settings = {ASSET_TAGS = (); }; };
 		449A9A491BC5417200C09468 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = 449A9A481BC5417200C09468 /* main.mm */; };
 		449A9A501BC5421F00C09468 /* gtest-all.cc in Sources */ = {isa = PBXBuildFile; fileRef = 449A9A4F1BC5421F00C09468 /* gtest-all.cc */; settings = {ASSET_TAGS = (); COMPILER_FLAGS = "-I$(SRCROOT)/../../third_party/googletest/"; }; };
 		449A9A521BC543C500C09468 /* AppInfoJsObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 449A9A511BC543C500C09468 /* AppInfoJsObject.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -35,6 +36,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		445E66E61BC7C896009E2C43 /* UpdateCheck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UpdateCheck.cpp; path = ../../../test/UpdateCheck.cpp; sourceTree = "<group>"; };
 		449A9A451BC5417200C09468 /* tests */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tests; sourceTree = BUILT_PRODUCTS_DIR; };
 		449A9A481BC5417200C09468 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		449A9A4F1BC5421F00C09468 /* gtest-all.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-all.cc"; path = "../../third_party/googletest/src/gtest-all.cc"; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 		449A9A471BC5417200C09468 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				445E66E61BC7C896009E2C43 /* UpdateCheck.cpp */,
 				44A8D1341BC7C5BE00686BDC /* ReferrerMapping.cpp */,
 				44A8D1321BC7C54600686BDC /* Prefs.cpp */,
 				44A8D12E1BC7C01000686BDC /* JsValue.cpp */,
@@ -161,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				449A9A491BC5417200C09468 /* main.mm in Sources */,
+				445E66E71BC7C896009E2C43 /* UpdateCheck.cpp in Sources */,
 				44A8D12B1BC685A500686BDC /* FilterEngine.cpp in Sources */,
 				44A8D12D1BC7BF1D00686BDC /* JsEngine.cpp in Sources */,
 				44A8D1351BC7C5BE00686BDC /* ReferrerMapping.cpp in Sources */,
