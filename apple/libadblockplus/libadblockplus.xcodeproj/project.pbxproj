@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		445E66E51BC7C7B3009E2C43 /* ReferrerMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D1381BC7C6DC00686BDC /* ReferrerMapping.cpp */; };
+		44A8D1391BC7C6DC00686BDC /* ReferrerMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44A8D1381BC7C6DC00686BDC /* ReferrerMapping.cpp */; settings = {ASSET_TAGS = (); }; };
 		44D07D9B1BA1C17D00CFBC64 /* JsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07D9A1BA1C17D00CFBC64 /* JsEngine.cpp */; settings = {ASSET_TAGS = (); }; };
 		44D07D9C1BA1C17D00CFBC64 /* JsEngine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 44D07D9A1BA1C17D00CFBC64 /* JsEngine.cpp */; settings = {ASSET_TAGS = (); }; };
 		44D07DA41BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 44D07DA31BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -46,6 +48,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		44A8D1381BC7C6DC00686BDC /* ReferrerMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ReferrerMapping.cpp; path = ../../src/ReferrerMapping.cpp; sourceTree = "<group>"; };
 		44B45FE11BA1AD6100B05E02 /* liblibadblockplus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibadblockplus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B45FF11BA1AD7F00B05E02 /* liblibadblockplus.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibadblockplus.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B45FFA1BA1ADE300B05E02 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
@@ -145,6 +148,7 @@
 		44D07D991BA1C14F00CFBC64 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				44A8D1381BC7C6DC00686BDC /* ReferrerMapping.cpp */,
 				44D07DC51BA4419300CFBC64 /* adblockplus.js.cpp */,
 				44D07DC21BA4411200CFBC64 /* FilterEngine.cpp */,
 				44D07DBE1BA4401000CFBC64 /* JSWebRequest.mm */,
@@ -254,6 +258,7 @@
 				44D07DA41BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm in Sources */,
 				44D07DBB1BA43F0400CFBC64 /* JSFileSystem.mm in Sources */,
 				44D07DB61BA375A400CFBC64 /* DefaultLogSystem.cpp in Sources */,
+				44A8D1391BC7C6DC00686BDC /* ReferrerMapping.cpp in Sources */,
 				44D07DAD1BA32B7900CFBC64 /* Notification.cpp in Sources */,
 				44D07DC01BA4401000CFBC64 /* JSWebRequest.mm in Sources */,
 				44D07DAA1BA3292800CFBC64 /* JsValue.cpp in Sources */,
@@ -267,6 +272,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				445E66E51BC7C7B3009E2C43 /* ReferrerMapping.cpp in Sources */,
 				44D07DB31BA3426000CFBC64 /* GlobalJsObject.mm in Sources */,
 				44D07D9C1BA1C17D00CFBC64 /* JsEngine.cpp in Sources */,
 				44D07DA51BA1C7C400CFBC64 /* JSCJsEnginePrivate.mm in Sources */,
