@@ -41,13 +41,13 @@ namespace AdblockPlus
     bool IsBool() const;
     
     std::string AsString() const;
-    int64_t AsInt() const;
+    JsValueInt AsInt() const;
     bool AsBool() const;
     JsValueList AsList() const;
     JsValuePtr GetProperty(const std::string& name) const;
     
     void SetProperty(const std::string& name, const std::string& val);
-    void SetProperty(const std::string& name, int64_t val);
+    void SetProperty(const std::string& name, JsValueInt val);
     void SetProperty(const std::string& name, bool val);
     
     void SetProperty(const std::string& name, const JsValuePtr& value);

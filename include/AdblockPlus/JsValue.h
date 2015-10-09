@@ -50,7 +50,7 @@ namespace AdblockPlus
     bool IsArray() const;
     bool IsFunction() const;
     std::string AsString() const;
-    int64_t AsInt() const;
+    JsValueInt AsInt() const;
     bool AsBool() const;
     JsValueList AsList() const;
 
@@ -75,17 +75,19 @@ namespace AdblockPlus
      * @param val Property value.
      */
     void SetProperty(const std::string& name, const std::string& val);
-    void SetProperty(const std::string& name, int64_t val);
+    void SetProperty(const std::string& name, JsValueInt val);
     void SetProperty(const std::string& name, bool val);
     void SetProperty(const std::string& name, const JsValuePtr& value);
     inline void SetProperty(const std::string& name, const char* val)
     {
       SetProperty(name, std::string(val));
     }
+#ifndef ABP_JAVASCRIPT_CORE
     inline void SetProperty(const std::string& name, int val)
     {
       SetProperty(name, static_cast<int64_t>(val));
     }
+#endif
     //@}
 
     /**

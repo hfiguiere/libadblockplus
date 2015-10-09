@@ -36,13 +36,13 @@ namespace AdblockPlus
     virtual bool IsBool() const = 0;
 
     virtual std::string AsString() const = 0;
-    virtual int64_t AsInt() const = 0;
+    virtual JsValueInt AsInt() const = 0;
     virtual bool AsBool() const = 0;
     virtual JsValueList AsList() const = 0;
     virtual JsValuePtr GetProperty(const std::string& name) const = 0;
 
     virtual void SetProperty(const std::string& name, const std::string& val) = 0;
-    virtual void SetProperty(const std::string& name, int64_t val) = 0;
+    virtual void SetProperty(const std::string& name, JsValueInt val) = 0;
     virtual void SetProperty(const std::string& name, bool val) = 0;
 
     virtual void SetProperty(const std::string& name, const JsValuePtr& value) = 0;

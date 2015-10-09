@@ -73,7 +73,7 @@ std::string JsValue::AsString() const
   return privateImpl->AsString();
 }
 
-int64_t JsValue::AsInt() const
+JsValueInt JsValue::AsInt() const
 {
   return privateImpl->AsInt();
 }
@@ -103,7 +103,7 @@ void JsValue::SetProperty(const std::string& name, const std::string& value)
   privateImpl->SetProperty(name, value);
 }
 
-void JsValue::SetProperty(const std::string& name, const int64_t value)
+void JsValue::SetProperty(const std::string& name, const JsValueInt value)
 {
   privateImpl->SetProperty(name, value);
 }

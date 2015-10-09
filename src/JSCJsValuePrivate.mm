@@ -86,7 +86,7 @@ std::string JSCJsValuePrivateImpl::AsString() const
   return [[jsValue toString] UTF8String];
 }
 
-int64_t JSCJsValuePrivateImpl::AsInt() const
+JsValueInt JSCJsValuePrivateImpl::AsInt() const
 {
   return [jsValue toInt32];
 }
@@ -148,9 +148,9 @@ void JSCJsValuePrivateImpl::SetProperty(const std::string& name, const std::stri
   [jsValue setValue:@(val.c_str()) forProperty:@(name.c_str())];
 }
 
-void JSCJsValuePrivateImpl::SetProperty(const std::string& name, int64_t val)
+void JSCJsValuePrivateImpl::SetProperty(const std::string& name, JsValueInt val)
 {
-  [jsValue setValue:[JSValue valueWithInt32:static_cast<int32_t>(val) inContext:[jsValue context]] forProperty:@(name.c_str())];
+  [jsValue setValue:[JSValue valueWithInt32:val inContext:[jsValue context]] forProperty:@(name.c_str())];
  }
 
 void JSCJsValuePrivateImpl::SetProperty(const std::string& name, const JsValuePtr& val)

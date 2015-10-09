@@ -21,6 +21,7 @@
 #include <memory>
 #include <vector>
 #include <functional>
+#include <cstdint>
 
 namespace AdblockPlus
 {
@@ -44,10 +45,15 @@ namespace AdblockPlus
    */
   typedef std::shared_ptr<FilterEngine> FilterEnginePtr;
   
-
   /**
    * List of JavaScript values.
    */
   typedef std::vector<AdblockPlus::JsValuePtr> JsValueList;
+  
+#ifdef ABP_JAVASCRIPT_CORE
+  typedef int32_t JsValueInt;
+#else
+  typedef int64_t JsValueInt;
+#endif
 }
 #endif // ADBLOCK_PLUS_DECLARATIONS_H
