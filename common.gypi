@@ -6,6 +6,7 @@
     'want_separate_host_toolset': 0,
     'v8_optimized_debug': 0,
     'v8_enable_i18n_support': 0,
+    'v8_use_external_startup_data%': 0,
   },
 
   'conditions': [
