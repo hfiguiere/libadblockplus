@@ -22,7 +22,7 @@ TEST_EXECUTABLE = build/out/Debug/tests
 	android_arm
 
 all:
-	third_party/gyp/gyp --depth=. -f make -I common.gypi --generator-output=build -Dtarget_arch=$(ARCH) libadblockplus.gyp
+	third_party/gyp/gyp --depth=. -f make -I common.gypi --generator-output=build -Dtarget_arch=$(ARCH) -Dhost_arch=$(shell python ./third_party/v8/build/detect_v8_host_arch.py) libadblockplus.gyp
 	$(MAKE) -C build
 
 test: all

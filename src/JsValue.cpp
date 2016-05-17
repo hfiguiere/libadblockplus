@@ -25,7 +25,7 @@
 AdblockPlus::JsValue::JsValue(AdblockPlus::JsEnginePtr jsEngine,
       v8::Handle<v8::Value> value)
     : jsEngine(jsEngine),
-      value(new v8::Persistent<v8::Value>(jsEngine->GetIsolate(), value))
+      value(new v8::UniquePersistent<v8::Value>(jsEngine->GetIsolate(), value))
 {
 }
 
@@ -37,11 +37,6 @@ AdblockPlus::JsValue::JsValue(AdblockPlus::JsValue&& src)
 
 AdblockPlus::JsValue::~JsValue()
 {
-  if (value)
-  {
-    value->Dispose();
-    value.reset();
-  }
 }
 
 bool AdblockPlus::JsValue::IsUndefined() const
@@ -192,7 +187,7 @@ void AdblockPlus::JsValue::SetProperty(const std::string& name, const JsValuePtr
 void AdblockPlus::JsValue::SetProperty(const std::string& name, bool val)
 {
   const JsContext context(jsEngine);
-  SetProperty(name, v8::Boolean::New(val));
+  SetProperty(name, v8::Boolean::New(jsEngine->GetIsolate(), val));
 }
 
 std::string AdblockPlus::JsValue::GetClass() const

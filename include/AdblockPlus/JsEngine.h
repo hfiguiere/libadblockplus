@@ -36,7 +36,8 @@ namespace v8
   class Value;
   class Context;
   template<class T> class Handle;
-  typedef Handle<Value>(*InvocationCallback)(const Arguments &args);
+  template<typename T> class FunctionCallbackInfo;
+  typedef void(*FunctionCallback)(const FunctionCallbackInfo<v8::Value>& info);
 }
 
 namespace AdblockPlus
@@ -175,7 +176,7 @@ namespace AdblockPlus
      *        the current `JsEngine`.
      * @return New `JsValue` instance.
      */
-    JsValuePtr NewCallback(v8::InvocationCallback callback);
+    JsValuePtr NewCallback(v8::FunctionCallback callback);
 
     /**
      * Returns a `JsEngine` instance contained in a `v8::Arguments` object.
@@ -185,7 +186,7 @@ namespace AdblockPlus
      *        instance.
      * @return `JsEngine` instance from `v8::Arguments`.
      */
-    static JsEnginePtr FromArguments(const v8::Arguments& arguments);
+    static JsEnginePtr FromArguments(const v8::FunctionCallbackInfo<v8::Value>& arguments);
 
     /**
      * Converts v8 arguments to `JsValue` objects.
@@ -193,7 +194,7 @@ namespace AdblockPlus
      *        convert.
      * @return List of arguments converted to `JsValue` objects.
      */
-    JsValueList ConvertArguments(const v8::Arguments& arguments);
+    JsValueList ConvertArguments(const v8::FunctionCallbackInfo<v8::Value>& arguments);
 
     /**
      * @see `SetFileSystem()`.
@@ -260,7 +261,7 @@ namespace AdblockPlus
     FileSystemPtr fileSystem;
     WebRequestPtr webRequest;
     LogSystemPtr logSystem;
-    std::unique_ptr<v8::Persistent<v8::Context>> context;
+    std::unique_ptr<v8::UniquePersistent<v8::Context>> context;
     EventMap eventCallbacks;
     JsValuePtr globalJsObject;
   };

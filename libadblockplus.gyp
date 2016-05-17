@@ -33,6 +33,7 @@
     'include_dirs': [
       'include',
       'third_party/v8/include',
+      'third_party/v8',
     ],
     'sources': [
       'src/AppInfoJsObject.cpp',
@@ -66,8 +67,8 @@
         },
         'standalone_static_library': 1, # disable thin archives
       }, {
-        'dependencies': ['third_party/v8/tools/gyp/v8.gyp:v8'],
-        'export_dependent_settings': ['third_party/v8/tools/gyp/v8.gyp:v8'],
+        'dependencies': ['third_party/v8/tools/gyp/v8.gyp:v8', 'third_party/v8/tools/gyp/v8.gyp:v8_libplatform',],
+        'export_dependent_settings': ['third_party/v8/tools/gyp/v8.gyp:v8', 'third_party/v8/tools/gyp/v8.gyp:v8_libplatform'],
       }],
       ['have_curl==1',
         {

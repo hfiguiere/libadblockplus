@@ -64,7 +64,7 @@ namespace
     JsValueList functionArguments;
   };
 
-  v8::Handle<v8::Value> SetTimeoutCallback(const v8::Arguments& arguments)
+  void SetTimeoutCallback(const v8::FunctionCallbackInfo<v8::Value>& arguments)
   {
     TimeoutThread* timeoutThread;
     try
@@ -77,30 +77,27 @@ namespace
     catch (const std::exception& e)
     {
       v8::Isolate* isolate = arguments.GetIsolate();
-      return v8::ThrowException(Utils::ToV8String(isolate, e.what()));
+      return Utils::ThrowException(isolate, e.what());
     }
     timeoutThread->Start();
 
     // We should actually return the timer ID here, which could be
     // used via clearTimeout(). But since we don't seem to need
     // clearTimeout(), we can save that for later.
-    return v8::Undefined();
   }
 
-  v8::Handle<v8::Value> TriggerEventCallback(const v8::Arguments& arguments)
+  void TriggerEventCallback(const v8::FunctionCallbackInfo<v8::Value>& arguments)
   {
     AdblockPlus::JsEnginePtr jsEngine = AdblockPlus::JsEngine::FromArguments(arguments);
     AdblockPlus::JsValueList converted = jsEngine->ConvertArguments(arguments);
     if (converted.size() < 1)
     {
       v8::Isolate* isolate = arguments.GetIsolate();
-      return v8::ThrowException(Utils::ToV8String(isolate,
-      "_triggerEvent expects at least one parameter"));
+      return Utils::ThrowException(isolate, "_triggerEvent expects at least one parameter");
     }
     std::string eventName = converted.front()->AsString();
     converted.erase(converted.begin());
     jsEngine->TriggerEvent(eventName, converted);
-    return v8::Undefined();
   }
 }
 

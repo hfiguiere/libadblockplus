@@ -88,7 +88,7 @@ namespace
     AdblockPlus::JsValuePtr callback;
   };
 
-  v8::Handle<v8::Value> GETCallback(const v8::Arguments& arguments)
+  void GETCallback(const v8::FunctionCallbackInfo<v8::Value>& arguments)
   {
     WebRequestThread* thread;
     try
@@ -101,12 +101,9 @@ namespace
     }
     catch (const std::exception& e)
     {
-      using AdblockPlus::Utils::ToV8String;
-      v8::Isolate* isolate = arguments.GetIsolate();
-      return v8::ThrowException(ToV8String(isolate, e.what()));
+      return AdblockPlus::Utils::ThrowException(arguments.GetIsolate(), e.what());
     }
     thread->Start();
-    return v8::Undefined();
   }
 }
 

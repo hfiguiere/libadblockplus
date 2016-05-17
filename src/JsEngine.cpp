@@ -20,6 +20,7 @@
 #include "JsContext.h"
 #include "JsError.h"
 #include "Utils.h"
+#include <libplatform/libplatform.h>
 
 namespace
 {
@@ -46,14 +47,19 @@ namespace
   class V8Initializer
   {
     V8Initializer()
+      : platform(v8::platform::CreateDefaultPlatform())
     {
+      v8::V8::InitializePlatform(platform);
       v8::V8::Initialize();
     }
 
     ~V8Initializer()
     {
       v8::V8::Dispose();
+      v8::V8::ShutdownPlatform();
+      delete platform;
     }
+    v8::Platform* platform;
   public:
     static void Init()
     {
@@ -89,7 +95,7 @@ AdblockPlus::JsEnginePtr AdblockPlus::JsEngine::New(const AppInfo& appInfo, cons
   const v8::Isolate::Scope isolateScope(result->GetIsolate());
   const v8::HandleScope handleScope(result->GetIsolate());
 
-  result->context.reset(new v8::Persistent<v8::Context>(result->GetIsolate(),
+  result->context.reset(new v8::UniquePersistent<v8::Context>(result->GetIsolate(),
     v8::Context::New(result->GetIsolate())));
   v8::Local<v8::Object> globalContext = v8::Local<v8::Context>::New(
     result->GetIsolate(), *result->context)->Global();
@@ -131,7 +137,7 @@ void AdblockPlus::JsEngine::TriggerEvent(const std::string& eventName, AdblockPl
 
 void AdblockPlus::JsEngine::Gc()
 {
-  while (!v8::V8::IdleNotification());
+  while (!GetIsolate()->IdleNotification(1000));
 }
 
 AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewValue(const std::string& val)
@@ -151,17 +157,17 @@ AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewValue(int64_t val)
 AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewValue(bool val)
 {
   const JsContext context(shared_from_this());
-  return JsValuePtr(new JsValue(shared_from_this(), v8::Boolean::New(val)));
+  return JsValuePtr(new JsValue(shared_from_this(), v8::Boolean::New(GetIsolate(), val)));
 }
 
 AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewObject()
 {
   const JsContext context(shared_from_this());
-  return JsValuePtr(new JsValue(shared_from_this(), v8::Object::New()));
+  return JsValuePtr(new JsValue(shared_from_this(), v8::Object::New(GetIsolate())));
 }
 
 AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewCallback(
-    v8::InvocationCallback callback)
+    v8::FunctionCallback callback)
 {
   const JsContext context(shared_from_this());
 
@@ -169,12 +175,12 @@ AdblockPlus::JsValuePtr AdblockPlus::JsEngine::NewCallback(
   // it's no longer used
   std::weak_ptr<JsEngine>* data =
       new std::weak_ptr<JsEngine>(shared_from_this());
-  v8::Local<v8::FunctionTemplate> templ = v8::FunctionTemplate::New(callback,
-      v8::External::New(data));
+  v8::Local<v8::FunctionTemplate> templ = v8::FunctionTemplate::New(GetIsolate(), callback,
+    v8::External::New(GetIsolate(), data));
   return JsValuePtr(new JsValue(shared_from_this(), templ->GetFunction()));
 }
 
-AdblockPlus::JsEnginePtr AdblockPlus::JsEngine::FromArguments(const v8::Arguments& arguments)
+AdblockPlus::JsEnginePtr AdblockPlus::JsEngine::FromArguments(const v8::FunctionCallbackInfo<v8::Value>& arguments)
 {
   const v8::Local<const v8::External> external =
       v8::Local<const v8::External>::Cast(arguments.Data());
@@ -186,7 +192,7 @@ AdblockPlus::JsEnginePtr AdblockPlus::JsEngine::FromArguments(const v8::Argument
   return result;
 }
 
-AdblockPlus::JsValueList AdblockPlus::JsEngine::ConvertArguments(const v8::Arguments& arguments)
+AdblockPlus::JsValueList AdblockPlus::JsEngine::ConvertArguments(const v8::FunctionCallbackInfo<v8::Value>& arguments)
 {
   const JsContext context(shared_from_this());
   JsValueList list;
