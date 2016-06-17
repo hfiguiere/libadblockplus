@@ -9,7 +9,7 @@ os:
 - linux
 
 before_script: ./ensure_dependencies.py && wget http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86_64.bin -O third_party/android-ndk-r10d-linux-x86_64.bin && pushd third_party && chmod +x android-ndk-r10d-linux-x86_64.bin && ./android-ndk-r10d-linux-x86_64.bin > /dev/null && popd 
-script: make && ./build/out/Debug/tests && rm -rf build && ANDROID_NDK_ROOT=$(pwd -L)/third_party/android-ndk-r10d make android_arm && rm -rf build && ANDROID_NDK_ROOT=$(pwd -L)/third_party/android-ndk-r10d make android_x86
+script: make test && rm -rf build && ANDROID_NDK_ROOT=$(pwd -L)/third_party/android-ndk-r10d make android_arm && rm -rf build && ANDROID_NDK_ROOT=$(pwd -L)/third_party/android-ndk-r10d make android_x86
 
 notifications:
   email: false

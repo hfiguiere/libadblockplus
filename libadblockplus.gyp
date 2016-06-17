@@ -71,15 +71,16 @@
       },
     },
     'conditions': [
-      ['OS=="android"', {
+      ['OS=="android" or OS=="linux"', {
         'link_settings': {
           'libraries': [
-#            'android_<(ANDROID_ARCH).release/obj.target/tools/gyp/libv8_base.<(ANDROID_ARCH).a',
-#            'android_<(ANDROID_ARCH).release/obj.target/tools/gyp/libv8_snapshot.a',
+             '-lv8',
+             '-lv8_libplatform',
+             '-L../third_party/v8-binaries/<(OS)_<(target_arch)/${V8_BIN_BUILDTYPE}/',
+             '-L../third_party/v8-binaries/<(OS)_<(target_arch)/${V8_BIN_BUILDTYPE}/lib.target/',
           ],
         },
         'standalone_static_library': 1, # disable thin archives
-      }, {
       }],
       ['have_curl==1',
         {
