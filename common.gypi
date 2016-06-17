@@ -43,11 +43,80 @@
   'target_defaults': {
     'msvs_cygwin_shell': 0,
     'target_conditions': [[
-      'OS=="mac" and _type=="executable"', {
-        'xcode_settings': {
-          'OTHER_LDFLAGS': ['-stdlib=libc++'],
+        'OS=="mac" and _type=="executable"', {
+          'xcode_settings': {
+            'OTHER_LDFLAGS': ['-stdlib=libc++'],
+          },
+        }
+      ],
+      ['OS=="win"', {
+        'defines': ['WIN32'],
+        'msvs_configuration_attributes': {
+          'OutputDirectory': '<(DEPTH)\\build\\$(ConfigurationName)',
+          'IntermediateDirectory': '$(OutDir)\\obj\\$(ProjectName)',
+          'CharacterSet': '1',
         },
+        'msvs_settings': {
+          'VCCLCompilerTool': {
+            'RuntimeTypeInfo': 'true', # we need it because there is dynamic_call
+            'StringPooling': 'true', # pool string literals
+            'DebugInformationFormat': 3, # Generate a PDB
+            'WarningLevel': 3, # Unfortunately v8 headers produces a lot of warnings and there is no way to say -ipath-to-v8-include
+            'ExceptionHandling': 1, # /EHsc
+          },
+          'VCLinkerTool': {
+            'GenerateDebugInformation': 'true',
+            'DataExecutionPrevention': 2, # enable DEP
+            'AllowIsolation': 'true',
+          }
+        },
+      }],
+      ['OS=="win" and target_arch=="x64"', {
+        'msvs_configuration_platform': 'x64'
+      }],
+    ],
+    'configurations': {
+      'Debug': {
+        'defines': ['DEBUG', '_DEBUG'],
+        'cflags': [ '-g', '-O0' ],
+        'msvs_settings': {
+          'VCCLCompilerTool': {
+            'RuntimeLibrary': 1 # /MTd (debug static)
+          },
+          'VCLinkerTool': {
+            'LinkTimeCodeGeneration': 1,
+            'OptimizeReferences': 2,
+            'EnableCOMDATFolding': 2,
+            'LinkIncremental': 1,
+            'GenerateDebugInformation': 'true',
+          }
+        }
+      },
+      'Release': {
+        'cflags': [ '-O3', '-fdata-sections', '-ffunction-sections' ],
+        'msvs_settings': {
+          'VCCLCompilerTool': {
+              'RuntimeLibrary': 0, #/MT static release
+              'Optimization': 3, # /Ox, full optimization
+              'FavorSizeOrSpeed': 1, # /Ot, favour speed over size
+              'InlineFunctionExpansion': 2, # /Ob2, inline anything eligible
+              'OmitFramePointers': 'true',
+              'EnableFunctionLevelLinking': 'true',
+              'EnableIntrinsicFunctions': 'true',
+            },
+          'VCLibrarianTool': {
+            'AdditionalOptions': [
+              '/LTCG', # link time code generation
+            ],
+          },
+          'VCLinkerTool': {
+            'LinkTimeCodeGeneration': 1, # link-time code generation
+            'OptimizeReferences': 2, # /OPT:REF
+            'EnableCOMDATFolding': 2, # /OPT:ICF
+            'LinkIncremental': 1, # disable incremental linking
+          },
+        }
       }
-    ]],
+    }
   }
 }

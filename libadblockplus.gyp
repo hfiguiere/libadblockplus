@@ -13,9 +13,7 @@
       }
     }
   ]],
-  'includes': ['third_party/v8/build/features.gypi',
-               'third_party/v8/build/toolchain.gypi',
-               'shell/shell.gyp'],
+  'includes': ['shell/shell.gyp'],
   'targets': [{
     'target_name': 'ensure_dependencies',
     'type': 'none',
@@ -32,8 +30,8 @@
     'dependencies': ['ensure_dependencies'],
     'include_dirs': [
       'include',
-      'third_party/v8/include',
-      'third_party/v8',
+      'third_party/v8-binaries/include',
+      'third_party/v8-binaries',
     ],
     'sources': [
       'src/AppInfoJsObject.cpp',
@@ -55,20 +53,33 @@
       '<(INTERMEDIATE_DIR)/adblockplus.js.cpp'
     ],
     'direct_dependent_settings': {
-      'include_dirs': ['include']
+      'include_dirs': ['include'],
+      'msvs_settings': {
+        'VCLinkerTool': {
+          'AdditionalLibraryDirectories': [
+            '$(SolutionDir)../../third_party/v8-binaries/win32_<(target_arch)/$(Configuration)'
+          ],
+          'AdditionalDependencies': [
+            '%(AdditionalDependencies)',
+            'winmm.lib', # v8 want's to link with timeGetTime
+            'v8_base.lib',
+            'v8_libbase.lib',
+            'v8_libplatform.lib',
+            'v8_snapshot.lib'
+          ],
+        }
+      },
     },
     'conditions': [
       ['OS=="android"', {
         'link_settings': {
           'libraries': [
-            'android_<(ANDROID_ARCH).release/obj.target/tools/gyp/libv8_base.<(ANDROID_ARCH).a',
-            'android_<(ANDROID_ARCH).release/obj.target/tools/gyp/libv8_snapshot.a',
+#            'android_<(ANDROID_ARCH).release/obj.target/tools/gyp/libv8_base.<(ANDROID_ARCH).a',
+#            'android_<(ANDROID_ARCH).release/obj.target/tools/gyp/libv8_snapshot.a',
           ],
         },
         'standalone_static_library': 1, # disable thin archives
       }, {
-        'dependencies': ['third_party/v8/tools/gyp/v8.gyp:v8', 'third_party/v8/tools/gyp/v8.gyp:v8_libplatform',],
-        'export_dependent_settings': ['third_party/v8/tools/gyp/v8.gyp:v8', 'third_party/v8/tools/gyp/v8.gyp:v8_libplatform'],
       }],
       ['have_curl==1',
         {
