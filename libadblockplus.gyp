@@ -76,8 +76,8 @@
           'libraries': [
              '-lv8',
              '-lv8_libplatform',
-             '-L../third_party/v8-binaries/<(OS)_<(target_arch)/${V8_BIN_BUILDTYPE}/',
-             '-L../third_party/v8-binaries/<(OS)_<(target_arch)/${V8_BIN_BUILDTYPE}/lib.target/',
+             '-L../third_party/v8-binaries/<(OS)_${V8_TARGET_ARCH}/${V8_BIN_BUILDTYPE}/',
+             '-L../third_party/v8-binaries/<(OS)_${V8_TARGET_ARCH}/${V8_BIN_BUILDTYPE}/lib.target/',
           ],
         },
         'standalone_static_library': 1, # disable thin archives

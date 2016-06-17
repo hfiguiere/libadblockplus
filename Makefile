@@ -1,4 +1,4 @@
-TARGET_ARCH := x64
+V8_TARGET_ARCH=x64
 
 BUILDTYPE ?=Release
 V8_BIN_BUILDTYPE=Release
@@ -9,13 +9,13 @@ OS=android
 V8_BIN_BUILDTYPE=release
 ANDROID_PARAMETERS = OS=android
 ifeq ($(ANDROID_ARCH),arm)
-TARGET_ARCH=arm
+V8_TARGET_ARCH=arm
 ANDROID_PARAMETERS += target_arch=arm android_target_arch=arm
 ANDROID_PARAMETERS += arm_neon=0 armv7=0 arm_fpu=off vfp3=off
 ANDROID_PARAMETERS += arm_float_abi=default
 ANDROID_ABI = armeabi-v7a
 else ifeq ($(ANDROID_ARCH),ia32)
-TARGET_ARCH=ia32
+V8_TARGET_ARCH=ia32
 ANDROID_PARAMETERS += target_arch=x86 android_target_arch=x86
 ANDROID_ABI = x86
 else
@@ -24,14 +24,14 @@ endif
 ANDROID_DEST_DIR = android_$(ANDROID_ARCH).release
 endif
 
-TEST_EXECUTABLE = LD_LIBRARY_PATH=third_party/v8-binaries/${OS}_${TARGET_ARCH}/${V8_BIN_BUILDTYPE}/lib.target build/out/${BUILDTYPE}/tests
+TEST_EXECUTABLE = LD_LIBRARY_PATH=third_party/v8-binaries/${OS}_${V8_TARGET_ARCH}/${V8_BIN_BUILDTYPE}/lib.target build/out/${BUILDTYPE}/tests
 
 .PHONY: all test clean docs v8_android_multi android_multi android_x86 \
 	android_arm
 
 all:
-	third_party/gyp/gyp --depth=. -f make -I common.gypi --generator-output=build -Dtarget_arch=$(TARGET_ARCH) -Dhost_arch=x64 libadblockplus.gyp
-	$(MAKE) -C build BUILDTYPE=${BUILDTYPE} V8_BIN_BUILDTYPE=${V8_BIN_BUILDTYPE}
+	third_party/gyp/gyp --depth=. -f make -I common.gypi --generator-output=build -Dtarget_arch=x64 -Dhost_arch=x64 libadblockplus.gyp
+	$(MAKE) -C build BUILDTYPE=${BUILDTYPE} V8_BIN_BUILDTYPE=${V8_BIN_BUILDTYPE} V8_TARGET_ARCH=${V8_TARGET_ARCH}
 
 test: all
 ifdef FILTER
@@ -60,6 +60,7 @@ android_multi:
 	$(ANDROID_NDK_ROOT)/ndk-build -C build installed_modules \
 	BUILDTYPE=${BUILDTYPE} \
 	V8_BIN_BUILDTYPE=${V8_BIN_BUILDTYPE} \
+	V8_TARGET_ARCH=${V8_TARGET_ARCH} \
 	APP_ABI=$(ANDROID_ABI) \
 	APP_PLATFORM=android-9 \
 	APP_STL=c++_static \
