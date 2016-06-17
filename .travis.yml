@@ -1,6 +1,8 @@
 sudo: required
 dist: trusty
 
+python: '3.5'
+
 language: cpp
 
 before_install: sudo apt-get install -qq g++-multilib binutils-gold libcurl4-openssl-dev
@@ -8,7 +10,12 @@ before_install: sudo apt-get install -qq g++-multilib binutils-gold libcurl4-ope
 os:
 - linux
 
-before_script: ./ensure_dependencies.py && wget http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86_64.bin -O third_party/android-ndk-r10d-linux-x86_64.bin && pushd third_party && chmod +x android-ndk-r10d-linux-x86_64.bin && ./android-ndk-r10d-linux-x86_64.bin > /dev/null && popd 
+before_script:
+  - python3.5 install-git-lfs.py
+  - ./ensure_dependencies.py
+  - wget http://dl.google.com/android/ndk/android-ndk-r10d-linux-x86_64.bin -O third_party/android-ndk-r10d-linux-x86_64.bin
+  - pushd third_party && chmod +x android-ndk-r10d-linux-x86_64.bin && ./android-ndk-r10d-linux-x86_64.bin > /dev/null && popd
+
 script: make test && rm -rf build && ANDROID_NDK_ROOT=$(pwd -L)/third_party/android-ndk-r10d make android_arm && rm -rf build && ANDROID_NDK_ROOT=$(pwd -L)/third_party/android-ndk-r10d make android_x86
 
 notifications:
