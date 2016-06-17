@@ -34,3 +34,4 @@ script: make ${BUILD_ACTION}
 
 notifications:
   email: false
+
