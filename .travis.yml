@@ -5,7 +5,15 @@ python: '3.5'
 
 language: cpp
 
-before_install: sudo apt-get install -qq g++-multilib binutils-gold libcurl4-openssl-dev
+addons:
+  apt:
+    sources:
+    - 'git-core'
+    packages:
+    - g++-multilib
+    - binutils-gold
+    - libcurl4-openssl-dev
+    - git
 
 os:
 - linux
