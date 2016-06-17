@@ -3,4 +3,4 @@ _self = adblockpluscore/buildtools/ensure_dependencies.py
 adblockpluscore = adblockpluscore hg:82c88024773b git:7cfbf64a929ab74aa5bb390ca427db8a75031502
 third_party/googletest = googletest-github hg:368e1f54e5f6 git:d225acc90bc3a8c420a9bcd1f033033c1ccd7fe0
 third_party/gyp = gyp hg:2488397072ad git:8ffe7e7b1b82890a7e9ea21176bf039b6c53167b
-third_party/v8-binaries = git@github.com:xxxz/v8-binaries.git git:9f9ac786aa860d8c6050fc08f3b2c2fa3f84d6c7
+third_party/v8-binaries = https://github.com/xxxz/v8-binaries.git git:9f9ac786aa860d8c6050fc08f3b2c2fa3f84d6c7
