@@ -30,7 +30,7 @@ TEST_EXECUTABLE = LD_LIBRARY_PATH=third_party/v8-binaries/${OS}_${TARGET_ARCH}/$
 	android_arm
 
 all:
-	third_party/gyp/gyp --depth=. -f make -I common.gypi --generator-output=build -Dtarget_arch=$(TARGET_ARCH) -Dhost_arch=$(shell python ./third_party/v8/build/detect_v8_host_arch.py) libadblockplus.gyp
+	third_party/gyp/gyp --depth=. -f make -I common.gypi --generator-output=build -Dtarget_arch=$(TARGET_ARCH) -Dhost_arch=x64 libadblockplus.gyp
 	$(MAKE) -C build BUILDTYPE=${BUILDTYPE} V8_BIN_BUILDTYPE=${V8_BIN_BUILDTYPE}
 
 test: all
