@@ -57,7 +57,7 @@ ifneq ($(ANDROID_ARCH),)
 android_multi:
 	GYP_DEFINES="${ANDROID_PARAMETERS} ANDROID_ARCH=$(ANDROID_ARCH)" \
 	third_party/gyp/gyp --depth=. -f make-android -I common.gypi --generator-output=build -Gandroid_ndk_version=r9 libadblockplus.gyp
-	$(ANDROID_NDK_ROOT)/ndk-build -n -C build installed_modules \
+	$(ANDROID_NDK_ROOT)/ndk-build -C build installed_modules \
 	BUILDTYPE=${BUILDTYPE} \
 	V8_BIN_BUILDTYPE=${V8_BIN_BUILDTYPE} \
 	APP_ABI=$(ANDROID_ABI) \
