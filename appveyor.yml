@@ -8,8 +8,8 @@ configuration:
 - Debug
 platform:
 - x64
-- Win32 
-clone_depth: 1
+- Win32
+clone_depth: 50 # to avoid clone errors during developing
 init:
 - cmd: echo %Platform% %Configuration%
 install:
