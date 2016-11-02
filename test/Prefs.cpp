@@ -74,6 +74,7 @@ namespace
     {
       fileSystem = new TestFileSystem();
       fileSystemPtr.reset(fileSystem);
+      jsEngine = CreateJsEngine();
 
       Reset();
     }
@@ -81,7 +82,6 @@ namespace
     void Reset(const AdblockPlus::FilterEngine::Prefs& preconfiguredPrefs =
                AdblockPlus::FilterEngine::Prefs())
     {
-      jsEngine = CreateJsEngine();
       jsEngine->SetLogSystem(AdblockPlus::LogSystemPtr(new LazyLogSystem));
       jsEngine->SetFileSystem(fileSystemPtr);
       jsEngine->SetWebRequest(AdblockPlus::WebRequestPtr(new LazyWebRequest));

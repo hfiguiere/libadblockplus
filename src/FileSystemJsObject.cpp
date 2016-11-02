@@ -34,13 +34,15 @@ namespace
   {
   public:
     IoThread(JsEnginePtr jsEngine, JsValuePtr callback)
-      : Thread(true), jsEngine(jsEngine), fileSystem(jsEngine->GetFileSystem()),
-        callback(callback)
+      : Thread(true)
+      , m_jsEngine(jsEngine)
+      , fileSystem(jsEngine->GetFileSystem())
+      , callback(callback)
     {
     }
 
   protected:
-    JsEnginePtr jsEngine;
+    std::weak_ptr<JsEngine> m_jsEngine;
     FileSystemPtr fileSystem;
     JsValuePtr callback;
   };
@@ -72,8 +74,8 @@ namespace
         error =  "Unknown error while reading from " + path;
       }
 
-      const JsContext context(jsEngine);
-      JsValuePtr result = jsEngine->NewObject();
+      JsContext context(m_jsEngine);
+      JsValuePtr result = context.jsEngine().NewObject();
       result->SetProperty("content", content);
       result->SetProperty("error", error);
       JsValueList params;
@@ -112,8 +114,8 @@ namespace
         error = "Unknown error while writing to " + path;
       }
 
-      const JsContext context(jsEngine);
-      JsValuePtr errorValue = jsEngine->NewValue(error);
+      JsContext context(m_jsEngine);
+      JsValuePtr errorValue = context.jsEngine().NewValue(error);
       JsValueList params;
       params.push_back(errorValue);
       callback->Call(params);
@@ -149,8 +151,8 @@ namespace
         error = "Unknown error while moving " + fromPath + " to " + toPath;
       }
 
-      const JsContext context(jsEngine);
-      JsValuePtr errorValue = jsEngine->NewValue(error);
+      JsContext context(m_jsEngine);
+      JsValuePtr errorValue = context.jsEngine().NewValue(error);
       JsValueList params;
       params.push_back(errorValue);
       callback->Call(params);
@@ -186,8 +188,8 @@ namespace
         error = "Unknown error while removing " + path;
       }
 
-      const JsContext context(jsEngine);
-      JsValuePtr errorValue = jsEngine->NewValue(error);
+      JsContext context(m_jsEngine);
+      JsValuePtr errorValue = context.jsEngine().NewValue(error);
       JsValueList params;
       params.push_back(errorValue);
       callback->Call(params);
@@ -224,8 +226,8 @@ namespace
         error = "Unknown error while calling stat on " + path;
       }
 
-      const JsContext context(jsEngine);
-      JsValuePtr result = jsEngine->NewObject();
+      JsContext context(m_jsEngine);
+      JsValuePtr result = context.jsEngine().NewObject();
       result->SetProperty("exists", statResult.exists);
       result->SetProperty("isFile", statResult.isFile);
       result->SetProperty("isDirectory", statResult.isDirectory);

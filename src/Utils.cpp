@@ -24,6 +24,7 @@
 #endif
 
 #include "Utils.h"
+#include <AdblockPlus/JsEngine.h>
 
 using namespace AdblockPlus;
 
@@ -104,3 +105,10 @@ std::wstring Utils::CanonizeUrl(const std::wstring& url)
 }
 #endif
 
+std::shared_ptr<JsEngine> Utils::lockJsEngine(const std::weak_ptr<JsEngine>& jsEngine)
+{
+  auto retValue = jsEngine.lock();
+  if (!retValue)
+    throw AdblockPlus::JsEngine::JsEngineNotAvailableException();
+  return retValue;
+}

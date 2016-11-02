@@ -23,10 +23,12 @@
 #include <functional>
 #include <istream>
 #include <string>
+#include <memory>
 #include <v8.h>
 
 namespace AdblockPlus
 {
+  class JsEngine;
   namespace Utils
   {
     std::string Slurp(std::istream& stream);
@@ -48,6 +50,7 @@ namespace AdblockPlus
     std::string ToUtf8String(const std::wstring& str);
     std::wstring CanonizeUrl(const std::wstring& url);
 #endif
+    std::shared_ptr<JsEngine> lockJsEngine(const std::weak_ptr<JsEngine>& jsEngine);
   }
 }
 

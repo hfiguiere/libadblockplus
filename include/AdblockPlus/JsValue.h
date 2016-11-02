@@ -132,13 +132,13 @@ namespace AdblockPlus
      */
     JsValuePtr Call(const JsValue& arg) const;
 
-    v8::Local<v8::Value> UnwrapValue() const;
+    v8::Local<v8::Value> UnwrapValue(JsEngine& jsEngine) const;
   protected:
-    JsEnginePtr jsEngine;
+    std::weak_ptr<JsEngine> m_jsEngine;
   private:
-    JsValue(JsEnginePtr jsEngine, v8::Handle<v8::Value> value);
+    JsValue(const std::weak_ptr<JsEngine>& jsEngine, v8::Handle<v8::Value> value);
     void SetProperty(const std::string& name, v8::Handle<v8::Value> val);
-    std::unique_ptr<v8::Persistent<v8::Value>> value;
+    std::unique_ptr<v8::Persistent<v8::Value>> m_value;
   };
 }
 

@@ -93,6 +93,21 @@ namespace AdblockPlus
     typedef std::map<std::string, EventCallback> EventMap;
 
     /**
+     * Exception which is thrown when JsEngine is not available.
+     *
+     * For instance, if JsEngine is already released but someone calls a method
+     * on JsValue this exception will be thrown.
+     */
+    class JsEngineNotAvailableException : public std::runtime_error
+    {
+    public:
+      JsEngineNotAvailableException()
+        : std::runtime_error("JsEngine is not available")
+      {
+      }
+    };
+
+    /**
      * Creates a new JavaScript engine instance.
      * @param appInfo Information about the app.
      * @param isolate v8::Isolate wrapper. This parameter should be considered

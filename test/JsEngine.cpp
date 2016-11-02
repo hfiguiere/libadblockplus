@@ -134,3 +134,23 @@ TEST(NewJsEngineTest, GlobalPropertyTest)
   ASSERT_EQ(foo->AsString(), "bar");
 }
 
+TEST(NewJsEngineTest, MemoryLeak_NoCircularReferences)
+{
+  std::weak_ptr<AdblockPlus::JsEngine> weakJsEngine;
+  {
+    weakJsEngine = AdblockPlus::JsEngine::New();
+  }
+  EXPECT_FALSE(weakJsEngine.lock());
+}
+
+TEST(NewJsEngineTest, MemoryLeak_NoLeak)
+{
+  // v8::Isolate by default requires 32MB, so if there is a memory leak than
+  // we will run out of memory on 32 bit platform because it will allocate
+  // 32000 MB which is less than 2GB where it reaches out of memory.
+  int i = 1000;
+  while (i-->0)
+  {
+    AdblockPlus::JsEngine::New();
+  }
+}

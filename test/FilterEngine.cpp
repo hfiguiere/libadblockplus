@@ -533,3 +533,16 @@ TEST_F(FilterEngineTest, ElemhideWhitelisting)
       "http://example.co.uk",
       documentUrls1));
 }
+
+TEST(NewFilterEngineTest, MemoryLeak_NoCircularReferences)
+{
+  std::weak_ptr<AdblockPlus::JsEngine> weakJsEngine;
+  {
+    auto jsEngine = AdblockPlus::JsEngine::New();
+    jsEngine->SetFileSystem(AdblockPlus::FileSystemPtr(new LazyFileSystem()));
+    jsEngine->SetWebRequest(AdblockPlus::WebRequestPtr(new LazyWebRequest()));
+    jsEngine->SetLogSystem(AdblockPlus::LogSystemPtr(new LazyLogSystem()));
+    auto filterEngine = FilterEnginePtr(new AdblockPlus::FilterEngine(jsEngine));
+  }
+  EXPECT_FALSE(weakJsEngine.lock());
+}

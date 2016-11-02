@@ -17,6 +17,7 @@
 
 #include <AdblockPlus/JsValue.h>
 #include <AdblockPlus/JsEngine.h>
+#include "JsContext.h"
 #include <AdblockPlus/Notification.h>
 #include <algorithm>
 
@@ -69,7 +70,8 @@ NotificationType Notification::GetType() const
 
 NotificationTexts Notification::GetTexts() const
 {
-  JsValuePtr jsTexts = jsEngine->Evaluate("API.getNotificationTexts")->Call(*this);
+  JsContext context(m_jsEngine);
+  JsValuePtr jsTexts = context.jsEngine().Evaluate("API.getNotificationTexts")->Call(*this);
   NotificationTexts notificationTexts;
   JsValuePtr jsTitle = jsTexts->GetProperty("title");
   if (jsTitle->IsString())
@@ -103,5 +105,6 @@ std::vector<std::string> Notification::GetLinks() const
 
 void Notification::MarkAsShown()
 {
-  jsEngine->Evaluate("API.markNotificationAsShown")->Call(*GetProperty("id"));
+  JsContext context(m_jsEngine);
+  context.jsEngine().Evaluate("API.markNotificationAsShown")->Call(*GetProperty("id"));
 }

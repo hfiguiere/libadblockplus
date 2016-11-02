@@ -30,7 +30,7 @@ namespace
   {
   public:
     WebRequestThread(AdblockPlus::JsEnginePtr jsEngine, AdblockPlus::JsValueList& arguments)
-        : Thread(true), jsEngine(jsEngine), url(arguments[0]->AsString())
+        : Thread(true), m_jsEngine(jsEngine), url(arguments[0]->AsString())
     {
       if (!url.length())
         throw std::runtime_error("Invalid string passed as first argument to GET");
@@ -58,16 +58,16 @@ namespace
 
     void Run()
     {
-      AdblockPlus::ServerResponse result = jsEngine->GetWebRequest()->GET(url, headers);
-
-      AdblockPlus::JsContext context(jsEngine);
-
-      AdblockPlus::JsValuePtr resultObject = jsEngine->NewObject();
+      // Don't keep a strong reference to JsEngine while request is being executed.
+      auto webRequest = AdblockPlus::Utils::lockJsEngine(m_jsEngine)->GetWebRequest();
+      auto result = webRequest->GET(url, headers);
+      AdblockPlus::JsContext context(m_jsEngine);
+      AdblockPlus::JsValuePtr resultObject = context.jsEngine().NewObject();
       resultObject->SetProperty("status", result.status);
       resultObject->SetProperty("responseStatus", result.responseStatus);
       resultObject->SetProperty("responseText", result.responseText);
 
-      AdblockPlus::JsValuePtr headersObject = jsEngine->NewObject();
+      AdblockPlus::JsValuePtr headersObject = context.jsEngine().NewObject();
       for (AdblockPlus::HeaderList::iterator it = result.responseHeaders.begin();
         it != result.responseHeaders.end(); ++it)
       {
@@ -81,7 +81,7 @@ namespace
     }
 
   private:
-    AdblockPlus::JsEnginePtr jsEngine;
+    std::weak_ptr<AdblockPlus::JsEngine> m_jsEngine;
     std::string url;
     AdblockPlus::HeaderList headers;
     AdblockPlus::JsValuePtr callback;

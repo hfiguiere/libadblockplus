@@ -20,6 +20,7 @@
 #endif
 
 #include "Thread.h"
+#include <AdblockPlus/JsEngine.h>
 
 using namespace AdblockPlus;
 
@@ -107,7 +108,13 @@ void Thread::Join()
 
 void Thread::CallRun(Thread* thread)
 {
-  thread->Run();
+  try
+  {
+    thread->Run();
+  }
+  catch (const AdblockPlus::JsEngine::JsEngineNotAvailableException&)
+  {
+  }
   if (thread->m_deleteSelfOnFinish)
     delete thread;
 }

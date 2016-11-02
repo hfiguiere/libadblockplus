@@ -26,13 +26,16 @@ namespace AdblockPlus
   class JsContext
   {
   public:
-    explicit JsContext(const JsEnginePtr jsEngine);
-
+    explicit JsContext(const std::weak_ptr<JsEngine>& jsEngine);
+    JsEngine& jsEngine() {
+      return *m_jsEngine;
+    }
   private:
-    const v8::Locker locker;
-    const v8::Isolate::Scope isolateScope;
-    const v8::HandleScope handleScope;
-    const v8::Context::Scope contextScope;
+    JsEnginePtr m_jsEngine;
+    const v8::Locker m_locker;
+    const v8::Isolate::Scope m_isolateScope;
+    const v8::HandleScope m_handleScope;
+    const v8::Context::Scope m_contextScope;
   };
 }
 
