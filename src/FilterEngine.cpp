@@ -129,6 +129,12 @@ bool Subscription::IsUpdating()
   return result->AsBool();
 }
 
+bool Subscription::IsAA()
+{
+  JsContext context(jsEngine);
+  return jsEngine->Evaluate("API.isAASubscription")->Call(*shared_from_this())->AsBool();
+}
+
 bool Subscription::operator==(const Subscription& subscription) const
 {
   return GetProperty("url")->AsString() == subscription.GetProperty("url")->AsString();
@@ -269,6 +275,21 @@ std::vector<SubscriptionPtr> FilterEngine::FetchAvailableSubscriptions() const
   for (JsValueList::iterator it = values.begin(); it != values.end(); it++)
     result.push_back(SubscriptionPtr(new Subscription(std::move(**it))));
   return result;
+}
+
+void FilterEngine::SetAAEnabled(bool enabled)
+{
+  jsEngine->Evaluate("API.setAASubscriptionEnabled")->Call(*jsEngine->NewValue(enabled));
+}
+
+bool FilterEngine::IsAAEnabled() const
+{
+  return jsEngine->Evaluate("API.isAASubscriptionEnabled()")->AsBool();
+}
+
+std::string FilterEngine::GetAAURL() const
+{
+  return GetPref("subscriptions_exceptionsurl")->AsString();
 }
 
 void FilterEngine::ShowNextNotification(const std::string& url)

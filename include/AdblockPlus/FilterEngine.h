@@ -118,6 +118,12 @@ namespace AdblockPlus
      */
     bool IsUpdating();
 
+    /**
+      * Indicates whether the subscription is acceptable ads subscription.
+      * @return `true` if this subscription is acceptable ads subscription.
+      */
+    bool IsAA();
+
     bool operator==(const Subscription& subscription) const;
 
     /**
@@ -267,6 +273,28 @@ namespace AdblockPlus
      * @return List of recommended subscriptions.
      */
     std::vector<SubscriptionPtr> FetchAvailableSubscriptions() const;
+
+    /**
+     * Ensures that Acceptable Ads subscription is enabled or disabled.
+     * @param enabled If the value is true, adds AA subscription in case of
+     *        necessity and enables AA subscription is disabled. If the value
+     *        is false, disables the subscription if it is present and enabled.
+     *        Otherwise has not effect.
+     */
+    void SetAAEnabled(bool enabled);
+
+    /**
+     * Checks whether Acceptable Ads subscription is enaled.
+     * @return `true` if acceptable ads subscription is present and enabled.
+     */
+    bool IsAAEnabled() const;
+
+    /**
+     * Retrieves the URL of Acceptable Ads provisioned in configuration, what
+     * makes it available even if subscription is not add yet.
+     * @return Returns URL of Acceptable Ads.
+     */
+    std::string GetAAURL() const;
 
     /**
      * Invokes the listener set via SetNotificationAvailableCallback() with the

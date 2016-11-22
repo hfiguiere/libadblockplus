@@ -598,23 +598,21 @@ TEST_F(FilterEngineWithFreshFolder, LangAndAASubscriptionsAreChosenOnFirstRun)
   auto filterEngine = FilterEnginePtr(new AdblockPlus::FilterEngine(jsEngine));
   const auto subscriptions = filterEngine->GetListedSubscriptions();
   ASSERT_EQ(2u, subscriptions.size());
-  const auto aaUrl = filterEngine->GetPref("subscriptions_exceptionsurl")->AsString();
   SubscriptionPtr aaSubscription;
   SubscriptionPtr langSubscription;
-  if (subscriptions[0]->GetProperty("url")->AsString() == aaUrl)
+  if (subscriptions[0]->IsAA())
   {
     aaSubscription = subscriptions[0];
     langSubscription = subscriptions[1];
-  }
-  else if (subscriptions[1]->GetProperty("url")->AsString() == aaUrl)
+  } else if (subscriptions[1]->IsAA())
   {
     aaSubscription = subscriptions[1];
     langSubscription = subscriptions[0];
   }
   ASSERT_NE(nullptr, aaSubscription);
   ASSERT_NE(nullptr, langSubscription);
-  EXPECT_EQ(aaUrl, aaSubscription->GetProperty("url")->AsString());
   EXPECT_EQ(langSubscriptionUrl, langSubscription->GetProperty("url")->AsString());
+  EXPECT_TRUE(filterEngine->IsAAEnabled());
 }
 
 TEST_F(FilterEngineWithFreshFolder, DisableSubscriptionsAutoSelectOnFirstRun)
@@ -625,4 +623,25 @@ TEST_F(FilterEngineWithFreshFolder, DisableSubscriptionsAutoSelectOnFirstRun)
   auto filterEngine = FilterEnginePtr(new AdblockPlus::FilterEngine(jsEngine, preSettings));
   const auto subscriptions = filterEngine->GetListedSubscriptions();
   EXPECT_EQ(0u, subscriptions.size());
+  EXPECT_FALSE(filterEngine->IsAAEnabled());
+}
+
+TEST_F(FilterEngineTest, IsAAEnabled)
+{
+  // no subscription (because of preconfigured prefs.json and patterns.ini)
+  EXPECT_FALSE(filterEngine->IsAAEnabled());
+  // add subscription and enable
+  filterEngine->SetAAEnabled(true);
+  EXPECT_TRUE(filterEngine->IsAAEnabled());
+  // disable
+  filterEngine->SetAAEnabled(false);
+  EXPECT_FALSE(filterEngine->IsAAEnabled());
+  // only enable already existing disabled
+  filterEngine->SetAAEnabled(true);
+  EXPECT_TRUE(filterEngine->IsAAEnabled());
+  // remove
+  filterEngine->GetSubscription(filterEngine->GetAAURL())->RemoveFromList();
+  EXPECT_FALSE(filterEngine->IsAAEnabled());
+  // no subscription
+  EXPECT_FALSE(filterEngine->IsAAEnabled());
 }
