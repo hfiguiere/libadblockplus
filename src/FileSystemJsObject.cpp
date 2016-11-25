@@ -75,7 +75,7 @@ namespace
       }
 
       JsContext context(m_jsEngine);
-      JsValuePtr result = context.jsEngine().NewObject();
+      JsValuePtr result = context.GetJsEngine().NewObject();
       result->SetProperty("content", content);
       result->SetProperty("error", error);
       JsValueList params;
@@ -115,7 +115,7 @@ namespace
       }
 
       JsContext context(m_jsEngine);
-      JsValuePtr errorValue = context.jsEngine().NewValue(error);
+      JsValuePtr errorValue = context.GetJsEngine().NewValue(error);
       JsValueList params;
       params.push_back(errorValue);
       callback->Call(params);
@@ -152,7 +152,7 @@ namespace
       }
 
       JsContext context(m_jsEngine);
-      JsValuePtr errorValue = context.jsEngine().NewValue(error);
+      JsValuePtr errorValue = context.GetJsEngine().NewValue(error);
       JsValueList params;
       params.push_back(errorValue);
       callback->Call(params);
@@ -189,7 +189,7 @@ namespace
       }
 
       JsContext context(m_jsEngine);
-      JsValuePtr errorValue = context.jsEngine().NewValue(error);
+      JsValuePtr errorValue = context.GetJsEngine().NewValue(error);
       JsValueList params;
       params.push_back(errorValue);
       callback->Call(params);
@@ -227,7 +227,7 @@ namespace
       }
 
       JsContext context(m_jsEngine);
-      JsValuePtr result = context.jsEngine().NewObject();
+      JsValuePtr result = context.GetJsEngine().NewObject();
       result->SetProperty("exists", statResult.exists);
       result->SetProperty("isFile", statResult.isFile);
       result->SetProperty("isDirectory", statResult.isDirectory);

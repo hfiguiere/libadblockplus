@@ -539,6 +539,7 @@ TEST(NewFilterEngineTest, MemoryLeak_NoCircularReferences)
   std::weak_ptr<AdblockPlus::JsEngine> weakJsEngine;
   {
     auto jsEngine = AdblockPlus::JsEngine::New();
+    weakJsEngine = jsEngine;
     jsEngine->SetFileSystem(AdblockPlus::FileSystemPtr(new LazyFileSystem()));
     jsEngine->SetWebRequest(AdblockPlus::WebRequestPtr(new LazyWebRequest()));
     jsEngine->SetLogSystem(AdblockPlus::LogSystemPtr(new LazyLogSystem()));

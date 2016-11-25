@@ -54,8 +54,8 @@ Filter::Type Filter::GetType()
 
 bool Filter::IsListed()
 {
-  JsContext context(m_jsEngine);
-  JsValuePtr func = context.jsEngine().Evaluate("API.isListedFilter");
+  JsContext context(jsEngine);
+  JsValuePtr func = context.GetJsEngine().Evaluate("API.isListedFilter");
   JsValueList params;
   params.push_back(shared_from_this());
   return func->Call(params)->AsBool();
@@ -63,8 +63,8 @@ bool Filter::IsListed()
 
 void Filter::AddToList()
 {
-  JsContext context(m_jsEngine);
-  JsValuePtr func = context.jsEngine().Evaluate("API.addFilterToList");
+  JsContext context(jsEngine);
+  JsValuePtr func = context.GetJsEngine().Evaluate("API.addFilterToList");
   JsValueList params;
   params.push_back(shared_from_this());
   func->Call(params);
@@ -72,8 +72,8 @@ void Filter::AddToList()
 
 void Filter::RemoveFromList()
 {
-  JsContext context(m_jsEngine);
-  JsValuePtr func = context.jsEngine().Evaluate("API.removeFilterFromList");
+  JsContext context(jsEngine);
+  JsValuePtr func = context.GetJsEngine().Evaluate("API.removeFilterFromList");
   JsValueList params;
   params.push_back(shared_from_this());
   func->Call(params);
@@ -93,8 +93,8 @@ Subscription::Subscription(JsValue&& value)
 
 bool Subscription::IsListed()
 {
-  JsContext context(m_jsEngine);
-  JsValuePtr func = context.jsEngine().Evaluate("API.isListedSubscription");
+  JsContext context(jsEngine);
+  JsValuePtr func = context.GetJsEngine().Evaluate("API.isListedSubscription");
   JsValueList params;
   params.push_back(shared_from_this());
   return func->Call(params)->AsBool();
@@ -102,8 +102,8 @@ bool Subscription::IsListed()
 
 void Subscription::AddToList()
 {
-  JsContext context(m_jsEngine);
-  JsValuePtr func = context.jsEngine().Evaluate("API.addSubscriptionToList");
+  JsContext context(jsEngine);
+  JsValuePtr func = context.GetJsEngine().Evaluate("API.addSubscriptionToList");
   JsValueList params;
   params.push_back(shared_from_this());
   func->Call(params);
@@ -111,8 +111,8 @@ void Subscription::AddToList()
 
 void Subscription::RemoveFromList()
 {
-  JsContext context(m_jsEngine);
-  JsValuePtr func = context.jsEngine().Evaluate("API.removeSubscriptionFromList");
+  JsContext context(jsEngine);
+  JsValuePtr func = context.GetJsEngine().Evaluate("API.removeSubscriptionFromList");
   JsValueList params;
   params.push_back(shared_from_this());
   func->Call(params);
@@ -120,8 +120,8 @@ void Subscription::RemoveFromList()
 
 void Subscription::UpdateFilters()
 {
-  JsContext context(m_jsEngine);
-  JsValuePtr func = context.jsEngine().Evaluate("API.updateSubscription");
+  JsContext context(jsEngine);
+  JsValuePtr func = context.GetJsEngine().Evaluate("API.updateSubscription");
   JsValueList params;
   params.push_back(shared_from_this());
   func->Call(params);
@@ -129,8 +129,8 @@ void Subscription::UpdateFilters()
 
 bool Subscription::IsUpdating()
 {
-  JsContext context(m_jsEngine);
-  JsValuePtr func = context.jsEngine().Evaluate("API.isSubscriptionUpdating");
+  JsContext context(jsEngine);
+  JsValuePtr func = context.GetJsEngine().Evaluate("API.isSubscriptionUpdating");
   JsValueList params;
   params.push_back(shared_from_this());
   JsValuePtr result = func->Call(params);
