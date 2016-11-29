@@ -30,7 +30,7 @@ AdblockPlus::JsValue::JsValue(const std::weak_ptr<AdblockPlus::JsEngine>& jsEngi
 }
 
 AdblockPlus::JsValue::JsValue(AdblockPlus::JsValue&& src)
-    : jsEngine(move(src.jsEngine)),
+    : jsEngine(std::move(src.jsEngine)),
       value(std::move(src.value))
 {
 }
