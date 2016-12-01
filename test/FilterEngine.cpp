@@ -16,6 +16,8 @@
  */
 
 #include "BaseJsTest.h"
+#include <thread>
+#include <chrono>
 
 namespace
 {
@@ -544,6 +546,16 @@ TEST(NewFilterEngineTest, MemoryLeak_NoCircularReferences)
     jsEngine->SetWebRequest(AdblockPlus::WebRequestPtr(new LazyWebRequest()));
     jsEngine->SetLogSystem(AdblockPlus::LogSystemPtr(new LazyLogSystem()));
     auto filterEngine = FilterEnginePtr(new AdblockPlus::FilterEngine(jsEngine));
+  }
+  {
+    // It's a hack to figure current race condition out (better than nothing):
+    // IO or timer thread still can aquire a strong reference to JsEngine right
+    // before destroying filterEngine holding JsEngine and keep it for some
+    // time, so here we need to give it a reasonable amount of time to finish
+    // the current operation.
+    uint16_t attempts = 10;
+    while (attempts-- > 0 && weakJsEngine.lock())
+      std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
   EXPECT_FALSE(weakJsEngine.lock());
 }
