@@ -282,10 +282,10 @@ namespace AdblockPlus
     struct TimerTask
     {
       std::weak_ptr<JsEngine> weakJsEngine;
-      TimerTaskInfos::const_iterator taskInfoIterator;
+      TimerTaskInfos::iterator taskInfoIterator;
     };
     TimerTask CreateTimerTask(const v8::Arguments& arguments);
-    void CallTimerTask(TimerTaskInfos::const_iterator taskInfoIterator);
+    void CallTimerTask(TimerTaskInfos::iterator taskInfoIterator);
   private:
     explicit JsEngine(const ScopedV8IsolatePtr& isolate);
 

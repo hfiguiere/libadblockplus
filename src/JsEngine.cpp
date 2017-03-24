@@ -101,7 +101,7 @@ JsEngine::TimerTask JsEngine::CreateTimerTask(const v8::Arguments& arguments)
   return retValue;
 }
 
-void JsEngine::CallTimerTask(TimerTaskInfos::const_iterator timerTaskInfoIterator)
+void JsEngine::CallTimerTask(TimerTaskInfos::iterator timerTaskInfoIterator)
 {
   const JsContext context(shared_from_this());
   JsValue callback(shared_from_this(), v8::Local<v8::Value>::New(GetIsolate(), *timerTaskInfoIterator->arguments[0]));
